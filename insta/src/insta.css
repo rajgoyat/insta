@@ -1,0 +1,139 @@
+*{margin:0;
+padding:0;
+box-sizing: border-box;
+  }
+
+.postData img,video{
+    width:468px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+  }
+.logininput, .registerinput{
+    margin-left:8px;
+margin-top:10px;
+font-size:17px;
+transition:all 0.3s ease;
+z-index: 1;
+}
+
+
+ .move{
+    margin-top:-1px ;
+    font-size: 12px;
+z-index: 10;
+}
+.loginPageForm input, .registerPageForm input{
+    outline:none;
+    box-shadow: none;
+    text-decoration: none;
+    border:none;
+}
+.center-main{
+    width:630px;
+   
+}
+.followings div div::after {
+    content: "";
+    display: block;
+    position: absolute;
+    transform: translate(-4.3%, -96%);
+    width: 61px; /* Size of the circle */
+    height: 61px; /* Size of the circle */
+    border-radius: 50%; /* Make it a circle */
+    background: linear-gradient(to top right, #ffca10, #ff2877, #db30d0);
+    z-index: -1;/* Ensure the pseudo-element is behind the image */
+}
+.centerOrsuggestion{
+    position:relative;
+     display:flex;
+    justify-content:space-evenly
+}
+@media(max-width:1160px) {
+ .suggestion-main {
+        display: none
+    }
+} 
+
+@media(min-width:1160px) {
+    .suggestion-main{
+        margin-top:60px;
+    }
+    .suggestions {
+        position: relative;
+        width: 319px;
+        }
+    .light-color{
+        color:#636060;
+    }
+    .light-color2{
+        color:#746e6e;
+    }
+    .naming{
+        display: flex;
+        flex:1;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+@media(min-width:768px) {
+        .allIcon:hover {
+        border-radius: 12px;
+        background-color: rgba(51, 49, 49, 0.151);
+        cursor: pointer;
+    }
+    .followings{
+        margin-top:40px;
+    }
+    #slideBar {
+        border-right: 1px solid rgba(0, 0, 0, 0.219);
+        position: fixed;
+        width: 58px;
+        height: 100vh;
+    }
+}
+@media(min-width:768px) and (max-width:1200px){
+    .centerOrsuggestion {
+        margin-left: 57px;
+    }
+}
+@media(min-width:1200px) {
+    .centerOrsuggestion {
+        margin-left: 245px;
+    }
+
+    #slideBar {
+        width: 245px;
+    }
+}
+
+@media(max-width:768px){
+    .centerOrsuggestion {
+        margin-top: 60px;
+    }
+.header{position:fixed; border-bottom: 1px solid rgba(0, 0, 0, 0.219); top:0; z-index: 5;}
+.header .svgs{
+    width:395px
+}
+    .mainIcons {
+        border-top: 1px solid rgba(0, 0, 0, 0.219);
+        bottom: 0;
+        width: 100%;
+        justify-content: space-around;
+    }
+    .mainIcons{
+        background: white;
+    }
+}
+@media(max-width:875px){
+    .loginImage{
+        display:none;
+}}
+@media(min-width:875px){
+    .loginImage{
+        display: block;
+    }
+}
