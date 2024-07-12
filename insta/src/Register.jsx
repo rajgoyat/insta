@@ -18,8 +18,8 @@ const Register = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log(data);
-    try {
-      const response = await fetch(`http://localhost:5000/insta/register`, {
+    try { 
+            const response = await fetch(`http://localhost:5000/insta/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -34,7 +34,7 @@ const Register = () => {
           username: "",
           password: "",
         });
-        navigate("/client");
+        navigate("/insta-app");
      
       console.log(response);
     }
@@ -245,7 +245,7 @@ const Register = () => {
         >
           Don't have an account ?
           <span className="fw-bold text-primary">
-            <Link to="/client/login" className="text-decoration-none ms-2">
+            <Link to="/insta-app/login" className="text-decoration-none ms-2">
               Log in
             </Link>
           </span>

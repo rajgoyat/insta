@@ -10,11 +10,11 @@ const PathTo = () => {
   return (
     <BrowserRouter>
     <Routes>
-        <Route path="/client" element={<Insta/>}  />
-        <Route path="/client/login" element={<Login/>}  />
-        <Route path="/client/register" element={<Register/>}  />
-        <Route path="/client/messages" element={<Message/>}  />
-        <Route path="/client/profile" element={<Profile/>}  />    
+        <Route path="/insta-app" element={<Insta/>}  />
+        <Route path="/insta-app/login" element={<Login/>}  />
+        <Route path="/insta-app/register" element={<Register/>}  />
+        <Route path="/insta-app/messages" element={<Message/>}  />
+        <Route path="/insta-app/profile" element={<Profile/>}  />    
     </Routes>
     </BrowserRouter>
   )

@@ -11,6 +11,7 @@ const Following = () => {
       return <span>{text.substring(0, 7)}...</span>;
     }
   };
+
   useEffect(() => {
   const handleResize = () => {
     if (window.matchMedia("(max-width: 576px)").matches) {
@@ -32,7 +33,7 @@ const Following = () => {
       {peopleImgs.slice(0, followingInd).map((val, ind) => {
         return (
           <div key={ind} className="d-flex flex-column align-items-center">
-            <Link to="/client/profile" className="text-decoration-none">
+            <Link to="/insta-app/profile" className="text-decoration-none">
               <div className="position-relative w-100">
                 <img
                   className="rounded-circle"

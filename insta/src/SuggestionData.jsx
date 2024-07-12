@@ -7,7 +7,7 @@ import man5 from './Imgs/man5.jpeg'
 import man6 from './Imgs/man6.jpeg'
 import man7 from './Imgs/man7.jpeg'
 import man8 from './Imgs/man8.jpeg'
-import man9 from './Imgs/man9.jpeg'
+import man9 from './Imgs/man9.jpeg' 
 export const peopleImgs = [
     {
         img: man1,

@@ -10,7 +10,6 @@ import login4 from "./Imgs/loginimage4.png";
 import loginplay from "./Imgs/loginplay.png";
 import loginmicrosoft from "./Imgs/loginmicrosoft.png";
 import facebookLogo from "./Imgs/facebookLogo.jpeg";
-
 const Login = () => {
   const navigate = useNavigate();
   const [data, setdata] = useState({
@@ -36,7 +35,7 @@ const Login = () => {
           name: "",
           password: "",
         });
-        navigate("/client")}
+        navigate("/insta-app")}
     } catch (error) {
       console.log(error);
     }
@@ -173,7 +172,7 @@ const Login = () => {
         <div className="text-center border border-1 pt-3 pb-3 w-100">
           Don't have an account ?{" "}
           <span className="fw-bold text-primary">
-            <Link to="/client/register" className="text-decoration-none">
+            <Link to="/insta-app/register" className="text-decoration-none">
               Sign up
             </Link>
           </span>

@@ -26,7 +26,7 @@ const PostData = () => {
               className="position-relative d-flex p-2 mt-3 "
               style={{ width: "464px" }}
             >
-              <a href="/client/profile" onClick={() => console.log("hello")}>
+              <a href="/insta-app/profile" onClick={() => console.log("hello")}>
                 <img
                   className="rounded-circle border border-dark"
                   style={{ width: "32px", height: "32px" }}
@@ -38,7 +38,7 @@ const PostData = () => {
                 className="d-flex flex-column text-dark ms-2"
                 style={{ fontSize: "13px" }}
               >
-                <a href="/client/profile" className="text-decoration-none text-reset"><p className="m-0 p-0 d-flex flex-row">
+                <a href="/insta-app/profile" className="text-decoration-none text-reset"><p className="m-0 p-0 d-flex flex-row">
                 <p className="p-0 m-0">{val.id}</p>
                   
                     <p className="ms-2 text-primary m-0 p-0">Follow</p>

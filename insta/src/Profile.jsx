@@ -10,6 +10,7 @@ const Profile = () => {
     </>
   );
 };
+   
 const ProfileMain = () => {
   return (
     <div className="centerOrsuggestion">
@@ -34,7 +35,7 @@ const ProfileMain = () => {
 };
 const ProfileHeader=()=>{
   return(
-    <div className="d-md-none text-center position-absolute top-0 w-100" style={{borderBottom:"1px solid rgba(0, 0, 0, 0.219)", height:"44px"}}><a href="/client" className="position-absolute start-0 m-2 text-decoration-none"><IoIosArrowBack size={22}/></a> <div className="p-2">{peopleImgs[0].id}</div></div>
+    <div className="d-md-none text-center position-absolute top-0 w-100" style={{borderBottom:"1px solid rgba(0, 0, 0, 0.219)", height:"44px"}}><a href="/insta-app" className="position-absolute start-0 m-2 text-decoration-none"><IoIosArrowBack size={22}/></a> <div className="p-2">{peopleImgs[0].id}</div></div>
   )
 }
 export {Profile}

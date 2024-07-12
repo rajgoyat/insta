@@ -16,6 +16,7 @@ import profile from "./Imgs/profile.jpg";
 import { useState, useEffect } from "react";
 import {PostData} from './Center'
 const Insta = () => {
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const Insta = () => {
         console.log(InstaId);
         if (!InstaId) {
           // localStorage.removeItem('InstaUserId', InstaId);
-          navigate('/client/register');
+          navigate('/insta-app/register');
         }
       } catch (error) {
         console.log('Error fetching InstaUserId from localStorage:', error);
@@ -56,7 +57,7 @@ const SideBottombars= ()=>{
     const iconArray = [
       { label: "Home", icon: <MdHomeFilled size={25} /> },
       { label: "Search", icon: <AiOutlineSearch size={25} /> },
-      { label: "Explore", icon: <Link to="/client/login" className="text-decoration-none text-reset"><MdOutlineExplore size={25} /></Link> },
+      { label: "Explore", icon: <Link to="/insta-app/login" className="text-decoration-none text-reset"><MdOutlineExplore size={25} /></Link> },
       { label: "Reels", icon: <SiYoutubeshorts size={25} /> },
       { label: "Messenger", icon: <RiMessengerLine size={25} /> },
       { label: "Love", icon: <FaRegHeart size={25} /> },
@@ -64,7 +65,7 @@ const SideBottombars= ()=>{
     ];
      const iconArrayBottom = [
       { label: "Home", icon: <MdHomeFilled size={25} /> },
-      { label: "Explore", icon: <Link to="/client/login" className="text-decoration-none text-reset"><MdOutlineExplore size={25} /></Link> },
+      { label: "Explore", icon: <Link to="/insta-app/login" className="text-decoration-none text-reset"><MdOutlineExplore size={25} /></Link> },
       { label: "Create", icon: <LuPlusSquare size={25} /> },
       { label: "Reels", icon: <SiYoutubeshorts size={25} /> },
       { label: "Messenger", icon: <RiMessengerLine size={25} /> },
@@ -109,7 +110,7 @@ const SideBottombars= ()=>{
           </div>
         );
       })}
-      <Link to="/client/profile" className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
+      <Link to="/insta-app/profile" className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
         <img
           className="rounded-circle ms-md-2"
           style={{ width: "25px", height: "25px" }}

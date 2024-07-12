@@ -10,7 +10,7 @@ const getdata=async()=>{
  const res= await fetch(`http://localhost:5000/insta/users`,{
   method: "GET",
   headers:{ "Content-Type": "application/json"},
-  body: JSON.stringify()
+  body: JSON.stringify() 
  }) 
  const jsondata= await res.json()
  setdata(jsondata);
@@ -28,7 +28,7 @@ useEffect(()=>{
     >
       <div className="d-flex"><Link to="/user/profile" className="text-decoration-none text-dark"><img className="rounded-circle" style={{height:"44px",width:"44px"}} src={car} alt="" /></Link>
       <div className="naming">
-      <Link to="/client/profile/" className="text-decoration-none text-dark"> <div className="names d-flex flex-column " style={{marginLeft:"5px"}}><div style={{fontSize:"14px"}}>raj__gahlot</div>
+      <Link to="/insta-app/profile/" className="text-decoration-none text-dark"> <div className="names d-flex flex-column " style={{marginLeft:"5px"}}><div style={{fontSize:"14px"}}>raj__gahlot</div>
         <div className="fw-light light-color" style={{fontSize:"12px"}}>Raj_Gahlot</div></div></Link>
         <div className="text-primary me-4" >Switch</div>
       </div></div>
