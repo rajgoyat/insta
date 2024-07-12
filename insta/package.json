@@ -1,7 +1,7 @@
 {
   "name": "insta",
   "version": "0.1.0",
-  "homepage": "https://rajgahlot1.github.io/insta",
+  "homepage": "https://rajgahlot1.github.io/insta-app",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
