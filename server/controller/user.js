@@ -37,8 +37,8 @@ const getuserdata=async(req,res)=>{
     try {
         const user= await User.find();
         const details= user.map((user)=>{
-           const {username,...details}= user._doc;
-           return { details };
+           const {username, ...details}= user._doc;
+           return {username, ...details};
         })
         res.status(200).json(details)
     } catch (error) {

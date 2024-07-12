@@ -2,7 +2,7 @@ const mongoose= require("mongoose")
 const userSchema= new mongoose.Schema({
     numberoremail: {type: String, required: true , max:20},
     fullname: { type: String, required: true,max:30,min:3 },
-    username:{ type:String, required:true, unique:true },
+    username:{ type:String, required:true, max: 30, min:3 },
     password: { type: String, required: true, min: 6 },
     followers: { type: Array, default: [] },
     followings: { type: Array, default: [] },

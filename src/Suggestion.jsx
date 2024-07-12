@@ -3,25 +3,29 @@ import car from './Imgs/car.jpeg'
 // import { peopleImgs } from "./SuggestionData";
 import { Link } from "react-router-dom";
 import avtar from './Imgs/avtar.jpeg'
+import axios from 'axios';
+
 const Suggestion = () => {
   const [data,setdata]= useState([])
 const getdata=async()=>{
+
   try {
- const res= await fetch(`http://localhost:5000/insta/users`,{
-  method: "GET",
-  headers:{ "Content-Type": "application/json"},
-  body: JSON.stringify() 
- }) 
- const jsondata= await res.json()
- setdata(jsondata);
- console.log("hello",data,jsondata)
+    const response = await axios.get("http://localhost:5000/insta/users", {
+      headers: { "Content-Type": "application/json" },
+    });
+    const jsondata = response.data;
+    setdata(jsondata);
   } catch (error) {
-    console.log("failed to load the data")
+    console.log("failed to load the data",error);
   }
-} 
-useEffect(()=>{
+};
+useEffect(() => {
+  console.log("hello", data);
+}, [data]);
+useEffect(() => {
   getdata();
-},[])
+}, []);
+
   return (
     <div 
       className="suggestions"  
@@ -36,10 +40,10 @@ useEffect(()=>{
     
       <div className="d-flex flex-column">
       {data.map((val,ind)=>{
-        return(<Link className="text-decoration-none text-reset" to={`user/profile/${val.details._id}`} key={ind}>  <div className="d-flex mt-3" >
-          <img className="rounded-circle" style={{height:"44px",width:"44px"}} src={val.details.img || avtar} alt="" />
+        return(<Link className="text-decoration-none text-reset" to={`user/profile/`} key={ind}>  <div className="d-flex mt-3" >
+          <img className="rounded-circle" style={{height:"44px",width:"44px"}} src={val.img || avtar} alt="" />
           <div className="naming">
-        <div className="names d-flex flex-column " style={{marginLeft:"5px"}}><div style={{fontSize:"14px"}}>{val.details.instaId}</div>
+        <div className="names d-flex flex-column " style={{marginLeft:"5px"}}><div style={{fontSize:"14px"}}>{val.username}</div>
         <div className="fw-light light-color" style={{fontSize:"12px"}}>Suggested for you</div></div>
         <div className="text-primary me-4" style={{fontSize:"13px"}}>Follow</div>
       </div></div></Link>

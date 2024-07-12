@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import facebookLogo from "./Imgs/facebookLogo.jpeg";
 import { ImageContent } from "./Login";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 const Register = () => {
   const navigate = useNavigate();
   const [data, setdata] = useState({
@@ -15,17 +16,16 @@ const Register = () => {
     const { name, value } = e.target;
     setdata({ ...data, [name]: value });
   };
-  const submitHandler = async (e) => {
+  const submitHandler = async (e) => { 
     e.preventDefault();
-    console.log(data);
-    try { 
-            const response = await fetch(`http://localhost:5000/insta/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (response.ok) {
-        const responseData = await response.json(); // Parse response body as JSON
+    // console.log(data);
+   try { 
+  const response = await axios.post('http://localhost:5000/insta/register', data, {
+    headers: { "Content-Type": "application/json" }
+  });
+      if (response.status === 201) {
+        // console.log(data)
+        const responseData = response.data; // Parse response body as JSON
         const InstaUserId = responseData.user._id // Assuming _id is returned from backend
         localStorage.setItem('InstaUserId', InstaUserId);
         setdata({
@@ -36,7 +36,7 @@ const Register = () => {
         });
         navigate("/insta-app");
      
-      console.log(response);
+      // console.log(response);
     }
     } catch (error) {
       console.log("register", error);

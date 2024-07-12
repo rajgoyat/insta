@@ -10,6 +10,7 @@ import login4 from "./Imgs/loginimage4.png";
 import loginplay from "./Imgs/loginplay.png";
 import loginmicrosoft from "./Imgs/loginmicrosoft.png";
 import facebookLogo from "./Imgs/facebookLogo.jpeg";
+import axios from 'axios';
 const Login = () => {
   const navigate = useNavigate();
   const [data, setdata] = useState({
@@ -23,23 +24,26 @@ const Login = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
+    
+
     try {
-      const response = await fetch("http://localhost:5000/insta/login", {
-        method: "POST",
+      const response = await axios.post("http://localhost:5000/insta/login", data, {
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
       });
+      
       console.log(response);
-      if (response.ok){ 
+    
+      if (response.status === 200) { 
         setdata({
           name: "",
           password: "",
         });
-        navigate("/insta-app")}
+        navigate("/insta-app");
+      }
     } catch (error) {
       console.log(error);
     }
-  };
+  }
   return (
     <div
       className="d-flex align-items-center justify-content-center w-100"
