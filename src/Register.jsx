@@ -110,8 +110,7 @@ const Register = () => {
                 style={{ borderRadius: "5px" }}
               >
                 <label
-                  // for="name"
-                  className={`position-absolute registerinput ${data.numberoremail.length>0 ? "move": ""}`}
+                 className={`position-absolute registerinput ${data.numberoremail.length>0 ? "move": ""}`}
                 >
                   Phone number or email
                 </label>
@@ -138,7 +137,6 @@ const Register = () => {
                 style={{ borderRadius: "5px" }}
               >
                 <label
-                  // for="password"
                   className={`position-absolute registerinput ${data.fullname.length>0 ? "move": ""}`}
                 >
                   Full Name
@@ -202,7 +200,7 @@ const Register = () => {
                   type="password"
                   name="password"
                   required
-                  autoComplete="new-password"
+                  // autoComplete="new-password for"
                   style={{
                     height: "38px",
                     width: "268px",
