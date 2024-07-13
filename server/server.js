@@ -4,18 +4,11 @@ const cors= require("cors")
 const mongoose= require("mongoose")
 const router= require('./routes/route')
 const app= express();
-const allowedOrigins = ['http://localhost:3000', 'https://rajgahlot1.github.io'];
-corsOptions={
-    origin: (origin, callback) => {
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    method:"GET, PUT, POST, DELETE,PATCH, HEAD",
+const corsOptions = {
+    origin: true, // Allow all origins
+    methods: "GET, PUT, POST, DELETE, PATCH, HEAD",
     credentials: true
-}
+};
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/insta',router)
