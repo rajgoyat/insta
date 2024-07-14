@@ -10,8 +10,9 @@ import login4 from "./Imgs/loginimage4.png";
 import loginplay from "./Imgs/loginplay.png";
 import loginmicrosoft from "./Imgs/loginmicrosoft.png";
 import facebookLogo from "./Imgs/facebookLogo.jpeg";
-import axios from 'axios';
+import { useFirebase } from "./Firebase";
 const Login = () => {
+  const firebase=useFirebase();
   const navigate = useNavigate();
   const [data, setdata] = useState({
     username: "",
@@ -25,25 +26,24 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     
-
-    try {
-      const response = await axios.post("http://localhost:5000/insta/login", data, {
-        headers: { "Content-Type": "application/json" },
-      });
-      
-      console.log(response);
-    
-      if (response.status === 200) { 
-        setdata({
-          name: "",
+    try{
+      const response = await firebase.loginWithEmailandPass(data.username, data.password);
+// console.log("login response",response)
+if(response){
+   setdata({
+          username: "",
           password: "",
-        });
-        navigate("/insta-app");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+            });
+  navigate("/insta-app")}
+}catch(err){
+alert(`Error:${err.message}`);
+}}
+ 
+useEffect(()=>{
+  if(firebase.isLoggedIn){
+         navigate("/insta-app");
   }
+},[firebase,navigate])
   return (
     <div
       className="d-flex align-items-center justify-content-center w-100"

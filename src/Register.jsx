@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import facebookLogo from "./Imgs/facebookLogo.jpeg";
 import { ImageContent } from "./Login";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import { useFirebase } from "./Firebase";
 const Register = () => {
   const navigate = useNavigate();
+   const firebase=useFirebase();
   const [data, setdata] = useState({
-    numberoremail: "",
+    numberoremail: "", 
     fullname: "",
     username: "",
     password: "",
@@ -17,31 +18,29 @@ const Register = () => {
     setdata({ ...data, [name]: value });
   };
   const submitHandler = async (e) => { 
-    e.preventDefault();
-    // console.log(data);
-   try { 
-  const response = await axios.post('http://localhost:5000/insta/register', data, {
-    headers: { "Content-Type": "application/json" }
+    // console.log("it s i yuor data",data);
+    e.preventDefault()
+
+        try{
+          const response = await firebase.signupUserWithPassEmailName(data.numberoremail,data.password,data.fullname,data.username);
+          //  console.log("response ",response );
+if(response){
+  setdata({
+    numberoremail: "",
+    fullname: "",
+    username: "",
+    password: "",
   });
-      if (response.status === 201) {
-        // console.log(data)
-        const responseData = response.data; // Parse response body as JSON
-        const InstaUserId = responseData.user._id // Assuming _id is returned from backend
-        localStorage.setItem('InstaUserId', InstaUserId);
-        setdata({
-          numberoremail: "",
-          fullname: "",
-          username: "",
-          password: "",
-        });
-        navigate("/insta-app");
-     
-      // console.log(response);
-    }
-    } catch (error) {
-      console.log("register", error);
-    }
-  };
+  navigate("/insta-app")
+}
+           
+          }
+           catch(err){
+              alert(`Error:${err.message}`);
+            }
+       
+      }
+  
   return (
     <div
       className="d-flex align-items-center justify-content-center w-100"

@@ -8,6 +8,7 @@ import { MdOutlineExplore, MdHomeFilled } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
 import { SiYoutubeshorts } from "react-icons/si";
 import { FaRegHeart, FaThreads, FaInstagram } from "react-icons/fa6";
+import {SlideLogout} from './IconsFunctions/SlideLogout'
 import { RiMessengerLine } from "react-icons/ri";
 import { LuPlusSquare } from "react-icons/lu";
 import { PiList } from "react-icons/pi";
@@ -15,26 +16,17 @@ import { FaChevronDown } from "react-icons/fa";
 import profile from "./Imgs/profile.jpg";
 import { useState, useEffect } from "react";
 import {PostData} from './Center'
+import { useFirebase } from "./Firebase";
+
 const Insta = () => {
-  
+  const firebase=useFirebase();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchInstaId = async () => {
-      try {
-        const InstaId = await localStorage.getItem('InstaUserId');
-        console.log(InstaId);
-        if (!InstaId) {
-          // localStorage.removeItem('InstaUserId', InstaId);
-          navigate('/insta-app/register');
-        }
-      } catch (error) {
-        console.log('Error fetching InstaUserId from localStorage:', error);
-      }
-    };
-
-    fetchInstaId();
-  }, [navigate]);
+  useEffect(()=>{
+    if(firebase.isLoggedIn===false){
+           navigate("/insta-app/login");
+    }
+  },[firebase,navigate])
+     
   return (
     <>
      <HeadBar/>   
@@ -128,9 +120,9 @@ const SideBottombars= ()=>{
         <FaThreads size={25} />
         <span className="p-2 ps-2 d-none d-xl-inline">Threads</span>
       </div>
-      <div className=" allIcon m-2 p-2">
-        <PiList size={25} />
-        <span className="p-2 ps-2 d-none d-xl-inline text-center">More</span>
+      <div className=" allIcon m-2 p-2" data-bs-toggle="show" data-bs-target=".slidelogoutIconmain" aria-expanded="false">
+        <PiList size={25} /> <SlideLogout/>
+        <span className="p-2 ps-2 d-none d-xl-inline text-center" >More</span>
       </div>
     </div>
   </div>    
@@ -184,8 +176,10 @@ const HeadBar=()=>{
         <RiMessengerLine size={23} className="m-2 d-sm-none"/>
         
       </div>
+     
     </div>
 
   )
 }
+
 export {SideBottombars, Insta};

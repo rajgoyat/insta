@@ -2,11 +2,14 @@
 padding:0;
 box-sizing: border-box;
   }
-
+.slidelogoutIcon .set:hover{
+      border-radius: 12px;
+        background-color: rgba(51, 49, 49, 0.151);
+        cursor: pointer;
+}
 .postData img,video{
     width:468px;
 }
-
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset !important;
     box-shadow: 0 0 0px 1000px white inset !important;

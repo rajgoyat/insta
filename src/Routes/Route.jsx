@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import {  Routes, Route } from 'react-router-dom'
 import {Insta} from '../Insta'
 import {Login} from '../Login'
 import Register from '../Register'
@@ -8,7 +8,7 @@ import {Profile} from '../Profile'
 const PathTo = () => {
   
   return (
-    <BrowserRouter>
+  
     <Routes>
         <Route path="/insta-app" element={<Insta/>}  />
         <Route path="/insta-app/login" element={<Login/>}  />
@@ -16,7 +16,7 @@ const PathTo = () => {
         <Route path="/insta-app/messages" element={<Message/>}  />
         <Route path="/insta-app/profile" element={<Profile/>}  />    
     </Routes>
-    </BrowserRouter>
+    
   )
 }
 
