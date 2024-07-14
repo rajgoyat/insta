@@ -113,7 +113,7 @@ z-index: 10;
     }
 }
 
-@media(max-width:768px){
+@media(max-width:767px){
     .centerOrsuggestion {
         margin-top: 60px;
     }

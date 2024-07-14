@@ -7,9 +7,10 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     FacebookAuthProvider,
-    GoogleAuthProvider,
+    // GoogleAuthProvider,
     signInWithPopup,
-    onAuthStateChanged
+    onAuthStateChanged,
+    signOut
     
   } from "firebase/auth";
   const FirebaseContext = createContext(null);
@@ -60,13 +61,17 @@ export const FirebaseProvider = (props) => {
         console.error(error);
       }
     }
+    const logout =async()=>{
+      await signOut(firebaseAuth);
+    }
     return (
         <FirebaseContext.Provider
           value={{
             signupUserWithPassEmailName,
             loginWithEmailandPass,
              loginWithFacebook,
-             isLoggedIn
+             isLoggedIn,
+             logout
             //  https://insta-6bcb5.firebaseapp.com/__/auth/handler  raj_gahlot galhlot_raj
           }}
         >

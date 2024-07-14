@@ -1,12 +1,13 @@
 import "./insta.css";
 import "bootstrap/dist/css/bootstrap.css";
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import insta from "./Imgs/logo.png";
 import {Center} from "./Center"; 
 import { Link, useNavigate } from "react-router-dom";
 import Suggestion from "./Suggestion";
 import { MdOutlineExplore, MdHomeFilled } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
-import { SiYoutubeshorts } from "react-icons/si";
+// import { SiYoutubeshorts } from "react-icons/si";
 import { FaRegHeart, FaThreads, FaInstagram } from "react-icons/fa6";
 import {SlideLogout} from './IconsFunctions/SlideLogout'
 import { RiMessengerLine } from "react-icons/ri";
@@ -17,6 +18,7 @@ import profile from "./Imgs/profile.jpg";
 import { useState, useEffect } from "react";
 import {PostData} from './Center'
 import { useFirebase } from "./Firebase";
+import { Reels } from "./AllIconsSvgs/IconsSvg";
 
 const Insta = () => {
   const firebase=useFirebase();
@@ -50,7 +52,7 @@ const SideBottombars= ()=>{
       { label: "Home", icon: <MdHomeFilled size={25} /> },
       { label: "Search", icon: <AiOutlineSearch size={25} /> },
       { label: "Explore", icon: <Link to="/insta-app/login" className="text-decoration-none text-reset"><MdOutlineExplore size={25} /></Link> },
-      { label: "Reels", icon: <SiYoutubeshorts size={25} /> },
+      { label: "Reels", icon: <Reels /> },
       { label: "Messenger", icon: <RiMessengerLine size={25} /> },
       { label: "Love", icon: <FaRegHeart size={25} /> },
       { label: "Create", icon: <LuPlusSquare size={25} /> },
@@ -59,7 +61,7 @@ const SideBottombars= ()=>{
       { label: "Home", icon: <MdHomeFilled size={25} /> },
       { label: "Explore", icon: <Link to="/insta-app/login" className="text-decoration-none text-reset"><MdOutlineExplore size={25} /></Link> },
       { label: "Create", icon: <LuPlusSquare size={25} /> },
-      { label: "Reels", icon: <SiYoutubeshorts size={25} /> },
+      { label: "Reels", icon: <Reels /> },
       { label: "Messenger", icon: <RiMessengerLine size={25} /> },
     ];
 
@@ -116,14 +118,15 @@ const SideBottombars= ()=>{
       className="d-none d-md-block w-md-100"
       style={{ position: "absolute", bottom: "0px" }}
     >
-      <div className="allIcon m-2 p-2 col">
+      <div className="allIcon m-2 p-2 col ">
         <FaThreads size={25} />
         <span className="p-2 ps-2 d-none d-xl-inline">Threads</span>
       </div>
-      <div className=" allIcon m-2 p-2" data-bs-toggle="show" data-bs-target=".slidelogoutIconmain" aria-expanded="false">
-        <PiList size={25} /> <SlideLogout/>
-        <span className="p-2 ps-2 d-none d-xl-inline text-center" >More</span>
+      <div className=" allIcon m-2 p-2" data-bs-toggle="collapse" data-bs-target=".slidelogoutIconmain" aria-expanded="false">
+        <PiList size={25} /> 
+        <span className="p-2 ps-2 d-none d-xl-inline text-center"  >More</span>
       </div>
+      <SlideLogout/>
     </div>
   </div>    
   )

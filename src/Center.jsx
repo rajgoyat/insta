@@ -29,7 +29,8 @@ const VideoComponent = ({ src, vol ,setVol }) => {
   });
 
   useEffect(() => {
-    if (isIntersecting) {
+    const video = videoRef.current;
+    if (isIntersecting && video.paused) {
       videoRef.current.play();
     } else {
       videoRef.current.pause();

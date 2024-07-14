@@ -1,0 +1,17 @@
+*body{
+    width:100vh;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+@media(max-width:767px){
+    .profilePage .user-image img{
+   height:77px;
+   width:77px; 
+}}
+@media(min-width:767px){
+    .profilePage .user-image img{
+    height: 150px;
+    width: 150px;
+    }  
+}

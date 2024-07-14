@@ -11,11 +11,11 @@ import man9 from './Imgs/man9.jpeg'
 import vid1 from './post/VID-20240616-WA0001.mp4'
 import vid2 from './post/VID-20240704-WA0002.mp4'
 import vid3 from './post/VID-20240704-WA0007.mp4'
-import vid4 from './post/VID-20240704-WA0004.mp4'
+import vid4 from './post/VID-20240704-WA0009.mp4'
 export const peopleImgs = [
     {
-        img: man1,
-        post: man1,
+        img: man9,
+        post: man9,
         id: '@alice_343',
     },
     {
@@ -55,7 +55,7 @@ export const peopleImgs = [
     },
     {
         img: man9,
-        post: man6,
+        post: man1,
         id: '@irene_scott#343',
     }
 ];

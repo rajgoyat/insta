@@ -4,7 +4,7 @@ import {Insta} from '../Insta'
 import {Login} from '../Login'
 import Register from '../Register'
 import Message from '../Message'
-import {Profile} from '../Profile'
+import {Profile} from '../ProfilePage/Profile'
 const PathTo = () => {
   
   return (
