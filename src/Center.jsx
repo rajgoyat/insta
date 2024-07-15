@@ -49,6 +49,7 @@ const PostData = () => {
   const [vol,setVol]= useState(false)
   const [randomNo, setRandomNo]= useState([])
   const dataLength= peopleImgs.length;
+  const [like,setLikes]= useState([]) 
 
   const [likeNo, setLikeNo]= useState(Array(dataLength).fill(false))
   const generateUniqueRandomNumbers = () =>{
@@ -65,10 +66,8 @@ const PostData = () => {
     generateUniqueRandomNumbers();
 }, []);
 useEffect(() => {
-  console.log("no here",like
-  )
+  setLikes(randomNo.map((index) => peopleImgs[index].likes));
 }, [randomNo]);
-const [like,setLikes]= useState(randomNo.map(val=>peopleImgs[val].likes)) 
 
   const likeHandler = (index) => {
     console.log(index)
@@ -80,7 +79,7 @@ const [like,setLikes]= useState(randomNo.map(val=>peopleImgs[val].likes))
       prevLikeNo.map((likeState, i) => (i === index ? !likeState : likeState))
     );
   };
-  // console.log("likeO",peopleImgs.length)
+  console.log("likeO",like)
     return (
     <div className="postData w-100 d-flex flex-column align-items-center justify-content-center">
 {/* <VideoComponent src={vid1}  vol={vol} setVol={setVol}/> */}
@@ -135,7 +134,7 @@ const [like,setLikes]= useState(randomNo.map(val=>peopleImgs[val].likes))
               />
             </div>
             <div className="text-dark" style={{ fontSize: "12px" }}>
-              <p className="m-0">{like[val]} likes</p>
+              <p className="m-0">{like[ind]} likes</p>
               <p className="m-0">
                 cars_universe.tiktok #vutruxe #catagram
               </p>{" "}
