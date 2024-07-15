@@ -16,46 +16,55 @@ export const peopleImgs = [
     {
         img: man9,
         post: man9,
+        likes:23,
         id: '@alice_343',
     },
     {
         img: man2,
         post: vid1,
+        likes:253,
         id: 'brian_harris#',
     },
     {
         img: man3,
         post: vid3,
+        likes:234,
         id: 'charles_clark343',
     },
     {
         img: man4,
         post: man2,
+        likes:123,
         id: '@diana.lewis',
     },
     {
         img: man5,
         post: vid4,
+        likes:293,
         id: 'ethan_walker#343',
     },
     {
         img: man6,
         post: man3,
+        likes:239,
         id: 'fiona_hall@343',
     },
     {
         img: man7,
         post: man5,
+        likes:93,
         id: 'george_y#oung',
     },
     {
         img: man8,
         post: vid2,
+        likes:200,
         id: 'hannah_king343@',
     },
     {
         img: man9,
         post: man1,
+        likes:101,
         id: '@irene_scott#343',
     }
 ];

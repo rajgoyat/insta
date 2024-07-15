@@ -116,7 +116,6 @@ useEffect(()=>{
                 style={{ borderRadius: "5px" }}
               >
                 <label
-                  for="password"
                   className={`position-absolute logininput ${data.password.length> 0? "move":""}`}
                 >
                   Password
@@ -198,7 +197,7 @@ useEffect(()=>{
     </div>
   );
 };
-
+// for
 const ImageContent = () => {
   const [loginImg, setLoginImg] = useState(login1);
  const images= [login1, login2,login3,login4]
