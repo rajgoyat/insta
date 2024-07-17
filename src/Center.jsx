@@ -14,7 +14,7 @@ import { IoVolumeMute } from "react-icons/io5";
 const Center = () => {
  
   return (
-    <div
+    <div 
       className="center align-items-center position-relative" style={{zIndex:"4"}}
     >
       <Following />
