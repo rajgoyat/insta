@@ -1,13 +1,14 @@
 
 import { useFirebase } from "../Firebase";
 import { useNavigate } from "react-router-dom";
-import {Seeting, YourActivity, Saved, DarkMode, Report} from '../AllIconsSvgs/IconsSvg'
+import {CreatePost, LiveVideo, Seeting, YourActivity, Saved, DarkMode, Report} from '../AllIconsSvgs/IconsSvg'
 
 export const SlideLogout = ()=>{
   const firebase=useFirebase();
   const navigate=useNavigate();
 
   const handleLogOut= async()=>{
+    console.log("hello")
    const logout=  await firebase.logout();
    console.log(logout)
    if(logout){navigate('/insta-app/login');} 
@@ -29,5 +30,17 @@ export const SlideLogout = ()=>{
            
             </div>
     
+    )
+  }
+  export const CreateReel=()=>{
+    return(
+      <div className="createReel position-absolute bg-white collapse" style={{width:"150px", fontSize:"19px",bottom:"-40px", left:"10px"}}>
+        <div className="iconhover d-flex align-items-center justify-content-between m-2 mb-0  p-1" style={{borderBottom:"1px solid #9b877d"}}>
+          <div>Post</div><div><CreatePost/></div>
+          </div>
+        <div className="iconhover d-flex align-items-center justify-content-between m-2 mt-0 p-1">
+          <div>Live Video</div><div><LiveVideo/></div>
+          </div>
+      </div>
     )
   }

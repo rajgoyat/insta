@@ -10,7 +10,7 @@ const Suggestion = () => {
 
  
 useEffect(() => {
-  console.log("hello", data);
+  // console.log("hello", data);
 }, [data]);
 
 

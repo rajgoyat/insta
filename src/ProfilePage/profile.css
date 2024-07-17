@@ -4,14 +4,159 @@
     padding:0;
     box-sizing: border-box;
 }
+.blurdiv{white-space: nowrap;
+    overflow-x:hidden;
+}
+.blurdiv div{
+    animation: scroll-text 10s linear infinite;
+}
+@keyframes scroll-text {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
 @media(max-width:767px){
+    .soundBtnReels{
+        top:40px;
+        right:60px;
+    }
+    .blurdiv{
+        width: 290px;
+    }
+    .reelData{
+        bottom:35px;
+        left:20px;
+    }
+    .mainReels video{height: 637px;
+        width: 320px;}
+     
+    .user-image{
+        width:100px
+    }
+    .profilePageIcon{
+        height:25px;
+        width:25px
+    }
+    .followContent{
+        border-top: 2px solid rgba(51, 49, 49, 0.151);
+    }
     .profilePage .user-image img{
    height:77px;
    width:77px; 
 }}
 @media(min-width:767px){
+    .soundBtnReels{
+        top:20px;
+        right:60px;
+    }
+    .blurdiv{
+    width:320px;
+    }
+    .reelData{
+        bottom:10px;
+        left:20px;
+    }
+    .mainReels video{height: 637px;
+        width: 378px;}
+     
+    .user-image{
+        width:200px;
+    }
+    .profilePageIcon{
+        height: 15px;
+        width:15px;
+    }
     .profilePage .user-image img{
     height: 150px;
     width: 150px;
     }  
 }
+.blurdiv{
+    padding:0 0 0 10px;
+    border-radius: 20px;
+    background-color: rgba(22, 19, 19, 0.671);
+}
+/* @media(m) */
+/* width: "378px",
+height: "637px",
+width: "378px",
+height: "637px",
+width: "378px",
+height: "637px", */
+/* @media(min-width:1200px){
+    .createReel{
+        left:20px;
+    }
+}
+@media(max-width:1200px){
+    .createReel{
+        left:20px;
+    }
+} */
+.createReel{
+    border-radius: 10px;
+    border:1px solid rgba(37, 35, 35, 0.055); 
+}
+.iconhover:hover{
+    background-color: rgba(80, 74, 74, 0.144); ;
+}
+.allMessage {
+     /* Adjust the height as needed */
+    overflow-y: auto;  /* Adds vertical scroll */
+    overflow-x: hidden; /* Hides horizontal scroll */
+  }
+  @media(min-width:767px){
+    .allMessage{
+        height:630px
+    }
+  }
+  @media(max-width:767px){
+    .allMessage{
+        height:580px
+    }
+  }
+@media(min-width:900px){
+    .messagesPeople{
+        width:397px;
+    }
+    .mainMessage .messageContent{
+        width:calc(100% - (397px + 57px))
+    }
+}
+@media(max-width:900px){
+    .messagesPeople{
+        width:121px;
+    }
+    .messagesPeople .naming, .messagesPeople .not{
+        display: none;
+    }
+}
+@media(min-width:1200px){
+.mainMessage .messageContent{
+    width:calc(100% - (397px + 228px))
+}
+}
+@media(max-width:900px){
+    .mainMessage .messageContent{
+        width:calc(100% - (120px + 56px))
+    }
+    }
+    @media(min-width:767px){
+        .notificationMain{
+            background-color: white;
+            position:fixed;
+            height:1000px;
+            top:0px;
+            width:300px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            left:-328px;
+            transition: hello 2s ease-in;
+        }
+       .notificationMain.shown{
+            left:0px;
+        }
+    }

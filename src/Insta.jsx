@@ -9,7 +9,7 @@ import { MdOutlineExplore, MdHomeFilled } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
 // import { SiYoutubeshorts } from "react-icons/si";
 import { FaRegHeart, FaThreads, FaInstagram } from "react-icons/fa6";
-import {SlideLogout} from './IconsFunctions/SlideLogout'
+import {SlideLogout, CreateReel} from './IconsFunctions/SlideLogout'
 import { RiMessengerLine } from "react-icons/ri";
 import { LuPlusSquare } from "react-icons/lu";
 import { PiList } from "react-icons/pi";
@@ -19,7 +19,7 @@ import { useState, useEffect } from "react";
 import {PostData} from './Center'
 import { useFirebase } from "./Firebase";
 import { Reels } from "./AllIconsSvgs/IconsSvg";
-
+import { Notifications } from "./Notifications";
 const Insta = () => {
   const firebase=useFirebase();
   const navigate = useNavigate();
@@ -33,6 +33,7 @@ const Insta = () => {
     <>
      <HeadBar/>   
 <SideBottombars/>
+
       <div className="centerOrsuggestion">
         <div className="center-main">
         <Center />
@@ -47,22 +48,24 @@ const Insta = () => {
 };
 const SideBottombars= ()=>{
   const [iconData, setIconData] = useState([]);
+  const [shows,setshow]= useState(false)
+console.log(shows)
   useEffect(() => {
     const iconArray = [
-      { label: "Home", icon: <MdHomeFilled size={25} /> },
-      { label: "Search", icon: <AiOutlineSearch size={25} /> },
-      { label: "Explore", icon: <Link to="/insta-app/login" className="text-decoration-none text-reset"><MdOutlineExplore size={25} /></Link> },
-      { label: "Reels", icon: <Reels /> },
-      { label: "Messenger", icon: <RiMessengerLine size={25} /> },
-      { label: "Love", icon: <FaRegHeart size={25} /> },
-      { label: "Create", icon: <LuPlusSquare size={25} /> },
+      {link:"/insta-app", label: "Home", icon: <MdHomeFilled size={25} /> },
+      {link:"/insta-app", label: "Search", icon: <AiOutlineSearch size={25} /> },
+      {link:"/insta-app/login", label: "Explore", icon: <MdOutlineExplore size={25} /> },
+      {link:"/insta-app/reels", label: "Reels", icon:  <Reels /> },
+      {link:"/insta-app/messages", label: "Messenger", icon: <RiMessengerLine size={25} /> },
+      {link:"/insta-app", label: "Notifications", icon: <FaRegHeart size={25} onClick={()=>setshow(!shows)}/> },
+      {link:"/insta-app", label: "Create", icon: <LuPlusSquare size={25} data-bs-target=".createReel" data-bs-toggle="collapse" aria-expanded="false"/> },
     ];
      const iconArrayBottom = [
-      { label: "Home", icon: <MdHomeFilled size={25} /> },
-      { label: "Explore", icon: <Link to="/insta-app/login" className="text-decoration-none text-reset"><MdOutlineExplore size={25} /></Link> },
-      { label: "Create", icon: <LuPlusSquare size={25} /> },
-      { label: "Reels", icon: <Reels /> },
-      { label: "Messenger", icon: <RiMessengerLine size={25} /> },
+      {link:"/insta-app", label: "Home", icon: <MdHomeFilled size={25} /> },
+      {link:"/insta-app/login", label: "Explore", icon: <MdOutlineExplore size={25} />},
+      {link:"/insta-app", label: "Create", icon: <LuPlusSquare size={25} data-bs-target=".createReel" data-bs-toggle="collapse" aria-expanded="false"/> },
+      {link:"/insta-app/reels", label: "Reels", icon: <Reels /> },
+      {link:"/insta-app/messages", label: "Messenger", icon: <RiMessengerLine size={25} /> },
     ];
 
     const handleResize = () => {
@@ -79,6 +82,11 @@ const SideBottombars= ()=>{
 
   return(
     <div id="slideBar" className="position-fixed" style={{zIndex:"5"}}> 
+<div className={`position-absolute notificationMain d-none d-md-block ${shows? "shown": ""}`} style={{zIndex:"19"}}><Notifications/>
+<h3 className='top-0 d-none d-md-block ms-5 ps-2 position-absolute text-center'>Notification</h3>
+
+<div className="text-dark fs-4 fw-medium position-relative btn" style={{top:"-140px",right:"-250px"}} onClick={()=>setshow(!shows)}>X</div></div>
+
     <div className="allIcon m-2">
       <div className="d-none d-md-block p-2 ps-2 d-xl-none">
         <FaInstagram size={25} />
@@ -97,13 +105,14 @@ const SideBottombars= ()=>{
       {iconData.map((val, ind) => {
         return (
           <div key={ind} className={`allIcon m-2 ${ind===4? "d-none d-sm-block": ""}`}>
-            <div className="p-2">
+          <Link className="text-decoration-none text-reset" to={val.link}> <div className="p-2">
               {val.icon}
               <span className="ps-2 d-none d-xl-inline">{val.label}</span>
-            </div>
+            </div></Link>
           </div>
         );
       })}
+      <CreateReel/>
       <Link to="/insta-app/profile" className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
         <img
           className="rounded-circle ms-md-2"
@@ -175,12 +184,11 @@ const HeadBar=()=>{
             }}
           />
         </div>
-        <FaRegHeart size={20} className="m-2" />
+        <Link to="/insta-app/notifications" className="text-decoration-none text-reset"><FaRegHeart size={20} className="m-2" /></Link>
         <RiMessengerLine size={23} className="m-2 d-sm-none"/>
         
-      </div>
-     
-    </div>
+      </div>  
+        </div>
 
   )
 }

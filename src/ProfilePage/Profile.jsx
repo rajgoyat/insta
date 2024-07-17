@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState ,useEffect} from "react";
+import { useMediaQuery } from 'react-responsive';
 import './profile.css'
+import { Link } from "react-router-dom";
 import { peopleImgs } from "../SuggestionData";
 import { SideBottombars } from "../Insta";
 import { IoIosArrowBack } from "react-icons/io";
@@ -11,10 +13,11 @@ import {
   Saved,
   Post,
 } from "../AllIconsSvgs/IconsSvg";
-const Profile = () => {
+// import { useActionData } from "react-router-dom";
+const Profile = () => { 
   return (
     <>
-      <ProfileHeader />
+      <ProfileHeader heading={peopleImgs[5].id}/>
       <SideBottombars />
       <ProfileMain />
     </>
@@ -22,14 +25,25 @@ const Profile = () => {
 };
 
 const ProfileMain = () => {
+  const [iconSize,setIconSize]= useState(25)
+  const isLarger = useMediaQuery({ query: '(min-width: 767px)' });
+
+  useEffect(() => {
+    if (isLarger) {
+      setIconSize(15);
+    } else {
+      setIconSize(25);
+    }
+  }, [isLarger]);
+
   return (
     <div className="centerOrsuggestion">
-      <div className="profilePage" style={{ maxWidth:"934px" }}>
+      <div className="profilePage" style={{ width:"100%" }}>
         <div
           className="justify-content-center d-flex mt-md-3"
-          style={{ height: "193px" }}
+          // style={{ height: "193px" }}
         >
-          <div className="user-image " style={{ MaxWidth: "260px", width:"200px" }}>
+          <div className="user-image " style={{ MaxWidth: "260px" }}>
             <img
               className="rounded-circle p-1"
               src={peopleImgs[5].img}
@@ -42,8 +56,8 @@ const ProfileMain = () => {
           </div>
           <div className="follwer content mt-3">
             <div className="d-flex">
-              <div className="me-2" style={{ fontSize: "25px" }}>
-                {peopleImgs[4].id}
+              <div className="me-2 d-none d-md-block" style={{ fontSize: "25px" }}>
+                {peopleImgs[0].id}
               </div>
               <div
                 className="btn text-center ms-2 me-2"
@@ -75,48 +89,46 @@ const ProfileMain = () => {
               </div>
             </div>
             <div className="d-none d-md-block"><FollowerAndFollowing/></div>
-            <div>Raj_Gahlot</div>
-            <p className="fw-lighter ">hello</p>
+            <div className="mt-md-5"><div>Raj_Gahlot</div>
+            <p className="fw-lighter ">hello</p></div>
           </div>
         </div>
-        <div className="ms-5" style={{ height: "120px", width: "115px" }}>
+        <div className="ms-sm-5 ms-2" style={{ height: "120px", width: "115px" }}>
           <div
             className="border border-1 m-3 d-flex align-items-center justify-content-center"
             style={{ height: "87px", width: "87px", borderRadius: "50%" }}
           >
-            <PlusIcon />
+          <PlusIcon />
           </div>
           <div className="text-center">New</div>
         </div>
-
         <div className="d-md-none"><FollowerAndFollowing/></div>
-
         <div
           className="gap-5 content d-flex align-items-center mt-md-5 justify-content-center"
-          style={{ height: "53px",borderTop:"2px solid rgba(51, 49, 49, 0.351)",borderBottom:"2px solid rgba(51, 49, 49, 0.151)" }}
+          style={{ height: "53px", borderTop:"2px solid rgba(51, 49, 49, 0.151)" }}
         >
           <div className=" d-flex ms-3">
             <div className="">
-              <Post />
-            </div><div className="ms-2" style={{marginTop:"2px"}}>
+              <Post height={iconSize} width={iconSize}/>
+            </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
             POST</div>
           </div>
           <div className=" d-flex ms-3">
             <div className="">
-              <Reels height={15} width={15} />
-            </div><div className="ms-2" style={{marginTop:"2px"}}>
+              <Reels height={iconSize} width={iconSize} />
+            </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
             REELS</div>
           </div>
           <div className=" d-flex ms-3">
             <div className="">
-              <Saved height={15} width={15} />
-            </div><div className="ms-2" style={{marginTop:"2px"}}>
+              <Saved height={iconSize} width={iconSize} />
+            </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
             SAVED</div>
           </div>
           <div className=" d-flex ms-3">
             <div className="">
-              <Tagged />
-            </div><div className="ms-2" style={{marginTop:"2px"}}>
+              <Tagged height={iconSize} width={iconSize}/>
+            </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
             TAGGED</div>
           </div>
         </div>
@@ -125,34 +137,34 @@ const ProfileMain = () => {
     </div>
   );
 };
-const ProfileHeader = () => {
+const ProfileHeader = ({heading}) => {
   return (
     <div
       className="d-md-none text-center position-absolute top-0 w-100"
-      style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.219)", height: "44px" }}
+      style={{ borderBottom: "1px solid #c8c8c8", height: "44px" }}
     >
-      <a
-        href="/insta-app"
+      <Link
+        to="/insta-app"
         className="position-absolute start-0 m-2 text-decoration-none"
       >
         <IoIosArrowBack size={22} />
-      </a>{" "}
-      <div className="p-2">{peopleImgs[0].id}</div>
+      </Link>
+      <div className="p-2 fw-normal fs-4 pt-1">{heading}</div>
     </div>
   );
 };
 const FollowerAndFollowing=()=>{
   return(
-  <div className="d-flex align-items-center justify-content-md-between justify-content-evenly mt-3">
-              <p className="fs-5">
-                <span className="fs-5 fw-medium">3</span> post
-              </p>
-              <p className="fs-5">
-                <span className="fs-5 fw-medium">5</span> follower
-              </p>
-              <p className="fs-5">
-                <span className="fs-5 fw-medium">10</span> following
-              </p>
+  <div className="d-flex followContent align-items-center justify-content-md-between justify-content-evenly mt-3">
+              <div className=" d-md-flex flex-md-row">
+                <div className="text-center">3</div> <div> post
+              </div></div>
+              <div className=" d-md-flex flex-md-row">
+                <div className="text-center">5</div> <div> follower
+              </div></div>
+              <div className=" d-md-flex flex-md-row">
+                <div className="text-center">10</div><div>  following
+              </div></div>
             </div>)
 }
-export { Profile };
+export { Profile ,ProfileHeader};

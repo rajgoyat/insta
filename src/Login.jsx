@@ -115,7 +115,7 @@ useEffect(()=>{
                 className="position-relative border border-1 mt-1"
                 style={{ borderRadius: "5px" }}
               >
-                <label
+                <label 
                   className={`position-absolute logininput ${data.password.length> 0? "move":""}`}
                 >
                   Password

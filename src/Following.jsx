@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { peopleImgs } from "./SuggestionData";
+import { useMediaQuery } from "react-responsive";
 import "./insta.css";
 import { Link } from "react-router-dom";
 const Following = () => {
@@ -11,20 +12,10 @@ const Following = () => {
       return <span>{text.substring(0, 7)}...</span>;
     }
   };
-
+const isLarger = useMediaQuery({query: '(max-width: 576px)'});
   useEffect(() => {
-  const handleResize = () => {
-    if (window.matchMedia("(max-width: 576px)").matches) {
-      setFollowingInd(4);
-    } else {
-      setFollowingInd(8);
-      
-    }
-  };
-  handleResize();
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
+ if(isLarger){setFollowingInd(4)}else{setFollowingInd(8)}
+}, [isLarger]);
   return (
     <div
       className="followings text-white position-relative w-100  d-flex align-items-around justify-content-around p-2"

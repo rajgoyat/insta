@@ -79,7 +79,6 @@ useEffect(() => {
       prevLikeNo.map((likeState, i) => (i === index ? !likeState : likeState))
     );
   };
-  console.log("likeO",like)
     return (
     <div className="postData w-100 d-flex flex-column align-items-center justify-content-center">
 {/* <VideoComponent src={vid1}  vol={vol} setVol={setVol}/> */}
