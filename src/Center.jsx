@@ -1,5 +1,4 @@
 import React, { useState , useRef, useEffect} from "react";
-// import vid from './post/VID-20240616-WA0001.mp4'
 import { peopleImgs } from "./SuggestionData";
 import Following from "./Following";
 import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa6";
@@ -7,7 +6,6 @@ import { BiMessageRounded } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { LuSend } from "react-icons/lu";
 import { Link } from "react-router-dom";
-// import vid1 from './post/VID-20240616-WA0001.mp4'
 import useIntersectionObserver from './useIntersectionObserver';
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoVolumeMute } from "react-icons/io5";
@@ -15,7 +13,7 @@ const Center = () => {
  
   return (
     <div 
-      className="center align-items-center position-relative" style={{zIndex:"4"}}
+      className="center align-items-center position-relative col-12" style={{zIndex:"4"}}
     >
       <Following />
     </div>
@@ -38,9 +36,9 @@ const VideoComponent = ({ src, vol ,setVol }) => {
   }, [isIntersecting]);
  
   return (
-    <div ref={videoContainerRef} className="video-container position-relative">
-      <div className="position-absolute fs-3 rounded-circle d-flex align-items-center justify-content-center " onClick={()=>setVol(!vol)} style={{zIndex:"2", background:"rgba(0, 0, 0, 0.763)", bottom:"10px",right:"50px", height:"35px", width:"35px"}}>{vol ?<IoVolumeHigh size={26} color="white"/> :<IoVolumeMute size={26} color="white"/> }</div>
-      <video ref={videoRef} src={src} controls={false} {...(vol ? {} : {muted: true})}  className="position-relative" style={{zIndex:'1'}} />
+    <div ref={videoContainerRef} className="video-container position-relative col-12 row  m-0 p-0">
+      <div className="position-absolute fs-3 rounded-circle d-flex align-items-center col-12 row justify-content-center  m-0 p-0" onClick={()=>setVol(!vol)} style={{zIndex:"2", background:"rgba(0, 0, 0, 0.763)", bottom:"10px",right:"10px", height:"35px", width:"35px"}}>{vol ?<IoVolumeHigh size={26} color="white"/> :<IoVolumeMute size={26} color="white"/> }</div>
+      <video ref={videoRef} src={src} controls={false} {...(vol ? {} : {muted: true})}  className="position-relative col-12  m-0 p-0" style={{zIndex:'1'}} />
     </div>
   );
 };
@@ -66,8 +64,9 @@ const PostData = () => {
     generateUniqueRandomNumbers();
 }, []);
 useEffect(() => {
+  console.log("hello from raj")
   setLikes(randomNo.map((index) => peopleImgs[index].likes));
-}, [randomNo]);
+}, []);
 
   const likeHandler = (index) => {
     console.log(index)
@@ -80,7 +79,7 @@ useEffect(() => {
     );
   };
     return (
-    <div className="postData w-100 d-flex flex-column align-items-center justify-content-center">
+    <div className="postData w-100 d-flex flex-column align-items-center justify-content-center row pe-0">
 {/* <VideoComponent src={vid1}  vol={vol} setVol={setVol}/> */}
 {/* <VideoComponent src={vid1}  vol={vol} setVol={setVol} /> */}
 
@@ -91,10 +90,10 @@ useEffect(() => {
           return videoExtensions.includes(extension);
         };
         return (
-          <div className="position-relative" key={ind}>
+          <div className="position-relative row col-12 m-0 pe-0" key={ind}>
             <div
-              className="position-relative d-flex p-2 mt-3 "
-              style={{ width: "464px" }}
+              className="position-relative d-flex p-2 mt-3 col-12  m-0 p-0"
+              
             >
               <Link to="/insta-app/profile" onClick={() => console.log("hello")}>
                 <img
@@ -120,30 +119,29 @@ useEffect(() => {
                 <BsThreeDotsVertical size={20} />
               </div>
             </div>
-            {isVideo(peopleImgs[val].post) ? <VideoComponent src={peopleImgs[val].post}  vol={vol} setVol={setVol} /> : <img className="" src={peopleImgs[val].post} alt="" /> }
+            {isVideo(peopleImgs[val].post) ? <VideoComponent src={peopleImgs[val].post}  vol={vol} setVol={setVol} /> : <img src={peopleImgs[val].post} alt="" className="col-12 m-0 p-0" /> }
             
-            <div>
+            <div className="col-12 position-relative">
             {likeNo[ind] ? <FaHeart color="red" className="m-2" size={22} onClick={()=>likeHandler(ind)}/> : <FaRegHeart  className="m-2" size={22} onClick={()=>likeHandler(ind)}/> }
               <BiMessageRounded className="m-2" size={23} />
               <LuSend className="m-2" size={23} />
-              <FaRegBookmark
-                className=""
-                style={{ marginLeft: "325px" }}
+                
+                <div className="position-absolute end-0  top-0 mt-1 me-1" ><FaRegBookmark
                 size={20}
-              />
+              /></div>
             </div>
             <div className="text-dark" style={{ fontSize: "12px" }}>
               <p className="m-0">{like[ind]} likes</p>
-              <p className="m-0">
+              <p className="m-0 p-0">
                 cars_universe.tiktok #vutruxe #catagram
-              </p>{" "}
+              </p>
             </div>
             <div
               style={{
                 fontSize: "12px",
                 color: "rgb(115 115 115)",
                 borderBottom: "1px solid rgb(219 219 219)",
-                padding: "2px 0 15px 0",
+                padding: "2px 15px 0 10px",
               }}
             >
               <p className="m-0">View all 345 comments</p>

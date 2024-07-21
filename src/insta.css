@@ -2,14 +2,31 @@
 padding:0;
 box-sizing: border-box;
   }
+
 .slidelogoutIcon .set:hover{
       border-radius: 12px;
         background-color: rgba(51, 49, 49, 0.151);
         cursor: pointer;
 }
-.postData img,video{
-    width:468px;
+ /* @media(min-width:420px){ center */
+.header{
+    width:100%;
 }
+.homevideoorimg{
+    width:464px;
+}
+/* .postData img,video{
+    width:468px;
+} */
+ /* @media(max-width:420px){
+
+    .postData img,video{
+    width:420px;
+} 
+ .header{
+    width:355px;
+}
+}  */
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset !important;
     box-shadow: 0 0 0px 1000px white inset !important;
@@ -22,7 +39,7 @@ transition:all 0.3s ease;
 z-index: 1;
 }
 
-/* hello from raj commando and my school friends god   */
+/* hello from raj commando and my school friends god video */
  .move{
     margin-top:-1px ;
     font-size: 12px;
@@ -34,10 +51,15 @@ z-index: 10;
     text-decoration: none;
     border:none;
 }
-.center-main{
+/* CHANGED CONTENT**************!!!!!!!!!!!!!~~~~~~~~~~~~~~~~~~~~~~~_________________ */
+@media(min-width:400px){
+    .center-main{
     width:630px;
-   
-}
+}}
+@media(max-width:400px){
+    .center-main{
+    width:330px;
+}}
 .followings div div::after {
     content: "";
     display: block;
@@ -98,6 +120,7 @@ z-index: 10;
         height: 100vh;
     }
 }
+/* soundBtnReels */
 @media(min-width:768px) and (max-width:1200px){
     .centerOrsuggestion, .mainReels, .mainMessage {
         margin-left: 57px;
@@ -140,3 +163,26 @@ z-index: 10;
         display: block;
     }
 }
+@media(max-width:567px){
+.mainReels .video-container video{
+    width:100%;
+}
+.reelIcons{
+    position:absolute;
+    right:0px;
+    top:50px;
+    z-index: 5;
+}
+.clrs{
+    color:white
+}
+.mainReels p{color:white}
+.soundBtnReels{
+    top:2px;
+    right:2px;
+}
+}
+/* .soundBtnReels{
+    top:50px;
+    right:60px;
+} */

@@ -51,9 +51,9 @@ const Reels = () => {
             }}
           ></video> */}
            <VideoComponent src={val.reel}  vol={vol} setVol={setVol} />
-          <div className="d-flex flex-column align-items-center justify-content-end">
+          <div className="d-flex flex-column align-items-center justify-content-end reelIcons">
             <div className="m-2 mb-3">
-            {likeNo[ind] ? <FaHeart color="red" className="m-2" size={22} onClick={()=>likeHandler(ind)}/> : <FaRegHeart  className="m-2" size={22} onClick={()=>likeHandler(ind)}/> }
+            {likeNo[ind] ? <FaHeart color="red" className="m-2" size={22} onClick={()=>likeHandler(ind)}/> : <FaRegHeart  className="m-2 clrs" size={22} onClick={()=>likeHandler(ind)}/> }
               <p
                 className="w-100 mb-0 text-center"
                 style={{ fontSize: "12px" }}

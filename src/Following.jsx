@@ -18,8 +18,8 @@ const isLarger = useMediaQuery({query: '(max-width: 576px)'});
 }, [isLarger]);
   return (
     <div
-      className="followings text-white position-relative w-100  d-flex align-items-around justify-content-around p-2"
-      style={{ maxWidth: "530px", zIndex: "22" }}
+      className="followings text-white position-relative d-flex align-items-around gap-3 p-2"
+      style={{ zIndex: "22" }}
     >
       {peopleImgs.slice(0, followingInd).map((val, ind) => {
         return (

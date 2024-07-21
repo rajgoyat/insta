@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import car from './Imgs/car.jpeg'
 import { peopleImgs } from "./SuggestionData";
 import { Link } from "react-router-dom";
 import avtar from './Imgs/avtar.jpeg'
 
 const Suggestion = () => {
-  const [data,setdata]= useState([])
+//   const [data,setdata]= useState([])
 
 
  
-useEffect(() => {
-  // console.log("hello", data);
-}, [data]);
-
-
+// useEffect(() => {
+//   // console.log("hello", data);
+// }, [data]);
   return (
     <div 
       className="suggestions"  
@@ -36,7 +34,7 @@ useEffect(() => {
         <div className="text-primary me-4" style={{fontSize:"13px"}}>Follow</div>
       </div></div></Link>
         )
-      })}</div>
+      })}</div>  
       <p className="light-color2 mt-4" style={{fontSize:'11px'}}>About
 Help
 Press

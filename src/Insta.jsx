@@ -35,7 +35,7 @@ const Insta = () => {
 <SideBottombars/>
 
       <div className="centerOrsuggestion">
-        <div className="center-main">
+        <div className="center-main row m-0 p-0">
         <Center />
         <PostData/>
          </div>
@@ -142,7 +142,7 @@ console.log(shows)
 }
 const HeadBar=()=>{
   return(
-<div className="pt-2 ms-1 pb-2 header bg-white d-md-none d-flex align-items-center w-100 justify-content-between">
+<div className="pt-2 ms-1 pb-2 header bg-white d-md-none d-flex align-items-center justify-content-between">
       <div className="allIcon d-flex align-items-center svgs">
         <svg
           aria-label="Instagram"
