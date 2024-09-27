@@ -54,4 +54,10 @@ const CreatePost=()=>(
 )
 const LiveVideo=()=>(
     <svg aria-label="Live video" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Live video</title><path d="M8.995 7.584a1 1 0 0 0-1.414.001 6.258 6.258 0 0 0 0 8.84 1 1 0 1 0 1.414-1.415 4.257 4.257 0 0 1 0-6.01 1 1 0 0 0 0-1.416Zm-5.994 4.42a8.94 8.94 0 0 1 2.636-6.363 1 1 0 0 0-1.414-1.414 11 11 0 0 0 0 15.556 1 1 0 1 0 1.414-1.414A8.941 8.941 0 0 1 3 12.005Zm16.777-7.778a1 1 0 1 0-1.414 1.414 9.001 9.001 0 0 1 0 12.729 1 1 0 1 0 1.414 1.414 11 11 0 0 0 0-15.557ZM16.42 7.584A1 1 0 1 0 15.006 9a4.257 4.257 0 0 1 0 6.01 1 1 0 1 0 1.414 1.415 6.258 6.258 0 0 0 0-8.84ZM12 10.5a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5Z" fill-rule="evenodd"></path></svg>)
-export {LiveVideo, YourMessage, DownChevron, Seeting, YourActivity, Like,Comment, Share, Saved, More, DarkMode, Report, PlusIcon, Post, Reels, Tagged, Song, Pencil, CreatePost}
+const AddUser=()=>(
+    <svg aria-label="Similar accounts" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="16" role="img" viewBox="0 0 24 24" width="16"><title>Similar accounts</title><path d="M19.006 8.252a3.5 3.5 0 1 1-3.499-3.5 3.5 3.5 0 0 1 3.5 3.5Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></path><path d="M22 19.5v-.447a4.05 4.05 0 0 0-4.05-4.049h-4.906a4.05 4.05 0 0 0-4.049 4.049v.447" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" x1="5.001" x2="5.001" y1="7.998" y2="14.003"></line><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" x1="8.004" x2="2.003" y1="11" y2="11"></line></svg>
+)
+const HorizintalDot=()=>(
+    <svg aria-label="Options" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="32" role="img" viewBox="0 0 24 24" width="32"><title>Options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+)
+    export {LiveVideo, YourMessage, DownChevron, Seeting, YourActivity, Like,Comment, Share, Saved, More, DarkMode, Report, PlusIcon, Post, Reels, Tagged, Song, Pencil, CreatePost ,AddUser,HorizintalDot}

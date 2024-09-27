@@ -2,6 +2,7 @@ import "./insta.css";
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import insta from "./Imgs/logo.png";
+import Search from "./Search";
 import {Center} from "./Center"; 
 import { Link, useNavigate } from "react-router-dom";
 import Suggestion from "./Suggestion";
@@ -21,8 +22,9 @@ import { useFirebase } from "./Firebase";
 import { Reels } from "./AllIconsSvgs/IconsSvg";
 import { Notifications } from "./Notifications";
 const Insta = () => {
+  const navigate= useNavigate()
   const firebase=useFirebase();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   useEffect(()=>{
     if(firebase.isLoggedIn===false){
            navigate("/insta-app/login");
@@ -47,18 +49,48 @@ const Insta = () => {
   );
 };
 const SideBottombars= ()=>{
+  const firebase= useFirebase();
   const [iconData, setIconData] = useState([]);
   const [shows,setshow]= useState(false)
-console.log(shows)
-  useEffect(() => {
+const [userdata,setData]=useState(null);
+const navigate= useNavigate()
+const {searchshow,setSearchshow}=firebase;
+  // console.log(shows)
+useEffect(()=>{
+  const getId=async()=>{
+  const userdata= await firebase.userdata
+  // const userId= await user.userId;
+
+  setData(userdata)}
+getId();
+},[firebase,userdata])
+// console.log("hells",userId)
+const handleSearch=()=>{
+  setSearchshow((prevState) => !prevState);  
+console.log("hello",searchshow)
+}
+// console.log("jjj",searchshow)
+const handleLogin=()=>{
+ navigate('/insta-app/login')
+}
+const handleMessage=()=>{
+ navigate('/insta-app/messages')
+}
+const handleHome=()=>{
+ navigate('/insta-app')
+}
+const handleReels=()=>{
+  navigate('/insta-app/reels')
+}
+useEffect(() => {
     const iconArray = [
-      {link:"/insta-app", label: "Home", icon: <MdHomeFilled size={25} /> },
-      {link:"/insta-app", label: "Search", icon: <AiOutlineSearch size={25} /> },
-      {link:"/insta-app/login", label: "Explore", icon: <MdOutlineExplore size={25} /> },
-      {link:"/insta-app/reels", label: "Reels", icon:  <Reels /> },
-      {link:"/insta-app/messages", label: "Messenger", icon: <RiMessengerLine size={25} /> },
-      {link:"/insta-app", label: "Notifications", icon: <FaRegHeart size={25} onClick={()=>setshow(!shows)}/> },
-      {link:"/insta-app", label: "Create", icon: <LuPlusSquare size={25} data-bs-target=".createReel" data-bs-toggle="collapse" aria-expanded="false"/> },
+      { label: "Home", icon: <MdHomeFilled size={25} />, onClick:handleHome },
+      { label: "Search", icon: <AiOutlineSearch size={25} />, onClick:handleSearch },
+      { label: "Explore", icon: <MdOutlineExplore size={25}  />,onClick:handleLogin },
+      { label: "Reels", icon:  <Reels /> ,onClick:handleReels},
+      { label: "Messenger", icon: <RiMessengerLine size={25} />,onClick:handleMessage },
+      { label: "Notifications", icon: <FaRegHeart size={25} onClick={()=>setshow(!shows)}/> },
+      { label: "Create", icon: <LuPlusSquare size={25} data-bs-target=".createReel" data-bs-toggle="collapse" aria-expanded="false"/> },
     ];
      const iconArrayBottom = [
       {link:"/insta-app", label: "Home", icon: <MdHomeFilled size={25} /> },
@@ -81,19 +113,19 @@ console.log(shows)
   }, []);
 
   return(
-    <div id="slideBar" className="position-fixed" style={{zIndex:"5"}}> 
+   <>{userdata? (<div className="position-fixed" style={{zIndex:"10"}}> <div id="slideBar" className="position-fixed" style={{zIndex:"5"}}> 
 <div className={`position-absolute notificationMain d-none d-md-block ${shows? "shown": ""}`} style={{zIndex:"19"}}><Notifications/>
 <h3 className='top-0 d-none d-md-block ms-5 ps-2 position-absolute text-center'>Notification</h3>
 
 <div className="text-dark fs-4 fw-medium position-relative btn" style={{top:"-140px",right:"-250px"}} onClick={()=>setshow(!shows)}>X</div></div>
 
     <div className="allIcon m-2">
-      <div className="d-none d-md-block p-2 ps-2 d-xl-none">
+      <div className={`d-none d-md-block p-2 ps-2 ${searchshow ? "d-xl-block":"d-xl-none"} `}>
         <FaInstagram size={25} />
       </div>
       <img
         src={insta}
-        className="d-none d-xl-inline"
+        className={`d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}
         style={{ height: "70px", width: "160px" }}
         alt=""
       />
@@ -104,23 +136,23 @@ console.log(shows)
     >
       {iconData.map((val, ind) => {
         return (
-          <div key={ind} className={`allIcon m-2 ${ind===4? "d-none d-sm-block": ""}`}>
-          <Link className="text-decoration-none text-reset" to={val.link}> <div className="p-2">
+          <div key={ind} className={`allIcon m-2 ${ind===4? "d-none d-sm-block": ""}` } onClick={val.onClick}>
+         <div className="p-2">
               {val.icon}
-              <span className="ps-2 d-none d-xl-inline">{val.label}</span>
-            </div></Link>
+              <span className={`ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}>{val.label}</span>
+            </div>
           </div>
         );
       })}
       <CreateReel/>
-      <Link to="/insta-app/profile" className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
+      <Link to={`/insta-app/profile/${userdata.userId}`} className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
         <img
           className="rounded-circle ms-md-2"
           style={{ width: "25px", height: "25px" }}
           src={profile}
           alt=""
         />
-        <span className="ps-2 d-none d-xl-inline">Profile</span>
+        <span className={`ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}>Profile</span>
       </div></Link>
     </div>
     <div
@@ -129,15 +161,16 @@ console.log(shows)
     >
       <div className="allIcon m-2 p-2 col ">
         <FaThreads size={25} />
-        <span className="p-2 ps-2 d-none d-xl-inline">Threads</span>
+        <span className={`p-2 ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}>Threads</span>
       </div>
       <div className=" allIcon m-2 p-2" data-bs-toggle="collapse" data-bs-target=".slidelogoutIconmain" aria-expanded="false">
         <PiList size={25} /> 
-        <span className="p-2 ps-2 d-none d-xl-inline text-center"  >More</span>
+        <span className={`p-2 ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"}  text-center`}  >More</span>
       </div>
       <SlideLogout/>
     </div>
-  </div>    
+    
+</div>{searchshow ? <Search/>:null}</div>):("Fetching user data...")}</>    
   )
 }
 const HeadBar=()=>{

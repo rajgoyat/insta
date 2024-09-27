@@ -186,3 +186,73 @@ z-index: 10;
     top:50px;
     right:60px;
 } */
+ /* login css */
+.input-container {
+    position: relative;
+    margin: 8px 0;
+   font-size:12px;
+  }
+  
+  
+  input[type="text"],
+  input[type="password"],input[type="email"]{
+    font-size: 14px;
+    color: black;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .floating-placeholder {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.3s ease;
+    pointer-events: none;
+    color: grey;
+  }
+  
+  input:focus + .floating-placeholder,
+  input:not(:placeholder-shown) + .floating-placeholder {
+    top: 10px;
+    font-size: 10px;
+    color: gray;
+  }
+   #inputs{
+    margin-top:5px;
+    height:38px;
+    width:270px;
+   font-size:14px;
+    outline:none;
+    border:1px solid #bdbdbd;
+    border-radius:3px;
+    background:#fafafa;
+  }
+  #button{
+    display:flex;
+    align-items:center;
+  
+      height:38px;
+      width:270px;
+     font-size:14px;
+      outline:none;
+      border:1px solid #bdbdbd;
+      border-radius:3px;
+      background:#fafafa;
+  }
+  #button input{
+    height:36px;
+    border:none;
+    outline:none;
+     font-size:14px;
+    background:#fafafa;
+     border-radius:3px;
+    /* width:230px; */
+     /* margin-top:4px; */
+    padding-top:16px;
+  }@media (max-width:876px){
+    .first{
+      display:none;
+    }
+  }
