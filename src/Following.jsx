@@ -10,6 +10,8 @@ const Following = () => {
   const [userData,setUserData]=useState();
   const [mainUser,setMainUser]=useState(null)
   const {getAllUser, userdata}= firebase;
+  const [suggestedUsers, setSuggestedUsers] = useState([]);
+
   useEffect(()=>{
 setUserData(getAllUser);
 setMainUser(userdata)
@@ -21,6 +23,38 @@ setMainUser(userdata)
       return <span>{text.substring(0, 7)}...</span>;
     }
   };
+
+  // const { getAllUser } = firebase;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await firebase.userdata;
+        // setUser(data);
+        // Step 1: Filter out the logged-in user from the suggestion pool
+        const filteredUsers = getAllUser.filter(u => u.id !== data?.id);
+
+        // Step 2: Shuffle the list of filtered users
+        let shuffledUsers = filteredUsers.sort(() => 0.5 - Math.random());
+
+        // Step 3: Always pick exactly 5 users. If fewer than 5 users are available, take the first 5 after filtering
+        let randomFiveUsers = shuffledUsers.slice(0, 8);
+
+        // If we still have less than 5 users, repeat from the beginning of the shuffled list
+        while (randomFiveUsers.length < 8 && shuffledUsers.length > 0) {
+          randomFiveUsers.push(shuffledUsers[randomFiveUsers.length % shuffledUsers.length]);
+        }
+
+        setSuggestedUsers(randomFiveUsers);
+      } catch (error) {
+        console.error("Error fetching userdata:", error);
+      }
+    };
+
+    fetchData();
+  }, [firebase.userdata, getAllUser]);
+
+
 const isLarger = useMediaQuery({query: '(max-width: 576px)'});
   useEffect(() => {
  if(isLarger){setFollowingInd(4)}else{setFollowingInd(8)}
@@ -33,10 +67,10 @@ console.log("commando",userData)
       className="followings text-white position-relative d-flex align-items-around gap-3 p-2"
       style={{ zIndex: "22" }}
     >
-      {userData?.slice(0, followingInd).map((val, ind) => {
-        if(val?.email===mainUser?.email){
-          return null;
-        }
+      {suggestedUsers?.slice(0, followingInd).map((val, ind) => {
+        // if(val.userId=== user.userId){
+        //   return null;
+        // }
         return (
           <div key={ind} className="d-flex flex-column align-items-center">
             <Link to={`/insta-app/profile/${val.userId}`} className="text-decoration-none">
@@ -53,10 +87,10 @@ console.log("commando",userData)
                 />
               </div>
               <p
-                className="text-dark m-0"
+                className="text-dark m-0 text-center"
                 style={{ fontSize: "13px", height: "30px" }}
               >
-                <TruncateText text={val.fullname} />
+                <TruncateText text={val.username} />
               </p>
             </Link>
           </div>

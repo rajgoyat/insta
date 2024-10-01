@@ -2,7 +2,8 @@ import { IoLogoFacebook } from "react-icons/io";
 import React,{useState,useEffect} from "react";
 import { useFirebase } from "../Firebase";
 import { useNavigate } from "react-router-dom";
-import LoginLayout from "./LoginLayout";
+import LoginLayout from '../Layout/LoginLayout';
+
 // import Auth from './img/Auth.png'
 import logo from '../Imgs/logo.png'
 import microsoft from '../Imgs/microsoft.png'

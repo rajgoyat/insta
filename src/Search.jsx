@@ -1,6 +1,6 @@
 // import img1 from './imgs/img1.jpg'
 import {useFirebase} from './Firebase'
-import { useEffect,useState } from 'react';
+import {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 export default function Search(){
 const firebase=useFirebase();
@@ -20,7 +20,7 @@ const [search, setSearch] = useState("");
    
     return(
         <>
-<div className='d-md-flex flex-column bg-white position-relative d-sm-none' style={{left:"57px",width:"397px",height:"100vh", borderLeft:'1px solid rgba(0, 0, 0, 0.219)',borderTopRightRadius:"20px",borderBottomRightRadius:"20px",position:"absolute",zIndex:"1000",boxShadow: "10px 0px 14px rgba(0,0,0,0.1)"}}>
+<div className='d-md-flex flex-column bg-white position-fixed d-sm-none top-0' style={{left:"57px",width:"397px",height:"100vh", borderLeft:'1px solid rgba(0, 0, 0, 0.219)',borderTopRightRadius:"20px",borderBottomRightRadius:"20px",position:"absolute",zIndex:"1000",boxShadow: "10px 0px 14px rgba(0,0,0,0.1)"}}>
 <h3 className="mx-3 my-4" >Search</h3>
 
    <div className="mx-3 mt-3 mb-2">

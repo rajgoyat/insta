@@ -1,0 +1,110 @@
+import React, { useContext, useEffect, useState } from "react";
+import { DataContext } from "./Context/DataContext";
+import Following from "./Following"; 
+import { Link } from "react-router-dom";
+import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa6";
+import { BiMessageRounded } from "react-icons/bi";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { LuSend } from "react-icons/lu";
+import { IoVolumeHigh } from "react-icons/io5";
+import { IoVolumeMute } from "react-icons/io5";
+
+const PostData = () => {
+  const { allUsers } = useContext(DataContext);
+  const [allPosts, setAllPosts] = useState([]);
+  const [imageCount, setImageCount] = useState(0);
+  const [likeStatus, setLikeStatus] = useState([]);
+
+  useEffect(() => {
+    const getAllPosts = () => {
+      if (allUsers && Array.isArray(allUsers)) {
+        const posts = allUsers.flatMap(user => user.video || []).filter(post => post.src);
+        setAllPosts(posts);
+
+        const imageCount = posts.filter(post => post.type === 'image').length;
+        setImageCount(imageCount);
+      }
+    };
+    getAllPosts();
+  }, [allUsers]);
+
+  const likeHandler = (index) => {
+    setLikeStatus(prev => {
+      const newStatus = [...prev];
+      newStatus[index] = !newStatus[index];
+      return newStatus;
+    });
+  };
+
+  return (
+    <div className="postData w-100 d-flex flex-column align-items-center justify-content-center">
+      <h3>Total Images: {imageCount}</h3>
+      {allPosts.length > 0 ? (
+        <div className="row">
+          {allPosts.map((item, index) => (
+            <div key={index} className="position-relative col-12 m-0 pe-0 mb-3">
+              <div className="d-flex p-2 mt-3">
+                <Link to="/insta-app/profile">
+                  <img
+                    className="rounded-circle border border-dark"
+                    style={{ width: "32px", height: "32px" }}
+                    src={item.userImg}
+                    alt=""
+                  />
+                </Link>
+                <div className="d-flex flex-column text-dark ms-2">
+                  <Link to="/insta-app/profile" className="text-decoration-none text-reset">
+                    <p className="m-0 p-0 d-flex flex-row">
+                      <p className="p-0 m-0">{item.userName}</p>
+                      <p className="ms-2 text-primary m-0 p-0">Follow</p>
+                    </p>
+                  </Link>
+                  <p className="p-0 m-0">Suggested for you</p>
+                </div>
+                <div className="position-absolute" style={{ right: "0px" }}>
+                  <BsThreeDotsVertical size={20} />
+                </div>
+              </div>
+              {item.type === 'image' ? (
+                <img src={item.src} alt={`Post ${index}`} className="img-fluid col-12 m-0 p-0" style={{ background: "cover", objectFit: "cover", height: "500px" }} />
+              ) : (
+                <video src={item.src} controls muted className="img-fluid col-12 m-0 p-0" style={{ background: "cover", objectFit: "cover", height: "500px" }} />
+              )}
+              <div className="col-12 position-relative">
+                {likeStatus[index] ? (
+                  <FaHeart color="red" className="m-2" size={22} onClick={() => likeHandler(index)} />
+                ) : (
+                  <FaRegHeart className="m-2" size={22} onClick={() => likeHandler(index)} />
+                )}
+                <BiMessageRounded className="m-2" size={23} />
+                <LuSend className="m-2" size={23} />
+                <div className="position-absolute end-0 top-0 mt-1 me-1">
+                  <FaRegBookmark size={20} />
+                </div>
+              </div>
+              <div className="text-dark" style={{ fontSize: "12px" }}>
+                <p className="m-0">{item.likes} likes</p>
+              </div>
+              <div style={{ fontSize: "12px", color: "rgb(115 115 115)", borderBottom: "1px solid rgb(219 219 219)", padding: "2px 15px 0 10px" }}>
+                <p className="m-0">View all comments</p>
+                <p className="m-0">Add a comment</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>No posts available.</p>
+      )}
+    </div>
+  );
+};
+
+const Center = () => {
+  return (
+    <div className="center align-items-center position-relative col-12" style={{ zIndex: "4" }}>
+      <Following />
+    </div>
+  );
+};
+
+export { Center, PostData };

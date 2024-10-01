@@ -84,20 +84,22 @@
 
 import React,{ createContext,useContext, useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
+import { getStorage } from 'firebase/storage';
+
 import profile from './Imgs/profile.jpg'
 import {
   getFirestore,
   doc,
   setDoc,
   getDoc,
-  getDocs,
+  // getDocs,
   collection,
-  deleteDoc,
+  // deleteDoc,
   query,
   orderBy,
-  onSnapshot,
+  onSnapshot,updateDoc, arrayUnion,arrayRemove,getDocs
 } from "firebase/firestore";
-import {  getAnalytics } from "firebase/analytics";
+// import {  getAnalytics } from "firebase/analytics";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -124,7 +126,10 @@ const firebaseConfig = {
 };
 const firebaseApp=initializeApp(firebaseConfig);
 const firebaseAuth=getAuth(firebaseApp);
-const database = getFirestore(firebaseApp);
+export const database = getFirestore(firebaseApp);
+
+export const storage = getStorage(firebaseApp);
+
 
 
 
@@ -141,7 +146,7 @@ const [searchshow,setSearchshow]= useState(false)
   const [userdata, setUserdata] = useState(null);
   const [getAllUser, setgetAllUser] = useState([]);
   const [search,setSearch]= useState(false)
- console.log("user=>",user)
+ console.log("user=>",userId)
    useEffect(()=>{
      onAuthStateChanged(firebaseAuth,(user)=>{
       if(user){
@@ -210,7 +215,10 @@ const [searchshow,setSearchshow]= useState(false)
         username: username,
         dob: dob,
         bio: "",
+        gender:"",
         proimg: profile,
+        followers:[],
+        followings:[],
         password: password,
         date: new Date().toLocaleString("en-us", {
           month: "short",
@@ -336,7 +344,57 @@ console.log("firebase,alldata",getAllUser)
     getAllUserFunction();
     
   }, []);
- 
+ const followuser=async(id)=>{
+  if(userdata.userId){
+  try {
+    // console.log("heloss",userdata.userId)
+    const userRef = doc(database, "users", userdata.userId);
+ const updatedData = {
+  followings: arrayUnion(id)
+ };
+ await updateDoc(userRef, updatedData);
+ console.log("follower",id)
+ const userRef1 = doc(database, "users", id);
+ const updatedData1 = {
+  followers: arrayUnion(userdata.userId)
+ };
+ await updateDoc(userRef1, updatedData1);
+//  console.log("followerd",id)
+
+} catch (error) {
+ console.error("Error in following user:", error);
+}
+}}
+const unfollowuser =async(id)=>{
+  if (userdata.userId) {
+    try {
+      // Reference to the user's document in Firestore
+      const userRef = doc(database, "users", userdata.userId);
+
+      // Prepare the updated data with arrayRemove to remove the user from followings
+      const updatedData = {
+        followings: arrayRemove(id), // Removes the specified user ID from the followings array
+      };
+
+      // Update Firestore document
+      await updateDoc(userRef, updatedData);
+      const userRef1 = doc(database, "users", id);
+
+      // Prepare the updated data with arrayRemove to remove the user from followings
+      const updatedData1 = {
+        followers: arrayRemove(userdata.userId), // Removes the specified user ID from the followings array
+      };
+
+      // Update Firestore document
+      await updateDoc(userRef1, updatedData1);
+      console.log("User successfully unfollowed!");
+    } catch (error) {
+      console.error("Error in unfollowing user:", error);
+    }
+  }
+}
+
+
   return (
       <FirebaseContext.Provider
         value={{
@@ -356,7 +414,9 @@ console.log("firebase,alldata",getAllUser)
         search,
         setSearch,
         searchshow,setSearchshow,
-        email
+        email,
+        followuser,
+        unfollowuser
         }}
       >
     {props.children}

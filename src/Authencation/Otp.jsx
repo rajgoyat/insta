@@ -4,7 +4,8 @@ import microsoft from '../Imgs/microsoft.png'
 import playstore from '../Imgs/playstore.png'
 // import auth from "./img/auth.png";
 import allimg from "../Imgs/allimg.png";
-import LoginLayout from "./LoginLayout";
+import LoginLayout from '../Layout/LoginLayout';
+
 import { useFirebase } from "../Firebase";
 export default function OtpPage() {
   const navigate = useNavigate();

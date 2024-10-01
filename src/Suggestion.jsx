@@ -1,6 +1,6 @@
 // import React, { useEffect, useState } from "react";
-import car from './Imgs/car.jpeg'
-import { peopleImgs } from "./SuggestionData";
+// import car from './Imgs/car.jpeg'
+// import { peopleImgs } from "./SuggestionData";
 import { Link } from "react-router-dom";
 import avtar from './Imgs/avtar.jpeg'
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ const Suggestion = () => {
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const firebase = useFirebase();
   const { getAllUser } = firebase;
+  // const [followstate,setfollowstate]=useState("Follow")
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,10 +25,10 @@ const Suggestion = () => {
         let shuffledUsers = filteredUsers.sort(() => 0.5 - Math.random());
 
         // Step 3: Always pick exactly 5 users. If fewer than 5 users are available, take the first 5 after filtering
-        let randomFiveUsers = shuffledUsers.slice(0, 5);
+        let randomFiveUsers = shuffledUsers.slice(0, 6);
 
         // If we still have less than 5 users, repeat from the beginning of the shuffled list
-        while (randomFiveUsers.length < 5 && shuffledUsers.length > 0) {
+        while (randomFiveUsers.length < 6 && shuffledUsers.length > 0) {
           randomFiveUsers.push(shuffledUsers[randomFiveUsers.length % shuffledUsers.length]);
         }
 
@@ -43,7 +44,19 @@ const Suggestion = () => {
   const handleClick = () => {
     setShowHello(!showHello);
   };
-
+  // const handleFollow=async (id)=>{
+  //   try {
+  //     if (followstate === "Follow") {
+  //       await firebase.followuser(id); // Perform follow action
+  //       setfollowstate("Unfollow"); // Change the button to "Unfollow"
+  //     } else {
+  //       await firebase.unfollowuser(id); // Optionally, perform unfollow action if needed
+  //       setfollowstate("Follow"); // Change the button to "Follow"
+  //     }
+  //   } catch (error) {
+  //     console.error("Error in following/unfollowing user:", error);
+  //   }
+  // }
   return (
    <> {user? (<div 
       className="suggestions"  
@@ -58,12 +71,16 @@ const Suggestion = () => {
     
       <div className="d-flex flex-column">
       {suggestedUsers.map((val,ind)=>{
-        return(<Link className="text-decoration-none text-reset" to={`profile/${val.userId}`} key={ind}>  <div className="d-flex mt-3" >
-          <img className="rounded-circle" style={{height:"44px",width:"44px"}} src={val?.proimg|| avtar} alt="" />
+        if(val.userId=== user.userId){
+          return null;
+        }
+        return(  <Link className="text-decoration-none text-reset" to={`profile/${val.userId}`} key={ind}><div className="d-flex mt-3" >
+         <img className="rounded-circle" style={{height:"44px",width:"44px"}} src={val?.proimg|| avtar} alt="" />
           <div className="naming">
-        <div className="names d-flex flex-column " style={{marginLeft:"5px"}}><div style={{fontSize:"14px"}}>{val?.fullname}</div>
-        <div className="fw-light light-color" style={{fontSize:"12px"}}>{val.username}</div></div>
-        <div className="text-primary me-4" style={{fontSize:"13px"}}>Follow</div>
+        <div className="names d-flex flex-column " style={{marginLeft:"5px"}}><div style={{fontSize:"14px"}}>{val?.username}</div>
+        <div className="fw-light light-color" style={{fontSize:"12px"}}>{val.fullname}</div></div>
+        <div className="text-primary me-4" style={{fontSize:"13px"}} 
+        >{user?.followings?.includes(val.userId)?"Unfollow":"Follow"}</div>
       </div></div></Link>
         )
       })}</div>  

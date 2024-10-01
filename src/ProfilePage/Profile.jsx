@@ -1,11 +1,13 @@
 import React, { useState ,useEffect} from "react";
 import { useMediaQuery } from 'react-responsive';
 import './profile.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { peopleImgs } from "../SuggestionData";
 import { SideBottombars } from "../Insta";
 import { IoIosArrowBack } from "react-icons/io";
 import { useParams } from 'react-router-dom';
+import ProfileReels from "./ProfileReels";
+import Posts from './Posts'
 import {
   Seeting,
   PlusIcon,
@@ -29,7 +31,7 @@ const[heading,setheading]=useState();
   setheading(data.fullname) } 
   getdata()
   },[userId,firebase])
-  console.log("kgjdkgjd",heading)
+  // console.log("kgjdkgjd",heading)
   return (
     <>
       <ProfileHeader heading={heading}/>
@@ -42,18 +44,30 @@ const[heading,setheading]=useState();
 const ProfileMain = () => {
   const [iconSize,setIconSize]= useState(25)
   const isLarger = useMediaQuery({ query: '(min-width: 767px)' });
+ const navigate= useNavigate();
   const [userAdmin,setuserAdmin]=useState(); 
   const firebase= useFirebase();
 const [user,setuser]=useState();
 const {userdata}= firebase;
 const { userId } = useParams();
+const [showwhat,setshowwhat]=useState("post")
+const [followstate,setfollowstate]=useState("")
 // console.log("prem",userdata)
+const [isExpanded, setIsExpanded] = useState(false); 
 useEffect(()=>{
   if(userdata?.userId===userId){
     setuserAdmin(true)
   }else{setuserAdmin(false)}
   
-},[userId])
+},[userId,userdata])
+useEffect(()=>{
+  if (userdata?.followings?.includes(userId)) {
+    console.log("User ID found in followings:", userId);
+    setfollowstate("Unfollow")
+  }
+  else{setfollowstate("Follow")}
+  
+},[userdata,userId])
 useEffect(() => {
   const fetchData = async () => {
     try {
@@ -66,7 +80,7 @@ useEffect(() => {
   };
 
   fetchData();
-}, [userId,user]);
+}, [userId,user,firebase]);
 // console.log("profile",user)
 
   useEffect(() => {
@@ -76,7 +90,33 @@ useEffect(() => {
       setIconSize(25);
     }
   }, [isLarger]);
-
+const EditProfile=()=>{
+  navigate('/insta-app/edit')
+}
+const handleFollow=async ()=>{
+  try {
+    if (followstate === "Follow") {
+      await firebase.followuser(userId); // Perform follow action
+      setfollowstate("Unfollow"); // Change the button to "Unfollow"
+    } else {
+      await firebase.unfollowuser(userId); // Optionally, perform unfollow action if needed
+      setfollowstate("Follow"); // Change the button to "Follow"
+    }
+  } catch (error) {
+    console.error("Error in following/unfollowing user:", error);
+  }
+}
+//   useEffect(()=>{
+// const getfollower=async()=>{
+// const notadmindata= await firebase.getUserData(userId)
+// // )
+// // // console.log("jkdjfdfd",data.followers,data.followings)
+// }
+// getfollower();
+//   },[firebase,userId])
+const toggleExpanded = () => {
+  setIsExpanded(!isExpanded); // Toggle between expanded and collapsed state
+};
   return (
     <div className="centerOrsuggestion">
       <div className="profilePage" style={{ width:"100%" }}>
@@ -109,10 +149,10 @@ useEffect(() => {
                   fontSize: "14px",
                   height: "35px",
                   width: "110px",
-                  backgroundColor: userAdmin ?" rgba(51, 49, 49, 0.151)": "#0095f6",
-                }}
+                  backgroundColor: userAdmin ?" rgba(51, 49, 49, 0.151)": "#0095f6",}}
+                  onClick={userAdmin ?  EditProfile : handleFollow} 
               >
-                {userAdmin? "Edit Profile":"Follow"}
+                {userAdmin? "Edit Profile":followstate}
               </div>
               <div
                 className="btn d-flex align-items-center justify-content-center ms-2 me-2"
@@ -136,7 +176,12 @@ useEffect(() => {
             </div>
             <div className="d-none d-md-block"><FollowerAndFollowing/></div>
             <div className="mt-md-5" style={{fontWeight:"500"}}><div>{user?.fullname}</div>
-            <p className="fw-lighter ">hello</p></div>
+          {user && (<p className="fw-lighter ">{isExpanded ? user.bio : user.bio.substring(0, 100)} {/* Show first 100 characters */}
+          {user.bio.length > 100 && ( 
+            <span onClick={toggleExpanded} style={{ color: 'blue', cursor: 'pointer' }}>
+              {isExpanded ? ' Less' : '... More'}
+            </span>
+          )}</p>)}  </div>
           </div>
         </div>
        {userAdmin && ( <div className="ms-sm-5 ms-2" style={{ height: "120px", width: "115px" }}>
@@ -154,22 +199,22 @@ useEffect(() => {
           style={{ height: "53px", borderTop:"2px solid rgba(51, 49, 49, 0.151)" }}
         >
           <div className=" d-flex ms-3">
-            <div className="">
-              <Post height={iconSize} width={iconSize}/>
+            <div style={{cursor:"pointer"}} className="d-flex align-items-center justify-content-evenly " onClick={()=>setshowwhat("post")}>
+             <div> <Post height={iconSize} width={iconSize}/>
             </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
-            POST</div>
+            POST</div></div>
           </div>
-          <div className=" d-flex ms-3">
-            <div className="">
-              <Reels height={iconSize} width={iconSize} />
+          <div className="  ms-3">
+            <div style={{cursor:"pointer"}} className="d-flex align-items-center justify-content-evenly" onClick={()=>setshowwhat("reels")}>
+            <div > <Reels height={iconSize} width={iconSize} />
             </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
-            REELS</div>
+            REELS</div></div>
           </div>
-          <div className=" d-flex ms-3">
-            <div className="">
-              <Saved height={iconSize} width={iconSize} />
+          <div className="  ms-3">
+            <div style={{cursor:"pointer"}} className="d-flex align-items-center justify-content-evenly">
+            <div > <Saved height={iconSize} width={iconSize} />
             </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
-            SAVED</div>
+            SAVED</div></div>
           </div>
           <div className=" d-flex ms-3">
             <div className="">
@@ -178,7 +223,7 @@ useEffect(() => {
             TAGGED</div>
           </div>
         </div>
-        <div className=" bottom area"></div>
+        <div className=" bottom area">{showwhat==="reels"?<ProfileReels/>:<Posts/>}</div>
       </div>
     </div>
   );
@@ -200,16 +245,39 @@ const ProfileHeader = ({heading}) => {
   );
 };
 const FollowerAndFollowing=()=>{
+  const firebase= useFirebase();
+const [follower,setfollower]=useState("")
+  const [following,setfollowing]=useState("")
+  const [numpost,setnumpost]=useState("")
+  // const {userdata}= firebase;
+  const {userId}=useParams(); //not admin Id
+  useEffect(()=>{
+const getfollower=async()=>{
+const notadmindata= await firebase.getUserData(userId)
+// console.log("jkdjfdfd",notadmindata.followers,notadmindata.followings)
+// const data= await firebase.userdata;
+setfollower(notadmindata.followers.length)
+setfollowing(notadmindata.followings.length)
+if (Array.isArray(notadmindata.video)) {
+  const images = notadmindata.video.filter(video => video.type === 'image');
+  setnumpost(images.length);
+} else {
+  setnumpost('0');
+}
+// // console.log("jkdjfdfd",data.followers,data.followings)
+}
+getfollower();
+  },[firebase,userId])
   return(
-  <div className="d-flex followContent align-items-center justify-content-md-between justify-content-evenly mt-3">
+  <div className="d-flex followContent align-items-center justify-content-md-between justify-content-evenly mt-3" style={{width:"300px"}}>
               <div className=" d-md-flex flex-md-row">
-                <div className="text-center text-dark me-1" style={{fontWeight:"700"}}>3 </div> <div> post
+                <div className="text-center text-dark me-1" style={{fontWeight:"700"}}>{numpost>=1?numpost :"0"}</div> <div> post
               </div></div>
               <div className=" d-md-flex flex-md-row">
-                <div className="text-center text-dark me-1" style={{fontWeight:"700"}}>5.3M </div> <div> follower
+              <div className="text-center text-dark me-1" style={{fontWeight:"700"}}>{follower} </div> <div> follower
               </div></div>
               <div className=" d-md-flex flex-md-row">
-                <div className="text-center text-dark me-1" style={{fontWeight:"700"}}>10</div><div>  following
+                <div className="text-center text-dark me-1" style={{fontWeight:"700"}}>{following}</div><div>  following
               </div></div>
             </div>)
 }

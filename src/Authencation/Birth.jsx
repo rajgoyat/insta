@@ -1,6 +1,6 @@
 import microsoft from '../Imgs/microsoft.png';
 import playstore from '../Imgs/playstore.png';
-import LoginLayout from './LoginLayout';
+import LoginLayout from '../Layout/LoginLayout';
 import React,{useState,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { useFirebase } from "../Firebase";

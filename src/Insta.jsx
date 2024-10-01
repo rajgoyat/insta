@@ -2,20 +2,27 @@ import "./insta.css";
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import insta from "./Imgs/logo.png";
+import SeetingIcon from "./IconsFunctions/SeetingIcon";
 import Search from "./Search";
 import {Center} from "./Center"; 
+// import EditProfile from "./EditProfile";
+// import EditSeeting from "./EditPage/EditSeeting";
+import { useContext } from "react";
+import CreatePost from "./Component/CreatePost";
 import { Link, useNavigate } from "react-router-dom";
 import Suggestion from "./Suggestion";
 import { MdOutlineExplore, MdHomeFilled } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
+// import CreatePost from "./Component/CreatePost";
 // import { SiYoutubeshorts } from "react-icons/si";
+import {DataContext} from './Context/DataContext'
 import { FaRegHeart, FaThreads, FaInstagram } from "react-icons/fa6";
 import {SlideLogout, CreateReel} from './IconsFunctions/SlideLogout'
 import { RiMessengerLine } from "react-icons/ri";
 import { LuPlusSquare } from "react-icons/lu";
 import { PiList } from "react-icons/pi";
 import { FaChevronDown } from "react-icons/fa";
-import profile from "./Imgs/profile.jpg";
+// import profile from "./Imgs/profile.jpg";
 import { useState, useEffect } from "react";
 import {PostData} from './Center'
 import { useFirebase } from "./Firebase";
@@ -32,11 +39,11 @@ const Insta = () => {
   },[firebase,navigate])
      
   return (
-    <>
+    <><CreatePost/>
      <HeadBar/>   
 <SideBottombars/>
 
-      <div className="centerOrsuggestion">
+      <div className="centerOrsuggestion ">
         <div className="center-main row m-0 p-0">
         <Center />
         <PostData/>
@@ -55,6 +62,8 @@ const SideBottombars= ()=>{
 const [userdata,setData]=useState(null);
 const navigate= useNavigate()
 const {searchshow,setSearchshow}=firebase;
+const { createPostCloseButton } = useContext(DataContext);
+
   // console.log(shows)
 useEffect(()=>{
   const getId=async()=>{
@@ -70,9 +79,9 @@ const handleSearch=()=>{
 console.log("hello",searchshow)
 }
 // console.log("jjj",searchshow)
-const handleLogin=()=>{
- navigate('/insta-app/login')
-}
+// const handleLogin=()=>{
+//  navigate('/insta-app/login')
+// }
 const handleMessage=()=>{
  navigate('/insta-app/messages')
 }
@@ -82,22 +91,23 @@ const handleHome=()=>{
 const handleReels=()=>{
   navigate('/insta-app/reels')
 }
+
 useEffect(() => {
     const iconArray = [
       { label: "Home", icon: <MdHomeFilled size={25} />, onClick:handleHome },
       { label: "Search", icon: <AiOutlineSearch size={25} />, onClick:handleSearch },
-      { label: "Explore", icon: <MdOutlineExplore size={25}  />,onClick:handleLogin },
+      { label: "Explore", icon: <MdOutlineExplore size={25}  /> },
       { label: "Reels", icon:  <Reels /> ,onClick:handleReels},
       { label: "Messenger", icon: <RiMessengerLine size={25} />,onClick:handleMessage },
       { label: "Notifications", icon: <FaRegHeart size={25} onClick={()=>setshow(!shows)}/> },
-      { label: "Create", icon: <LuPlusSquare size={25} data-bs-target=".createReel" data-bs-toggle="collapse" aria-expanded="false"/> },
+      { label: "Create", icon: <LuPlusSquare size={25} />, onClick:createPostCloseButton },
     ];
      const iconArrayBottom = [
-      {link:"/insta-app", label: "Home", icon: <MdHomeFilled size={25} /> },
+      {link:"/insta-app", label: "Home", icon: <MdHomeFilled size={25} />, onClick:handleHome  },
       {link:"/insta-app/login", label: "Explore", icon: <MdOutlineExplore size={25} />},
-      {link:"/insta-app", label: "Create", icon: <LuPlusSquare size={25} data-bs-target=".createReel" data-bs-toggle="collapse" aria-expanded="false"/> },
-      {link:"/insta-app/reels", label: "Reels", icon: <Reels /> },
-      {link:"/insta-app/messages", label: "Messenger", icon: <RiMessengerLine size={25} /> },
+      {link:"/insta-app", label: "Create", icon: <LuPlusSquare size={25} />, onClick:createPostCloseButton },
+      {link:"/insta-app/reels", label: "Reels", icon: <Reels />,onClick:handleReels },
+      {link:"/insta-app/messages", label: "Messenger", icon: <RiMessengerLine size={25} />, onClick:handleMessage},
     ];
 
     const handleResize = () => {
@@ -113,7 +123,7 @@ useEffect(() => {
   }, []);
 
   return(
-   <>{userdata? (<div className="position-fixed" style={{zIndex:"10"}}> <div id="slideBar" className="position-fixed" style={{zIndex:"5"}}> 
+   <><SeetingIcon/><div className="position-relative" style={{zIndex:"10"}}> <div id="slideBar" className="position-fixed" style={{zIndex:"5"}}> 
 <div className={`position-absolute notificationMain d-none d-md-block ${shows? "shown": ""}`} style={{zIndex:"19"}}><Notifications/>
 <h3 className='top-0 d-none d-md-block ms-5 ps-2 position-absolute text-center'>Notification</h3>
 
@@ -144,16 +154,16 @@ useEffect(() => {
           </div>
         );
       })}
-      <CreateReel/>
-      <Link to={`/insta-app/profile/${userdata.userId}`} className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
+     
+      {userdata&& (<Link to={`/insta-app/profile/${userdata.userId}`} className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
         <img
           className="rounded-circle ms-md-2"
           style={{ width: "25px", height: "25px" }}
-          src={profile}
+          src={userdata.proimg}
           alt=""
         />
         <span className={`ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}>Profile</span>
-      </div></Link>
+      </div></Link>)} 
     </div>
     <div
       className="d-none d-md-block w-md-100"
@@ -170,13 +180,20 @@ useEffect(() => {
       <SlideLogout/>
     </div>
     
-</div>{searchshow ? <Search/>:null}</div>):("Fetching user data...")}</>    
+</div>{searchshow ? <Search/>:null}</div></>    
   )
 }
 const HeadBar=()=>{
-  return(
-<div className="pt-2 ms-1 pb-2 header bg-white d-md-none d-flex align-items-center justify-content-between">
-      <div className="allIcon d-flex align-items-center svgs">
+  const [show,setshow]=useState(false)
+  const navigate= useNavigate();
+  const handleSeeting=()=>{
+    console.log("helo")
+    setshow(prevShow => !prevShow);
+show? navigate('/insta-app/edit'): navigate("/insta-app")
+  }
+  return(<>
+<div className=" header">
+     <div className="position-fixed pt-2 ms-1 pb-2  bg-white d-md-none d-flex align-items-center justify-content-between"> <div className="allIcon d-flex align-items-center svgs ">
         <svg
           aria-label="Instagram"
           className="x1lliihq x1n2onr6 x5n08af"
@@ -218,12 +235,13 @@ const HeadBar=()=>{
           />
         </div>
         <Link to="/insta-app/notifications" className="text-decoration-none text-reset"><FaRegHeart size={20} className="m-2" /></Link>
-        <RiMessengerLine size={23} className="m-2 d-sm-none"/>
-        
-      </div>  
+        <PiList size={25} className="iconhover me-2" onClick={()=>handleSeeting()} style={{marginTop:"4px" }}/>
+        {/* <PiList size={25} />  */}
+      </div>  </div>
         </div>
-
+        {/* {show? <EditSeeting/>: null} */}
+        </>
   )
 }
 
-export {SideBottombars, Insta};
+export {SideBottombars, Insta, HeadBar};

@@ -2,7 +2,7 @@
 padding:0;
 box-sizing: border-box;
   }
-
+/* header */
 .slidelogoutIcon .set:hover{
       border-radius: 12px;
         background-color: rgba(51, 49, 49, 0.151);
@@ -115,19 +115,19 @@ z-index: 10;
     }
     #slideBar {
         border-right: 1px solid rgba(0, 0, 0, 0.219);
-        position: fixed;
+        
         width: 58px;
         height: 100vh;
     }
 }
 /* soundBtnReels */
 @media(min-width:768px) and (max-width:1200px){
-    .centerOrsuggestion, .mainReels, .mainMessage {
+    .centerOrsuggestion, .mainReels, .mainMessage,.editProfile {
         margin-left: 57px;
     }
 }
 @media(min-width:1200px) {
-    .centerOrsuggestion, .mainReels, .mainMessage {
+    .centerOrsuggestion, .mainReels, .mainMessage, .editProfile {
         margin-left: 245px;
     }
 
@@ -135,12 +135,13 @@ z-index: 10;
         width: 245px;
     }
 }
+/* slideBar */
 
 @media(max-width:767px){
     .centerOrsuggestion {
         margin-top: 60px;
     }
-.header{position:fixed; border-bottom: 1px solid rgba(0, 0, 0, 0.219); top:0; z-index: 5;}
+.header{position:relative; border-bottom: 1px solid rgba(0, 0, 0, 0.219); top:0; z-index: 5;}
 .header .svgs{
     width:395px
 }
@@ -256,3 +257,80 @@ z-index: 10;
       display:none;
     }
   }
+ /* Custom styles for the scroll-container */
+.scroll-container {
+    /* height: 100vh; Set a fixed height for the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling if not needed */
+  }
+  
+  /* Add custom scrollbar styles if desired */
+  .scroll-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  .postIcon{
+ background-color: #474747
+
+  }
+  .postIcon:hover{
+    background-color: #777575
+   
+     }
+
+     a.carousel-control-prev, a.carousel-control-next{
+        display:none
+     }
+     div.carousel-indicators{
+        display:none
+     }
+     .carousel{
+        border-radius: 10px;
+     }
+     /* create post third carousel design */
+     .instagram-post-container {
+        height:400px;
+        overflow-y: scroll;
+        /* padding: 16px; */
+        /* width: 100px; */
+        /* border: 1px solid #ddd; */
+        border-radius: 10px;
+        background-color: #fff;
+      }
+      
+      .profile-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      
+      .profile-picture {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      
+      .post-textarea {
+        width: 100%;
+        /* padding: 10px; */
+        border-radius: 5px;
+        margin-bottom: 10px;
+        outline:none;
+        border:none
+      }
+      
+      .post-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+ 

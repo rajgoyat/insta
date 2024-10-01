@@ -1,8 +1,8 @@
 import React from "react";
 import { SideBottombars } from "./Insta";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
-
+import { DataContext } from "./Context/DataContext";
 import "./insta.css";
 import "./ProfilePage/profile.css";
 import { Comment, Share, Saved, More, Song } from "./AllIconsSvgs/IconsSvg";
@@ -10,14 +10,20 @@ import useIntersectionObserver from "./useIntersectionObserver";
 import { reels } from "./SuggestionData";
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoVolumeMute } from "react-icons/io5";
+import { useFirebase } from "./Firebase";
+
 const Reels = () => {
   const [vol, setVol] = useState(false);
   const [like, setLikes] = useState(reels.map((val) => val.likes));
   const dataLength = reels.length;
-
+  const { allUsers } = useContext(DataContext);
+  const [allPosts, setAllPosts] = useState([]);
   const [likeNo, setLikeNo] = useState(Array(dataLength).fill(false));
+  const [followState, setFollowState] = useState(''); // Store follow state for each user
+  const firebase = useFirebase();
+  const { userdata } = firebase;
+
   const likeHandler = (index) => {
-    // console.log(index)
     setLikes((prevLikes) =>
       prevLikes.map((like, i) =>
         i === index ? (likeNo[index] ? like - 1 : like + 1) : like
@@ -28,17 +34,84 @@ const Reels = () => {
       prevLikeNo.map((likeState, i) => (i === index ? !likeState : likeState))
     );
   };
+
+  useEffect(() => {
+    const getAllPosts = () => {
+      if (allUsers && Array.isArray(allUsers)) {
+        // Combine video posts with the user's username, userId, and proimg
+        const posts = allUsers.flatMap((user) => {
+          if (Array.isArray(user.video)) {
+            return user.video
+              .filter((video) => video.type !== "image" && user.userId !== userdata.userId)  // Filter out videos where video.userId === userdata.userId
+              .map((video) => ({
+                ...video, // Spread video properties (src, type, etc.)
+                username: user.username,
+                userId: user.userId,
+                proimg: user.proimg,
+              }));
+          }
+          return []; // If user.video is not an array, return an empty array
+        }).filter((post) => post.src); // Filter out any posts that do not have a src
+  
+        // Set the filtered posts in the state
+        setAllPosts(posts);
+      }
+    };
+  
+    getAllPosts();
+  }, [allUsers, userdata]);
+  
+  // Follow/Unfollow logic
+  const handleFollow = async (userId) => {
+    try {
+      if (followState[userId] === "Follow") {
+        await firebase.followuser(userId);
+        setFollowState((prevState) => ({
+          ...prevState,
+          [userId]: "Unfollow",
+        }));
+      } else {
+        await firebase.unfollowuser(userId);
+        setFollowState((prevState) => ({
+          ...prevState,
+          [userId]: "Follow",
+        }));
+      }
+    } catch (error) {
+      console.error("Error in following/unfollowing user:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Check follow state when posts are loaded
+    if(allUsers&&userdata){
+    allUsers.forEach((post) => {
+      if(userdata&&post.userId){
+      if (userdata?.followings?.includes(post.userId)) {
+        setFollowState((prevState) => ({
+          ...prevState,
+          [post.userId]: "Unfollow",
+        }));
+      } else {
+        setFollowState((prevState) => ({
+          ...prevState,
+          [post.userId]: "Follow",
+        }));
+      }
+    }})
+  }}, [allUsers, userdata]);
+
   return (
     <>
       <div>
         <SideBottombars />
       </div>
       <div className="mainReels d-flex align-items-center justify-content-center flex-column">
-        {reels.map((val, ind) => {
+        {allPosts.map((val, ind) => {
           return (
             <div key={ind} className="position-relative m-2 d-flex">
               <div
-                className="soundBtnReels position-absolute fs-3 rounded-circle d-flex align-items-center justify-content-center "
+                className="soundBtnReels position-absolute fs-3 rounded-circle d-flex align-items-center justify-content-center"
                 onClick={() => setVol(!vol)}
                 style={{
                   zIndex: "2",
@@ -61,7 +134,7 @@ const Reels = () => {
                 <div className=" d-flex flex-row">
                   <img
                     className="rounded-circle"
-                    src={val.img}
+                    src={val.proimg}
                     alt=""
                     style={{ height: "32px", width: "32px" }}
                   />
@@ -69,7 +142,7 @@ const Reels = () => {
                     className="ms-2 me-1 container"
                     style={{ fontSize: "15px" }}
                   >
-                    {val.channelName}
+                    {val.username}
                   </div>
                   <div
                     className="container text-white"
@@ -79,26 +152,19 @@ const Reels = () => {
                       border: "1px solid white",
                       borderRadius: "8px",
                     }}
+                    onClick={() => handleFollow(val.userId)}
                   >
-                    Follow
+                    {followState[val.userId] || "Follow"}
                   </div>
                 </div>
-                <div style={{ fontSize: "15px" }}>{val.videoName} ...more</div>
+                <div style={{ fontSize: "15px" }}>{val.desc} ...more</div>
                 <div className="blurdiv mt-2 mb-2">
                   <div>
-                    <Song /> {val.songName}
+                    <Song /> {"val.songName"}
                   </div>
                 </div>
               </div>
-              {/* <video
-            className="position-relative"
-            src={val.reel}
-            style={{
-              zIndex: "1",
-              borderRadius: "10px",
-            }}
-          ></video> */}
-              <VideoComponent src={val.reel} vol={vol} setVol={setVol} />
+              <VideoComponent src={val.src} vol={vol} setVol={setVol} />
               <div className="d-flex flex-column align-items-center justify-content-end reelIcons">
                 <div className="m-2 mb-3">
                   {likeNo[ind] ? (
@@ -143,7 +209,7 @@ const Reels = () => {
                 <div className="m-2">
                   <img
                     className="mb-md-0"
-                    src={val.img}
+                    src={val.proimg}
                     alt=""
                     style={{
                       marginBottom: "35px",
@@ -162,11 +228,11 @@ const Reels = () => {
     </>
   );
 };
-// 623 350 max-800
+
 const VideoComponent = ({ src, vol, setVol }) => {
   const videoRef = useRef(null);
   const [videoContainerRef, isIntersecting] = useIntersectionObserver({
-    threshold: 0.5, // Adjust as needed
+    threshold: 0.5,
   });
 
   useEffect(() => {
@@ -180,7 +246,6 @@ const VideoComponent = ({ src, vol, setVol }) => {
 
   return (
     <div ref={videoContainerRef} className="video-container position-relative">
-      {/* <div className="position-absolute fs-3 rounded-circle d-flex align-items-center justify-content-center " onClick={()=>setVol(!vol)} style={{zIndex:"2", background:"rgba(0, 0, 0, 0.763)", bottom:"10px",right:"50px", height:"35px", width:"35px"}}>{vol ?<IoVolumeHigh size={26} color="white"/> :<IoVolumeMute size={26} color="white"/> }</div> */}
       <video
         ref={videoRef}
         src={src}
