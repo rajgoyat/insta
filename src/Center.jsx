@@ -196,8 +196,7 @@ useEffect(() => {
         // Check if user.video is a valid array before mapping
         if (Array.isArray(user.video)) {
           return user.video.map(video => ({
-            ...video,           // Spread video properties (src, type, etc.)
-            fullname: user.fullname,  // Add the user's fullname
+            ...video,           // Spread video properties (src, type, etc.)  // Add the user's fullname
             username: user.username,  
             userId:user.userId,
             proimg:user.proimg// Add the user's username (if needed)

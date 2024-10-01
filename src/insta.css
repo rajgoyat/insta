@@ -297,8 +297,8 @@ z-index: 10;
      }
      /* create post third carousel design */
      .instagram-post-container {
-        height:400px;
-        overflow-y: scroll;
+        height:300px;
+        /* overflow-y: scroll; */
         /* padding: 16px; */
         /* width: 100px; */
         /* border: 1px solid #ddd; */
