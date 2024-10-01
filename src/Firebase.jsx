@@ -14,15 +14,7 @@
     
 //   } from "firebase/auth";
 //   const FirebaseContext = createContext(null);
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDi_yqiC8EABK-Lgo6g1jz6mxtd0FHAHj0",
-//   authDomain: "insta-6bcb5.firebaseapp.com",
-//   projectId: "insta-6bcb5",
-//   storageBucket: "insta-6bcb5.appspot.com",
-//   messagingSenderId: "767016756533",
-//   appId: "1:767016756533:web:3923e18f1615309243187c",
-//   measurementId: "G-C2CGCT4J65"
-// };
+
 
 // // Initialize Firebase
 // const firebaseApp=initializeApp(firebaseConfig);
