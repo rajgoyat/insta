@@ -19,7 +19,7 @@ export default function LoginPage() {
 // yhA se hai 5 line ka auto login bala img
 useEffect(()=>{
   if(firebase.isLoggedIn){
-         navigate("/insta-app");
+         navigate("/insta");
   }
 },[firebase,navigate])
 
@@ -40,7 +40,7 @@ useEffect(()=>{
                 const resultofLogin= await firebase.loginWithEmailandPass(email, password);
           alert("Login successful");
     console.log("resultofLogin",resultofLogin)
-          navigate("/insta-app");
+          navigate("/insta");
      }catch(err){
         alert("Error: Something Went Wrong");
      }
@@ -51,7 +51,7 @@ const handleSignup= async (e)=>{
   firebase.userData(numberoremail,fullname,username,password)
   // Check if email and password are provided
  
-     navigate("/insta-app/dob");
+     navigate("/insta/dob");
 }
 
 

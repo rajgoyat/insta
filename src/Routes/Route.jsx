@@ -25,20 +25,20 @@ const PathTo = () => {
   return (
   
     <Routes>
-        <Route path="/insta-app" element={<Insta/>}  />
-        <Route path="/insta-app/login" element={<Login/>}  />
-        <Route path="/insta-app/Otp" element={<Otp/>}  />
-        <Route path="/insta-app/dob" element={<Birth/>}  />
-        <Route path="/insta-app/edit" element={<EditMain/>}  />
-        <Route path="/insta-app/chat" element={<Chat/>}  />
-        <Route path="/insta-app/all" element={<SuggestionMain/>}  />
+        <Route path="/insta" element={<Insta/>}  />
+        <Route path="/insta/login" element={<Login/>}  />
+        <Route path="/insta/Otp" element={<Otp/>}  />
+        <Route path="/insta/dob" element={<Birth/>}  />
+        <Route path="/insta/edit" element={<EditMain/>}  />
+        <Route path="/insta/chat" element={<Chat/>}  />
+        <Route path="/insta/all" element={<SuggestionMain/>}  />
        
-        {/* <Route path="/insta-app/register" element=/{<Register/>}  /> */}
-        <Route path="/insta-app/messages" element={<Chat/>}  />
-        {/* <Route path="/insta-app/profile" element={<Profile/>}  />   */}
-        <Route path="/insta-app/profile/:userId" element={<Profile/>}  />
-        <Route path="/insta-app/reels" element={<Reels/>}  />    
-        <Route path="/insta-app/notifications" element={<Notifications/>}  />    
+        {/* <Route path="/insta/register" element=/{<Register/>}  /> */}
+        <Route path="/insta/messages" element={<Chat/>}  />
+        {/* <Route path="/insta/profile" element={<Profile/>}  />   */}
+        <Route path="/insta/profile/:userId" element={<Profile/>}  />
+        <Route path="/insta/reels" element={<Reels/>}  />    
+        <Route path="/insta/notifications" element={<Notifications/>}  />    
 
 
 

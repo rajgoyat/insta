@@ -26,7 +26,7 @@ const maindob= `${dob.day}-${dob.month}-${dob.year}`;
     console.log(maindob)
 await firebase.savedob(maindob)
     try {
-      navigate("/insta-app/Otp");
+      navigate("/insta/Otp");
     } catch (err) {
       alert("Error: Something Went Wrong");
     }

@@ -4,7 +4,7 @@ import './seetingicon.css'
 import { useContext } from 'react';
 import { DataContext } from '../Context/DataContext';
 function InstagramDialog() {
-
+  
   const { sidebarMenuSeeting,setSidebarMenuSeeting } = useContext(DataContext);
 
   return (

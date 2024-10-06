@@ -24,7 +24,7 @@ const Posts = () => {
       {allVideos.length > 0 ? (
         <div className="row">
           {allVideos.map((item, index) => (
-            <div key={index} className="col-12 col-sm-6 col-md-4  p-0">
+            <div key={index} className=" col-4  p-0">
               {item.type === 'image' ? (
                 <img
                   src={item.src}

@@ -11,7 +11,7 @@ export const SlideLogout = ()=>{
     console.log("hello")
    const logout=  await firebase.logout();
    console.log(logout)
-   if(logout){navigate('/insta-app/login');} 
+   if(logout){navigate('/insta/login');} 
   }
   const handleseetingicon=()=>{
 setSidebarMenuSeeting(true)

@@ -41,7 +41,7 @@ const [search, setSearch] = useState("");
                           return (
                            
 <div className="Sugges_profile mt-1 d-flex gap-2 flex-column w-100 iconhover  " style={{height:"60px",cursor:"pointer"}}   onClick={() => {firebase.setSearchshow(false) // Log the message
-    navigate(`/insta-app/profile/${val.userId}`);}}>
+    navigate(`/insta/profile/${val.userId}`);}}>
               
                      <div  className="Our_profie mx-3 d-flex align-items-center justify-content-between ">
                         <div className="d-flex gap-3  d-flex justify-content- align-items-center" style={{height:"60px"}}>

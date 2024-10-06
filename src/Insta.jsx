@@ -34,7 +34,7 @@ const Insta = () => {
   // const navigate = useNavigate();
   useEffect(()=>{
     if(firebase.isLoggedIn===false){
-           navigate("/insta-app/login");
+           navigate("/insta/login");
     }
   },[firebase,navigate])
      
@@ -80,13 +80,13 @@ const handleSearch=()=>{
 const handleMessage=()=>{
  
   // console.log(userdata,'jjjj')
- navigate(`/insta-app/messages`)
+ navigate(`/insta/messages`)
 }
 const handleHome=()=>{
- navigate('/insta-app')
+ navigate('/insta')
 }
 const handleReels=()=>{
-  navigate('/insta-app/reels')
+  navigate('/insta/reels')
 }
 const handleMenuIcon=()=>{
 setSidebarMenu(prev=>!prev)
@@ -102,11 +102,11 @@ useEffect(() => {
       { label: "Create", icon: <LuPlusSquare size={25} />, onClick:createPostCloseButton },
     ];
      const iconArrayBottom = [
-      {link:"/insta-app", label: "Home", icon: <MdHomeFilled size={25} />, onClick:handleHome  },
-      {link:"/insta-app/login", label: "Explore", icon: <MdOutlineExplore size={25} />},
-      {link:"/insta-app", label: "Create", icon: <LuPlusSquare size={25} />, onClick:createPostCloseButton },
-      {link:"/insta-app/reels", label: "Reels", icon: <Reels />,onClick:handleReels },
-      {link:"/insta-app/messages", label: "Messenger", icon: <RiMessengerLine size={25} />, onClick:handleMessage},
+      {link:"/insta", label: "Home", icon: <MdHomeFilled size={25} />, onClick:handleHome  },
+      {link:"/insta/login", label: "Explore", icon: <MdOutlineExplore size={25} />},
+      {link:"/insta", label: "Create", icon: <LuPlusSquare size={25} />, onClick:createPostCloseButton },
+      {link:"/insta/reels", label: "Reels", icon: <Reels />,onClick:handleReels },
+      {link:"/insta/messages", label: "Messenger", icon: <RiMessengerLine size={25} />, onClick:handleMessage},
     ];
 
     const handleResize = () => {
@@ -153,7 +153,7 @@ useEffect(() => {
         );
       })}
      
-      {userdata&& (<div onClick={()=>navigate(`/insta-app/profile/${userdata.userId}`)} className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
+      {userdata&& (<div onClick={()=>navigate(`/insta/profile/${userdata.userId}`)} className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
         <img
           className="rounded-circle ms-md-2"
           style={{ width: "25px", height: "25px" }}
@@ -187,7 +187,7 @@ const HeadBar=()=>{
   const handleSeeting=()=>{
     console.log("helo")
     setshow(prevShow => !prevShow);
-show? navigate('/insta-app/edit'): navigate("/insta-app")
+show? navigate('/insta/edit'): navigate("/insta")
   }
   return(<>
 <div className=" header">
@@ -232,7 +232,7 @@ show? navigate('/insta-app/edit'): navigate("/insta-app")
             }}
           />
         </div>
-        <Link to="/insta-app/notifications" className="text-decoration-none text-reset"><FaRegHeart size={20} className="m-2" /></Link>
+        <Link to="/insta/notifications" className="text-decoration-none text-reset"><FaRegHeart size={20} className="m-2" /></Link>
         <PiList size={25} className="iconhover me-2" onClick={()=>handleSeeting()} style={{marginTop:"4px" }}/>
         {/* <PiList size={25} />  */}
       </div>  </div>

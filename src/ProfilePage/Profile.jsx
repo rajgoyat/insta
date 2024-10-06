@@ -90,7 +90,7 @@ useEffect(() => {
     }
   }, [isLarger]);
 const EditProfile=()=>{
-  navigate('/insta-app/edit')
+  navigate('/insta/edit')
 }
 const handleFollow=async ()=>{
   try {
@@ -227,7 +227,7 @@ const ProfileHeader = ({heading}) => {
       style={{ borderBottom: "1px solid #c8c8c8", height: "44px" }}
     >
       <Link
-        to="/insta-app"
+        to="/insta"
         className="position-absolute start-0 m-2 text-decoration-none"
       >
         <IoIosArrowBack size={22} />

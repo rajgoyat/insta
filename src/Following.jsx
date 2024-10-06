@@ -73,7 +73,7 @@ console.log("commando",userData)
         // }
         return (
           <div key={ind} className="d-flex flex-column align-items-center">
-            <Link to={`/insta-app/profile/${val.userId}`} className="text-decoration-none">
+            <Link to={`/insta/profile/${val.userId}`} className="text-decoration-none">
               <div className="position-relative w-100">
                 <img
                   className="rounded-circle"

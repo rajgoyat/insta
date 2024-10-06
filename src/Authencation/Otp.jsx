@@ -38,7 +38,7 @@ const isNumber = /^\d+$/.test(numberoremail);
   // } else if (isEmail) {
   //   setemailType(true);
   } else {
-  //   navigate("/insta-app/login")
+  //   navigate("/insta/login")
     setemailType(true); 
   // alert("Enter valid number or email");
   }
@@ -54,12 +54,12 @@ const isNumber = /^\d+$/.test(numberoremail);
       // if(!firebase.user)
       
         // console.log("hello raj gahlot")
-        // navigate("/insta-app/SignUpPage ")
+        // navigate("/insta/SignUpPage ")
         // alert("Invalid user credential");
        
     
         // alert("OTP Sahi hai! Home page par navigate ho rahe hain.");
-        navigate("/insta-app");
+        navigate("/insta");
       
       
     } else {
@@ -83,7 +83,7 @@ const isNumber = /^\d+$/.test(numberoremail);
     //         width: "936px",
     //         height: "803.984px",
     //       }}
-    //     >
+    //     > 
     //       <div className="col first w-100 bg-" style={{ position: "relative" }}>
     //         <img src={auth} className="mt-3" alt="Auth" />
     //         <div className="text-center w-100" style={{ position: "absolute", top: "0px", right: "-50px", marginTop: "-7px" }}>
@@ -177,7 +177,7 @@ const isNumber = /^\d+$/.test(numberoremail);
               <button
                 className="fw-bold ms-1"
                 style={{ border: "none", color: "#0095f6", background: "none" }}
-                onClick={() => navigate("/insta-app")}
+                onClick={() => navigate("/insta")}
               >
                 Log in
               </button>

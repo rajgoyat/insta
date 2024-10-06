@@ -131,7 +131,7 @@ useEffect(() => {
     );
   };
   const handleFollow=(id)=>{
-navigate(`/insta-app/profile/${id}`)
+navigate(`/insta/profile/${id}`)
   }
     return (
     <div className="postData w-100 d-flex flex-column align-items-center justify-content-center row pe-0">
