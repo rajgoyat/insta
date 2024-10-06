@@ -146,7 +146,7 @@ z-index: 10;
     width:395px
 }
     .mainIcons {
-        border-top: 1px solid rgba(0, 0, 0, 0.219);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.219);
         bottom: 0;
         width: 100%;
         justify-content: space-around;
@@ -257,7 +257,7 @@ z-index: 10;
       display:none;
     }
   }
- /* Custom styles for the scroll-container */
+ /* Custom styles for the scroll-container border-bottom*/
 .scroll-container {
     /* height: 100vh; Set a fixed height for the container */
     overflow-y: auto; /* Enable vertical scrolling */
@@ -295,7 +295,7 @@ z-index: 10;
      .carousel{
         border-radius: 10px;
      }
-     /* create post third carousel design */
+     /* create post third carousel design set*/
      .instagram-post-container {
         height:300px;
         /* overflow-y: scroll; */

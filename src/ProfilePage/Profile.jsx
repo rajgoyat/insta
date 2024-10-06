@@ -40,7 +40,6 @@ const[heading,setheading]=useState();
     </>
   );
 };
-
 const ProfileMain = () => {
   const [iconSize,setIconSize]= useState(25)
   const isLarger = useMediaQuery({ query: '(min-width: 767px)' });
@@ -106,14 +105,7 @@ const handleFollow=async ()=>{
     console.error("Error in following/unfollowing user:", error);
   }
 }
-//   useEffect(()=>{
-// const getfollower=async()=>{
-// const notadmindata= await firebase.getUserData(userId)
-// // )
-// // // console.log("jkdjfdfd",data.followers,data.followings)
-// }
-// getfollower();
-//   },[firebase,userId])
+
 const toggleExpanded = () => {
   setIsExpanded(!isExpanded); // Toggle between expanded and collapsed state
 };
@@ -193,7 +185,7 @@ const toggleExpanded = () => {
           </div>
           <div className="text-center">New</div>
         </div>)}
-        <div className="d-md-none"><FollowerAndFollowing/></div>
+        <div className="d-md-none d-flex align-items-center justify-content-center"><FollowerAndFollowing/></div>
         <div
           className="gap-5 content d-flex align-items-center mt-md-5 justify-content-center"
           style={{ height: "53px", borderTop:"2px solid rgba(51, 49, 49, 0.151)" }}

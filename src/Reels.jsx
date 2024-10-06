@@ -7,7 +7,7 @@ import "./insta.css";
 import "./ProfilePage/profile.css";
 import { Comment, Share, Saved, More, Song } from "./AllIconsSvgs/IconsSvg";
 import useIntersectionObserver from "./useIntersectionObserver";
-import { reels } from "./SuggestionData";
+import { reels } from "./Suggestion/SuggestionData";
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoVolumeMute } from "react-icons/io5";
 import { useFirebase } from "./Firebase";

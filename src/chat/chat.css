@@ -1,0 +1,24 @@
+.fw600{font-weight: 600;}
+.fs14{font-size: 14px;}
+.fs20{font-size: 20px;}
+.fs16{font-size: 16px;}
+.fs15{font-size: 15px;}
+.fs11{font-size: 11px;}
+.fs13{font-size: 13px;}
+
+.fs12{font-size: 12px;}
+.fw700{font-weight: 700;}
+
+.fw400{font-weight: 400;}
+
+  input:focus {
+    outline: none; /* Removes the outline */
+    border: none; /* Removes the border */
+}
+.smiley-wrapper{
+  display: none;
+}
+.smiley-container:hover .smiley-wrapper{
+  cursor: pointer;
+  display: flex;
+}

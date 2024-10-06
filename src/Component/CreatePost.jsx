@@ -127,6 +127,8 @@ console.log(postText)
     document.getElementById("file-upload").click(); // Programmatically click the hidden input
     // sethandlecreatePostCloseButton(false)
   };
+  // const 20=20;
+
   return (
     <div style={styles.overlay} className={`${show ? "" : "d-none"}`}>
       <button
@@ -285,7 +287,7 @@ console.log(postText)
         <div  className="position-relative" style={{...styles.header,height:"40px",}}>
         
             <div className="
-             d-flex align-items-center justify-content-between p-2 pb-0 pt-0 position-fixed" style={{width:"500px"}}>
+             d-flex align-items-center justify-content-between p-2 pb-0 pt-0 position-fixed" style={{width:"550px"}}>
               <div >
                 <BackArrow />
               </div>
@@ -298,7 +300,7 @@ console.log(postText)
             </div>
         
         </div>
-       <div className="d-flex flex-sm-row flex-column row">
+       <div className="d-flex flex-sm-row m-0 flex-column row">
        
         {selectedImage && mediaType === "image" && (
           <div className="laptop-frame col-7 p-0">
@@ -313,7 +315,6 @@ console.log(postText)
                 height: "100%",
                 width: "70%",
                 objectFit:"cover",
-                border: "2px solid #ccc",
                 borderRadius: "5px",
               }}
             ></img>
@@ -338,7 +339,7 @@ console.log(postText)
             <source src={selectedImage} type="video/mp4" />
           </video></div>
         )}
- <div className="instagram-post-container col-4 scroll-container p-0" style={{height:"300px"}} >
+ <div className="instagram-post-container flex-grow-1 col-4 scroll-container p-0" style={{height:"300px"}} >
       <div className="profile-info">
         <img
           src={ProfileImg}
@@ -356,7 +357,7 @@ console.log(postText)
         style={{height:"100px"}}
       />
       <div className="d-flex align-items-center justify-content-between ms-1 me-1" style={{borderBottom:"1px solid #c8c3c3"}}>
-<div className="m-1"><Smile/></div><div style={{fontSize:"12px",color:"#c8c3c3"}}>0/2200</div>
+<div className="m-1"><Smile height={18} width={18}/></div><div style={{fontSize:"12px",color:"#c8c3c3"}}>0/2200</div>
       </div>
       <div className="post-options">
       <div className="d-flex mt-1 align-items-center justify-content-between ms-1 me-1" >

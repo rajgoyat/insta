@@ -1,6 +1,6 @@
 import React from 'react'
 import { SideBottombars } from './Insta'
-import { peopleImgs } from './SuggestionData'
+import { peopleImgs } from './Suggestion/SuggestionData'
 import man from './Imgs/man2.jpeg'
 import { YourMessage, Pencil,DownChevron } from './AllIconsSvgs/IconsSvg'
 const Message = () => {

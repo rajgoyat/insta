@@ -2,9 +2,9 @@
 // import car from './Imgs/car.jpeg'
 // import { peopleImgs } from "./SuggestionData";
 import { Link } from "react-router-dom";
-import avtar from './Imgs/avtar.jpeg'
+import avtar from '../Imgs/avtar.jpeg'
 import { useEffect, useState } from "react";
-import { useFirebase } from './Firebase';
+import { useFirebase } from '../Firebase';
 const Suggestion = () => {
   const [showHello, setShowHello] = useState(true);
   const [user, setUser] = useState(null);
@@ -74,11 +74,11 @@ const Suggestion = () => {
         if(val.userId=== user.userId){
           return null;
         }
-        return(  <Link className="text-decoration-none text-reset" to={`profile/${val.userId}`} key={ind}><div className="d-flex mt-3" >
+        return(  <Link className="text-decoration-none text-reset" to={`profile/${val.userId}` }  key={ind}><div className="d-flex mt-3" >
          <img className="rounded-circle" style={{height:"44px",width:"44px"}} src={val?.proimg|| avtar} alt="" />
           <div className="naming">
-        <div className="names d-flex flex-column " style={{marginLeft:"5px"}}><div style={{fontSize:"14px"}}>{val?.username}</div>
-        <div className="fw-light light-color" style={{fontSize:"12px"}}>{val.fullname}</div></div>
+        <div className="names d-flex flex-column " style={{marginLeft:"5px"}}><div style={{fontSize:"14px", fontWeight:"600"}}>{val?.username}</div>
+        <div className="fw-light light-color" style={{fontSize:"12px", fontWeight:"400"}}>{val.fullname}</div></div>
         <div className="text-primary me-4" style={{fontSize:"13px"}} 
         >{user?.followings?.includes(val.userId)?"Unfollow":"Follow"}</div>
       </div></div></Link>

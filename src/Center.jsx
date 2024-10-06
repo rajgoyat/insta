@@ -1,138 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "./Context/DataContext";
-// import Following from "./Following"; 
-// import { Link } from "react-router-dom";
-// import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa6";
-// import { BiMessageRounded } from "react-icons/bi";
-// import { BsThreeDotsVertical } from "react-icons/bs";
-// import { LuSend } from "react-icons/lu";
-
-// const PostData = () => {
-//   const { allUsers } = useContext(DataContext);
-//   const [allPosts, setAllPosts] = useState([]);
-//   const [imageCount, setImageCount] = useState(0);
-//   const [likeStatus, setLikeStatus] = useState([]);
-
-//   useEffect(() => {
-//     const getAllPosts = () => {
-//       if (allUsers && Array.isArray(allUsers)) {
-//         const posts = allUsers.flatMap(user => user.video || []).filter(post => post.src);
-//         setAllPosts(posts);
-
-//         const imageCount = posts.filter(post => post.type === 'image').length;
-//         setImageCount(imageCount);
-//       }
-//     };
-//     getAllPosts();
-//   }, [allUsers]);
-
-//   const likeHandler = (index) => {
-//     setLikeStatus(prev => {
-//       const newStatus = [...prev];
-//       newStatus[index] = !newStatus[index];
-//       return newStatus;
-//     });
-//   };
-// // console.log(allPosts)
-//   return (
-//     <div className="postData w-100 d-flex flex-column align-items-center justify-content-center">
-//       <h3>Total Images: {imageCount}</h3>
-//       {allPosts.length > 0 ? (
-//         <div className="row">
-//           {allPosts.map((item, index) => {
-//             // console.log(allPosts);
-//             return (
-//               <div key={index} className="position-relative col-12 m-0 pe-0 mb-3">
-//                 <div className="d-flex p-2 mt-3">
-//                   <Link to="/insta-app/profile">
-//                     <img
-//                       className="rounded-circle border border-dark"
-//                       style={{ width: "32px", height: "32px" }}
-//                       src={allUsers[index].proimg}
-//                       alt=""
-//                     />
-//                   </Link>
-//                   <div className="d-flex flex-column text-dark ms-2">
-//                     <Link to="/insta-app/profile" className="text-decoration-none text-reset">
-//                       <p className="m-0 p-0 d-flex flex-row">
-//                         <span className="p-0 m-0">{item.userName}</span>
-//                         <span className="ms-2 text-primary m-0 p-0">Follow</span>
-//                       </p>
-//                     </Link>
-//                     <p className="p-0 m-0">Suggested for you</p>
-//                   </div>
-//                   <div className="position-absolute" style={{ right: "0px" }}>
-//                     <BsThreeDotsVertical size={20} />
-//                   </div>
-//                 </div>
-//                 {item.type === 'image' ? (
-//                   <img
-//                     src={item.src}
-//                     alt={`Post ${index}`}
-//                     className="img-fluid"
-//                     style={{
-//                       height: "auto", // Let the height be determined by the content
-//                       width: "100%", // Make sure it takes the full width
-//                     }}
-//                   />
-//                 ) : (
-//                   <video
-//                     src={item.src}
-//                     controls
-//                     muted
-//                     className="img-fluid"
-//                     style={{
-//                       height: "auto", // Let the height be determined by the content
-//                       maxHeight: "600px", // Limit max height
-//                       width: "100%", // Make sure it takes the full width
-//                     }}
-//                   />
-//                 )}
-//                 <div className="col-12 position-relative">
-//                   {likeStatus[index] ? (
-//                     <FaHeart color="red" className="m-2" size={22} onClick={() => likeHandler(index)} />
-//                   ) : (
-//                     <FaRegHeart className="m-2" size={22} onClick={() => likeHandler(index)} />
-//                   )}
-//                   <BiMessageRounded className="m-2" size={23} />
-//                   <LuSend className="m-2" size={23} />
-//                   <div className="position-absolute end-0 top-0 mt-1 me-1">
-//                     <FaRegBookmark size={20} />
-//                   </div>
-//                 </div>
-//                 <div className="text-dark" style={{ fontSize: "12px" }}>
-//                   <p className="m-0">{item.likes} likes</p>
-//                 </div>
-//                 <div style={{
-//                   fontSize: "12px",
-//                   color: "rgb(115 115 115)",
-//                   borderBottom: "1px solid rgb(219 219 219)",
-//                   padding: "2px 15px 0 10px",
-//                 }}>
-//                   <p className="m-0">View all comments</p>
-//                   <p className="m-0">Add a comment</p>
-//                 </div>
-//               </div>
-//             );
-//           })}
-//         </div>
-//       ) : (
-//         <p>No posts available.</p>
-//       )}
-//     </div>
-//   );
-// }  
-// const Center = () => {
-//   return (
-//     <div className="center align-items-center position-relative col-12" style={{ zIndex: "4" }}>
-//       <Following />
-//     </div>
-//   );
-// };
-
-// export { Center, PostData };
 import  { useRef} from "react";
-import { peopleImgs } from "./SuggestionData";
+import { peopleImgs } from "./Suggestion/SuggestionData";
 import Following from "./Following";
 import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa6";
 import { BiMessageRounded } from "react-icons/bi";
@@ -142,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useIntersectionObserver from './useIntersectionObserver';
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoVolumeMute } from "react-icons/io5";
+import Loader from "./Component/Loader";
 const Center = () => {
  
   return (
@@ -161,12 +31,18 @@ const VideoComponent = ({ src, vol ,setVol }) => {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (isIntersecting && video.paused) {
-      videoRef.current.play();
-    } else {  
-      videoRef.current.pause();
+  
+    if (isIntersecting) {
+      // Attempt to play the video when it's in view
+      video.play().catch((error) => {
+        console.error("Error trying to play video:", error);
+      });
+    } else {
+      // Pause the video if it's out of view
+      video.pause();
     }
   }, [isIntersecting]);
+  
  
   return (
     <div ref={videoContainerRef} className="video-container position-relative col-12 row  m-0 p-0">
@@ -327,7 +203,7 @@ navigate(`/insta-app/profile/${id}`)
             </div>
           </div>
         );
-      })}</>):('jk')}
+      })}</>):(<div className="d-felx align-items-center justify-content-center "><Loader/></div>)}
     </div>
   );
 };

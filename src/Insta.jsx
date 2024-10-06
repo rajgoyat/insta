@@ -10,7 +10,7 @@ import {Center} from "./Center";
 import { useContext } from "react";
 import CreatePost from "./Component/CreatePost";
 import { Link, useNavigate } from "react-router-dom";
-import Suggestion from "./Suggestion";
+import Suggestion from "./Suggestion/Suggestion";
 import { MdOutlineExplore, MdHomeFilled } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
 // import CreatePost from "./Component/CreatePost";
@@ -62,7 +62,7 @@ const SideBottombars= ()=>{
 const [userdata,setData]=useState(null);
 const navigate= useNavigate()
 const {searchshow,setSearchshow}=firebase;
-const { createPostCloseButton } = useContext(DataContext);
+const { createPostCloseButton,sidebarMenu,setSidebarMenu } = useContext(DataContext);
 
   // console.log(shows)
 useEffect(()=>{
@@ -76,14 +76,11 @@ getId();
 // console.log("hells",userId)
 const handleSearch=()=>{
   setSearchshow((prevState) => !prevState);  
-console.log("hello",searchshow)
 }
-// console.log("jjj",searchshow)
-// const handleLogin=()=>{
-//  navigate('/insta-app/login')
-// }
 const handleMessage=()=>{
- navigate('/insta-app/messages')
+ 
+  // console.log(userdata,'jjjj')
+ navigate(`/insta-app/messages`)
 }
 const handleHome=()=>{
  navigate('/insta-app')
@@ -91,7 +88,9 @@ const handleHome=()=>{
 const handleReels=()=>{
   navigate('/insta-app/reels')
 }
-
+const handleMenuIcon=()=>{
+setSidebarMenu(prev=>!prev)
+}
 useEffect(() => {
     const iconArray = [
       { label: "Home", icon: <MdHomeFilled size={25} />, onClick:handleHome },
@@ -121,11 +120,10 @@ useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
   return(
    <><SeetingIcon/><div className="position-relative" style={{zIndex:"10"}}> <div id="slideBar" className="position-fixed" style={{zIndex:"5"}}> 
 <div className={`position-absolute notificationMain d-none d-md-block ${shows? "shown": ""}`} style={{zIndex:"19"}}><Notifications/>
-<h3 className='top-0 d-none d-md-block ms-5 ps-2 position-absolute text-center'>Notification</h3>
+
 
 <div className="text-dark fs-4 fw-medium position-relative btn" style={{top:"-140px",right:"-250px"}} onClick={()=>setshow(!shows)}>X</div></div>
 
@@ -155,7 +153,7 @@ useEffect(() => {
         );
       })}
      
-      {userdata&& (<Link to={`/insta-app/profile/${userdata.userId}`} className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
+      {userdata&& (<div onClick={()=>navigate(`/insta-app/profile/${userdata.userId}`)} className="text-decoration-none"><div className="p-3 pe-md-2 ps-md-0 pt-md-2 pb-md-2 ms-md-2 me-md-2  allIcon">
         <img
           className="rounded-circle ms-md-2"
           style={{ width: "25px", height: "25px" }}
@@ -163,7 +161,7 @@ useEffect(() => {
           alt=""
         />
         <span className={`ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}>Profile</span>
-      </div></Link>)} 
+      </div></div>)} 
     </div>
     <div
       className="d-none d-md-block w-md-100"
@@ -173,11 +171,11 @@ useEffect(() => {
         <FaThreads size={25} />
         <span className={`p-2 ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}>Threads</span>
       </div>
-      <div className=" allIcon m-2 p-2" data-bs-toggle="collapse" data-bs-target=".slidelogoutIconmain" aria-expanded="false">
+      <div className=" allIcon m-2 p-2" onClick={handleMenuIcon}>
         <PiList size={25} /> 
         <span className={`p-2 ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"}  text-center`}  >More</span>
       </div>
-      <SlideLogout/>
+     {sidebarMenu? <SlideLogout/>:null}
     </div>
     
 </div>{searchshow ? <Search/>:null}</div></>    
