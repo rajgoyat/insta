@@ -28,6 +28,7 @@ import {PostData} from './Center'
 import { useFirebase } from "./Firebase";
 import { Reels } from "./AllIconsSvgs/IconsSvg";
 import { Notifications } from "./Notifications";
+import { useMediaQuery } from "react-responsive";
 const Insta = () => {
   const navigate= useNavigate()
   const firebase=useFirebase();
@@ -63,6 +64,7 @@ const [userdata,setData]=useState(null);
 const navigate= useNavigate()
 const {searchshow,setSearchshow}=firebase;
 const { createPostCloseButton,sidebarMenu,setSidebarMenu } = useContext(DataContext);
+const isLarger = useMediaQuery({ query: '(min-width: 767px) and (max-width: 768px)' });
 
   // console.log(shows)
 useEffect(()=>{
@@ -140,7 +142,7 @@ useEffect(() => {
     
     </div>
     <div 
-      className="position-fixed position-md-relative d-flex d-md-block flex-row justify-content-around mainIcons"
+      className={`position-fixed position-md-relative  ${isLarger? "d-none": "d-flex d-md-block"}  flex-row justify-content-around mainIcons`}
     >
       {iconData.map((val, ind) => {
         return (
@@ -191,7 +193,7 @@ show? navigate('/insta/edit'): navigate("/insta")
   }
   return(<>
 <div className=" header">
-     <div className="position-fixed pt-2 ms-1 pb-2  bg-white d-md-none d-flex align-items-center justify-content-between"> <div className="allIcon d-flex align-items-center svgs ">
+     <div className="position-fixed row col-12 pt-2 ms-1 pb-2  bg-white d-md-none d-flex align-items-center justify-content-between"> <div className="col allIcon d-flex align-items-center svgs ">
         <svg
           aria-label="Instagram"
           className="x1lliihq x1n2onr6 x5n08af"
@@ -211,7 +213,7 @@ show? navigate('/insta/edit'): navigate("/insta")
         </svg>
         <FaChevronDown size={15} className="" />
       </div>
-      <div className="d-flex">
+      <div className="d-flex col justify-content-end">
         <div
           className="d-sm-flex align-items-center flex-row d-none"
           style={{

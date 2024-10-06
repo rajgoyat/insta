@@ -41,7 +41,7 @@ const[heading,setheading]=useState();
   );
 };
 const ProfileMain = () => {
-  const [iconSize,setIconSize]= useState(25)
+  const [iconSize,setIconSize]= useState(24)
   const isLarger = useMediaQuery({ query: '(min-width: 767px)' });
  const navigate= useNavigate();
   const [userAdmin,setuserAdmin]=useState(); 
@@ -51,6 +51,7 @@ const {userdata}= firebase;
 const { userId } = useParams();
 const [showwhat,setshowwhat]=useState("post")
 const [followstate,setfollowstate]=useState("")
+const [bordertop,setborderTop]=useState(1)
 // console.log("prem",userdata)
 const [isExpanded, setIsExpanded] = useState(false); 
 useEffect(()=>{
@@ -84,9 +85,9 @@ useEffect(() => {
 
   useEffect(() => {
     if (isLarger) {
-      setIconSize(15);
+      setIconSize(12);
     } else {
-      setIconSize(25);
+      setIconSize(24);
     }
   }, [isLarger]);
 const EditProfile=()=>{
@@ -113,7 +114,7 @@ const toggleExpanded = () => {
     <div className="centerOrsuggestion">
       <div className="profilePage" style={{ width:"100%" }}>
         <div
-          className="justify-content-center d-flex mt-md-3"
+          className="justify-content-center d-flex flex-column flex-md-row m-3 m-md-0 mt-md-3"
           // style={{ height: "193px" }}
         >
           <div className="user-image " style={{ MaxWidth: "260px" }}>
@@ -133,7 +134,7 @@ const toggleExpanded = () => {
                 {user?.fullname}
               </div>
               <div
-                className="btn ms-2 me-2 d-flex align-items-center justify-content-center"
+                className="btn ms-md-2 me-2 d-flex align-items-center justify-content-center"
                 style={{
                   fontWeight:"600",
                   borderRadius: "10px",
@@ -187,35 +188,41 @@ const toggleExpanded = () => {
         </div>)}
         <div className="d-md-none d-flex align-items-center justify-content-center"><FollowerAndFollowing/></div>
         <div
-          className="gap-5 content d-flex align-items-center mt-md-5 justify-content-center"
-          style={{ height: "53px", borderTop:"2px solid rgba(51, 49, 49, 0.151)" }}
+          className="gap-5 content d-flex align-items-center mt-md-5 justify-content-evenly justify-content-md-center"
+          style={{ height: "53px", borderTop:"2px solid rgba(51, 49, 49, 0.151)", color:"rgb(115, 115, 115)" }}
         >
-          <div className=" d-flex ms-3">
-            <div style={{cursor:"pointer"}} className="d-flex align-items-center justify-content-evenly " onClick={()=>setshowwhat("post")}>
-             <div> <Post height={iconSize} width={iconSize}/>
+          <div className=" d-flex h-100 align-items-center justify-content-center" onClick={()=>setborderTop(1)}  style={{width:isLarger?"10%":"20%", borderTop:bordertop===1?"1px solid black":''}}>
+            <div style={{cursor:"pointer", color: bordertop===1 ? (isLarger ? "black" : "#0095f6") : ''
+}} className="d-flex align-items-center justify-content-evenly " onClick={()=>setshowwhat("post")}>
+             <div > <Post height={iconSize} width={iconSize}/>
             </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
             POST</div></div>
           </div>
-          <div className="  ms-3">
-            <div style={{cursor:"pointer"}} className="d-flex align-items-center justify-content-evenly" onClick={()=>setshowwhat("reels")}>
+          <div className="d-flex h-100 align-items-center justify-content-center" onClick={()=>setborderTop(2)}  style={{width:isLarger?"10%":"20%", borderTop:bordertop===2?"1px solid black":''}}>
+            <div style={{cursor:"pointer", color: bordertop===2 ? (isLarger ? "black" : "#0095f6") : ''
+}} className="d-flex align-items-center justify-content-evenly" onClick={()=>setshowwhat("reels")}>
             <div > <Reels height={iconSize} width={iconSize} />
             </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
             REELS</div></div>
           </div>
-          <div className="  ms-3">
-            <div style={{cursor:"pointer"}} className="d-flex align-items-center justify-content-evenly">
+          <div className="d-flex  h-100 align-items-center justify-content-center" onClick={()=>setborderTop(3)}  style={{width:isLarger?"10%":"20%", borderTop:bordertop===3?"1px solid black":''}}>
+            <div style={{cursor:"pointer", color: bordertop===3 ? (isLarger ? "black" : "#0095f6") : ''
+}} className="d-flex align-items-center justify-content-evenly">
             <div > <Saved height={iconSize} width={iconSize} />
             </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
             SAVED</div></div>
           </div>
-          <div className=" d-flex ms-3">
-            <div className="">
+          <div className=" d-flex  h-100 align-items-center justify-content-center" onClick={()=>setborderTop(4)}  style={{width:isLarger?"10%":"20%", borderTop:bordertop===4?"1px solid black":''}}>
+            <div style={{cursor:"pointer", color: bordertop===4 ? (isLarger ? "black" : "#0095f6") : ''
+}} className="d-flex align-items-center justify-content-evenly">
+           
+            <div >
               <Tagged height={iconSize} width={iconSize}/>
             </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
-            TAGGED</div>
+            TAGGED</div></div>
           </div>
         </div>
-        <div className=" bottom area">{showwhat==="reels"?<ProfileReels/>:<Posts/>}</div>
+        <div className=" bottom area row m-0">{showwhat==="reels"?<ProfileReels/>:<Posts/>}</div>
       </div>
     </div>
   );
@@ -261,15 +268,15 @@ if (Array.isArray(notadmindata.video)) {
 getfollower();
   },[firebase,userId])
   return(
-  <div className="d-flex followContent align-items-center justify-content-md-between justify-content-evenly mt-3" style={{width:"300px"}}>
-              <div className=" d-md-flex flex-md-row">
-                <div className="text-center text-dark me-1" style={{fontWeight:"700"}}>{numpost>=1?numpost :"0"}</div> <div> post
+  <div className="d-flex followContent align-items-center justify-content-md-between justify-content-evenly w-100" style={{marginTop:"20px",padding:"12px",width:"300px"}}>
+              <div className=" d-md-flex flex-md-row" style={{height:"36px"}}>
+                <div className="text-center text-dark me-1" style={{fontWeight:"600", fontSize:"14px"}}>{numpost>=1?numpost :"0"}</div> <div style={{fontSize:"14px", fontWeight:"400"}}> post
               </div></div>
-              <div className=" d-md-flex flex-md-row">
-              <div className="text-center text-dark me-1" style={{fontWeight:"700"}}>{follower} </div> <div> follower
+              <div className=" d-md-flex flex-md-row" style={{height:"36px"}}>
+              <div className="text-center text-dark me-1" style={{fontWeight:"600", fontSize:"14px"}}>{follower} </div> <div style={{fontSize:"14px", fontWeight:"400"}}> follower
               </div></div>
-              <div className=" d-md-flex flex-md-row">
-                <div className="text-center text-dark me-1" style={{fontWeight:"700"}}>{following}</div><div>  following
+              <div className=" d-md-flex flex-md-row" style={{height:"36px"}}>
+                <div className="text-center text-dark me-1" style={{fontWeight:"600", fontSize:"14px"}}>{following}</div><div style={{fontSize:"14px", fontWeight:"400"}}>  following
               </div></div>
             </div>)
 }

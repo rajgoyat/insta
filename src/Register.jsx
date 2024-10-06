@@ -11,7 +11,7 @@
 //     numberoremail: "", 
 //     fullname: "",
 //     username: "",
-//     password: "",
+//     password: "", 
 //   });
 //   const dataHandler = (e) => {
 //     const { name, value } = e.target;

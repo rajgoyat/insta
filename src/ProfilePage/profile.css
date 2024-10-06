@@ -158,4 +158,10 @@ height: "637px", */
             left:0px;
         }
     }
-  
+  .postpage .post-hover .posthover2{
+    color: white;
+    display: none;
+  }
+  .postpage .post-hover:hover .posthover2{
+    display: flex;
+  }

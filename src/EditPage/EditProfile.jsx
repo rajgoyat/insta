@@ -1,6 +1,6 @@
 // import img1 from './imgs/profile.jpg'
 import { useFirebase } from "../Firebase";
-// import profileImg from './Imgs/profile.jpg'
+// import profileImg from './Imgs/profile.jpg' 
 // import EditProfile1 from './EditSeeting'
 import {deleteObject, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import React, { useState, useEffect } from "react";

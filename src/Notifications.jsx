@@ -108,7 +108,7 @@ const navigate= useNavigate();
         ))}
       </div>
 
-      {/* This month */}
+      {/* This month  insta-app*/}
       <div className="mt-4">
         <h6>This month</h6>
         {notifications.month.map((notification, index) => (

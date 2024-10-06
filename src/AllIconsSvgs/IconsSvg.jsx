@@ -43,26 +43,8 @@ const YourActivity = () => (
   </svg>
 );
 const Saved = ({ height = 20, width = 20 }) => (
-  <svg
-    aria-label="Saved"
-    className="clrs x1lliihq x1n2onr6 x5n08af"
-    fill="currentColor"
-    height={height}
-    role="img"
-    viewBox="0 0 24 24"
-    width={width}
-  >
-    <title>Saved</title>
-    <polygon
-      fill="none"
-      points="20 21 12 13.44 4 21 4 3 20 3 20 21"
-      stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-    ></polygon>
-  </svg>
-);
+<svg aria-label="Saved" class="x1lliihq x1n2onr6 x1roi4f4" fill="currentColor" height={height} role="img" viewBox="0 0 24 24" width={width}><title>Saved</title><polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon></svg>
+)
 const DarkMode = () => (
   <svg
     aria-label="Theme icon"
