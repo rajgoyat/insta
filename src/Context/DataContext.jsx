@@ -2,7 +2,7 @@ import React, { createContext , useEffect, useState} from 'react'
 
 
 import { useFirebase } from '../Firebase';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 export const DataContext= createContext();
 const DataProvider = ({ children }) => {
 const [user,setuser]= useState()
@@ -10,6 +10,16 @@ const [allUsers,setallUsers]= useState(null)
 const firebase= useFirebase();
 const [sidebarMenu,setSidebarMenu]=useState(false)
 const [sidebarMenuSeeting,setSidebarMenuSeeting]= useState(false);
+const [allshow,setallshow]=useState("")
+const [msgUser1, setMsgUser1] = useState(null);
+  const navigate= useNavigate()
+
+  // Function to set the message box data
+  const handleUserMsgBox = (username, proimg, userId) => {
+    setMsgUser1({ username, proimg, userId });
+   navigate('insta/messages')
+  };
+
 useEffect(()=>{
 const getdata=async()=>{
   const userdata= await firebase.userdata;
@@ -25,8 +35,7 @@ const createPostCloseButton=()=>{
 
 useEffect(()=>{
   
-  if (user && user.video) {
-    
+  if (user) {
     const getall = async()=>{
       const alluser= await firebase.getAllUser;
       setallUsers(alluser); // Set the 'video' array in the state
@@ -34,9 +43,10 @@ useEffect(()=>{
   getall();}
 },[firebase,user])
     return (
-    <DataContext.Provider value={{sidebarMenuSeeting,setSidebarMenuSeeting,sidebarMenu,setSidebarMenu,
+    <DataContext.Provider value={{sidebarMenu,setSidebarMenu,
      createPostCloseButton,handlecreatePostCloseButton,
-     sethandlecreatePostCloseButton,user ,allUsers}}>
+     sethandlecreatePostCloseButton,user ,allUsers,
+     handleUserMsgBox, msgUser1,allshow,setallshow}}>
     {children}
 </DataContext.Provider>
   )

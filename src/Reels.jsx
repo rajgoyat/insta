@@ -22,7 +22,7 @@ const Reels = () => {
   const [followState, setFollowState] = useState(''); // Store follow state for each user
   const firebase = useFirebase();
   const { userdata } = firebase;
-
+console.log(allPosts)
   const likeHandler = (index) => {
     setLikes((prevLikes) =>
       prevLikes.map((like, i) =>
@@ -40,11 +40,13 @@ const Reels = () => {
       if (allUsers && Array.isArray(allUsers)) {
         // Combine video posts with the user's username, userId, and proimg
         const posts = allUsers.flatMap((user) => {
-          if (Array.isArray(user.video)) {
-            return user.video
-              .filter((video) => video.type !== "image" && user.userId !== userdata.userId)  // Filter out videos where video.userId === userdata.userId
-              .map((video) => ({
-                ...video, // Spread video properties (src, type, etc.)
+          if (Array.isArray(user.videos)) {
+            console.log(user.videos)
+            console.log("aaaaaaaaaa",user.videos,user)
+            return user.videos
+              .filter((videos) => videos.type !== "image" && user.userId !== userdata.userId)  // Filter out videos where video.userId === userdata.userId
+              .map((videos) => ({
+                ...videos, // Spread video properties (src, type, etc.)
                 username: user.username,
                 userId: user.userId,
                 proimg: user.proimg,

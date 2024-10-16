@@ -9,8 +9,8 @@ const Allpostreel = () => {
     const getAllVideos = () => {
       if (allUsers && Array.isArray(allUsers)) {
         const videos = allUsers.flatMap(user => {
-          if (Array.isArray(user.video)) {
-            return user.video.filter(video => video.src && video.src !== ""); 
+          if (Array.isArray(user.videos)) {
+            return user.videos.filter(videos => videos.src && videos.src !== ""); 
           }
           return [];
         });

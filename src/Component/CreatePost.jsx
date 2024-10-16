@@ -21,7 +21,6 @@ function CreatePost() {
     const [postText, setPostText] = useState("");
     const [videoFile, setVideoFile] = useState(null); // Stores the uploaded file
   const [data, setData] = useState(null); // Stores user data from Firestore
-console.log(user)
 const [userId,setUserId]=useState()
 useEffect(()=>{
   const getId=async()=>{  
@@ -49,7 +48,6 @@ console.log(postText)
       if(userId){const storageRef = ref(storage, `videos/${userId}_${videoFile.name}`);
       await uploadBytes(storageRef, videoFile);
       const downloadURL = await getDownloadURL(storageRef); // Get the download URL (src)
-      const fileType = videoFile.type; // Get the file type (e.g., video/mp4)
 
       // Step 2: Update Firestore with the video details
       const userRef = doc(database, "users", userId);
@@ -70,7 +68,7 @@ console.log(postText)
 
       // Step 3: Add the new video to the user's video array
       await updateDoc(userRef, {
-        video: [...existingVideos, newVideo],
+        videos: [...existingVideos, newVideo],
       });
 
       console.log("Video uploaded and added to Firestore successfully!");
@@ -146,27 +144,27 @@ console.log(postText)
       
     <Carousel.Item>
     
-      <div className="" style={styles.dialog}>
-        <div className=" " style={styles.header}>
+      <div className="container p-0" style={{...styles.dialog, width:"445px", height:"499px"}}>
+        <div className="" style={styles.header}>
           {selectedImage ? (
             <div className="
-            w-100 d-flex align-items-center justify-content-between p-2 pb-0 pt-0">
+            w-100 d-flex align-items-center justify-content-between p-2 pb-0 pt-0" style={{height:"41.8px"}}>
               <div onClick={()=>setSelectedImage(null)}>
                 <BackArrow />
               </div>
               <div>
-                <h5 className="mt-1" style={{ fontWeight: "450" }}>Crop</h5>
+                <h5 className="mt-1" style={{ fontWeight: "600", fontSize:"16px" }}>Crop</h5>
               </div>
-              <div  className="text-primary fs-6" onClick={()=>{setActiveIndex(1); pauseAllVideos()}} style={{ cursor: "pointer" }}>
+              <div  className="text-primary" onClick={()=>{setActiveIndex(1); pauseAllVideos()}} style={{ cursor: "pointer", fontSize:"14px", fontWeight:"600" }}>
                 Next
               </div>
             </div>
           ) : (
-            <h3>Create new post</h3>
+            <h3 className="m-0 d-flex align-items-center justify-content-center" style={{fontSize:"16px", fontWeight:"600",height:"42px"}}>Create new post</h3>
           )}
         </div>
         {!selectedImage && (
-          <div style={{...styles.body,height:"300px"}}>
+          <div className="h-75 " style={styles.body}>
             <div className="mt-3" style={styles.iconContainer}>
               {/* width */}
               <svg
@@ -223,9 +221,9 @@ console.log(postText)
                 backgroundImage: `url(${selectedImage})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                height: "300px",
-                // width: "400px",
-                objectFit:"cover",
+                maxHeight: "446px",
+              objectFit: "cover",
+              width: "445px",
                 border: "2px solid #ccc",
                 borderRadius: "5px",
               }}
@@ -240,9 +238,11 @@ console.log(postText)
             autoPlay
             style={{
               // borderRadius: "5px",
-              maxHeight: "400px",
+              height: "446px",
               objectFit: "cover",
-              width: "100%",
+              width: "445px",
+              borderBottomRightRadius:"10px",
+              borderBottomLeftRadius:"10px"
             }}
           >
             <source src={selectedImage} type="video/mp4" />
@@ -250,8 +250,8 @@ console.log(postText)
         )}
         {selectedImage && (
           <div
-            className="icon-container p-2  d-flex align-items-center justify-content-between"
-            style={{ zIndex: "3" }}
+            className="icon-container w-100 position-absolute p-2  d-flex align-items-center justify-content-between"
+            style={{ zIndex: "3", bottom:"10px" }}
           >
             <div className="d-flex gap-2">
               <span
@@ -283,38 +283,39 @@ console.log(postText)
    
     <Carousel.Item>
  
-    <div className="scroll-container" style={styles.dialog}>
-        <div  className="position-relative" style={{...styles.header,height:"40px",}}>
+    <div className=" position-relative" style={{...styles.dialog, width:"785px",height:"484px", overflow:"hidden"}}>
+        <div  className="position-relative bg-white" style={{...styles.header,width:"785px",height:"40px",}}>
         
             <div className="
-             d-flex align-items-center justify-content-between p-2 pb-0 pt-0 position-fixed" style={{width:"550px"}}>
+             d-flex align-items-center justify-content-between p-2 pb-0 pt-0 position-fixed" style={{width:"785px",height:"40px",}}>
               <div >
                 <BackArrow />
               </div>
               <div>
-                <h5 className="mt-1" style={{ fontWeight: "450" }}>New Reel</h5>
+                <h5 className="mt-1" style={{ fontWeight: "600", fontSize:"16px" }}>New Reel</h5>
               </div>
-              <div  className="text-primary fs-6" onClick={uploadVideoToFirebase} style={{ cursor: "pointer" }}>
+              <div  className="text-primary fs-6" onClick={uploadVideoToFirebase} style={{ cursor: "pointer", fontSize:"14px", fontWeight:"600" }}>
                 Share
               </div>
             </div>
         
         </div>
-       <div className="d-flex flex-sm-row m-0 flex-column row">
+       <div className="d-flex flex-sm-row m-0 flex-column row" style={{height:"445px"}}>
        
         {selectedImage && mediaType === "image" && (
           <div className="laptop-frame col-7 p-0">
             <img
             src={selectedImage}
-              className="laptop-screen img fluid"
+              className="laptop-screen img fluid "
               style={{
                 
                 // backgroundImage: `url(${selectedImage})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                height: "100%",
-                width: "70%",
-                objectFit:"cover",
+                height:"445px",
+              // borderRadius: "5px",
+              width:"455px",
+              objectFit: "cover",
                 borderRadius: "5px",
               }}
             ></img>
@@ -323,15 +324,13 @@ console.log(postText)
         )}
 
         {selectedImage && mediaType === "video" && (
-         <div className="col-7 p-0"> <video
+         <div className="col-7 p-0 "> <video
             loop
             autoPlay={activeIndex !== 2}
             style={{
-              height:"300px",
+              height:"445px",
               // borderRadius: "5px",
-              maxHeight: "300px",
-              // width:"500px",
-              maxWidth:"400px",
+              width:"455px",
               objectFit: "cover",
               
             }}
@@ -339,48 +338,48 @@ console.log(postText)
             <source src={selectedImage} type="video/mp4" />
           </video></div>
         )}
- <div className="instagram-post-container flex-grow-1 col-4 scroll-container p-0" style={{height:"300px"}} >
-      <div className="profile-info">
+ <div className=" instagram-post-container flex-grow-1 col-4  p-0" style={{height:"446px", width:"320px", overflowY:"scroll"}} >
+      <div className="profile-info p-2">
         <img
           src={ProfileImg}
           alt="Profile"
           className="profile-picture"
         />
-        <span>raj__goyat</span>
+        <span className="p-2">raj__goyat</span>
       </div>
       <textarea
         placeholder="Write a caption..."
         maxLength={2200}
         value={postText}
         onChange={(e)=>setPostText(e.target.value)}
-        className="post-textarea"
+        className="post-textarea p-2"
         style={{height:"100px"}}
       />
-      <div className="d-flex align-items-center justify-content-between ms-1 me-1" style={{borderBottom:"1px solid #c8c3c3"}}>
-<div className="m-1"><Smile height={18} width={18}/></div><div style={{fontSize:"12px",color:"#c8c3c3"}}>0/2200</div>
+      <div className="d-flex align-items-center justify-content-between" style={{padding:"10px 8px ",height:"43px" ,borderBottom:"1px solid #c8c3c3"}}>
+<div ><Smile height={18} width={18}/></div><div style={{fontSize:"12px",color:"#c8c3c3"}}>0/2200</div>
       </div>
       <div className="post-options">
-      <div className="d-flex mt-1 align-items-center justify-content-between ms-1 me-1" >
-<div style={{fontSize:"14px",color:"#737373"}}>Add Location</div><div className="m-1"><Location/></div>
+      <div className="d-flex align-items-center justify-content-between" style={{padding:"10px 8px ",height:"43px" }} >
+<div style={{fontSize:"14px",color:"#737373"}}>Add Location</div><div ><Location/></div>
       </div>
-      <div className="d-flex mt-1 align-items-center justify-content-between ms-1 me-1" >
-<div style={{fontSize:"14px",color:"#737373"}}>Add Colloborator</div><div className="m-1"><AddColloborator/></div>
+      <div className="d-flex align-items-center justify-content-between" style={{padding:"10px 8px ",height:"43px" }} >
+<div style={{fontSize:"14px",color:"#737373"}}>Add Colloborator</div><div ><AddColloborator/></div>
       </div>
-      <div className="d-flex mt-1 align-items-center justify-content-between ms-1 me-1" >
-<div style={{fontSize:"15px",color:""}}>Accessibility</div><div className="m-1"><DownChevron/></div>
+      <div className="d-flex align-items-center justify-content-between" style={{padding:"10px 8px ",height:"43px" }} >
+<div style={{fontSize:"15px",color:""}}>Accessibility</div><div ><DownChevron/></div>
       </div>
-      <div className="d-flex mt-1 align-items-center justify-content-between ms-1 me-1" style={{borderBottom:"1px solid #c8c3c3"}}>
-<div style={{fontSize:"15px",color:""}}>Advanced Seeting</div><div className="m-1"><DownChevron/></div>
+      <div className="d-flex align-items-center justify-content-between" style={{padding:"10px 8px ",height:"43px" ,borderBottom:"1px solid #c8c3c3"}}>
+<div style={{fontSize:"15px",color:""}}>Advanced Seeting</div><div ><DownChevron/></div>
       </div>
       </div>
     </div>
 
 </div>
           <div
-            className=" d-sm-block icon-container p-2 "
-            style={{ zIndex: "3" }}
+            className=" d-flex justify-content-between align-items-center icon-container p-1 position-absolute rounded-pill"
+            style={{fontSize:"14px", fontWeight:"600", zIndex: "3", bottom:"15px", left:"5px", color:"white", backgroundColor:"rgba(0, 0, 0, 0)" }}
           >
-           <ManLogo/> Tag People
+           <div><ManLogo/></div><div className="pt-1 ms-1">Tag People</div>
           </div>
       </div>
     </Carousel.Item>
@@ -389,17 +388,17 @@ console.log(postText)
    
     <Carousel.Item>
       
-    <div style={styles.dialog}>
-        <div className=" text-center p-2" style={styles.header}>
-       <h6>Reel Shared</h6>  
+    <div style={{...styles.dialog, height:"490px", width:"445px"    }}>
+        <div className=" text-center p-2" style={{...styles.header, height:"41.8px"}}>
+       <h6 style={{fontWeight:"600", fontSize:"16px"}}>Reel Shared</h6>  
      
         </div>
-      <div className="d-flex align-items-center justify-content-center " style={{height:"300px"}}>
+      <div className="d-flex align-items-center justify-content-center " style={{height:"440px"}}>
           <div className="d-flex flex-column h-100 align-items-center justify-content-center"> 
             <span style={{ backgroundRepeat: "no-repeat", backgroundPosition: "-244px 0px", height: "98px", width: "98px",backgroundImage:`url(${allimg})` }}>
                 {/* <img src={allimg} alt="Insta_logo"  style={{ }}/> */}
               </span>
-       <div style={{fontSize:"1.3rem",fontWeight:"400"}}>Reel has been shared</div></div>      </div>
+       <div style={{fontSize:"20px",fontWeight:"400"}}>Reel has been shared</div></div>      </div>
       </div>
     </Carousel.Item>
  
@@ -424,15 +423,13 @@ const styles = {
   dialog: {
     backgroundColor: "#fff",
     borderRadius: "10px",
-    width: "560px",
-    maxWidth: "100%",
-    boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
+    boxShadow: "0px 4px 0 rgba(0,0,0,0.1)",
     textAlign: "center",
     position: "relative",
-    maxHeight:"400px",
+   
   },
   header: {
-    borderBottom: "1px solid #e6e6e6",
+    borderBottom: "1px solid #dbdbdb",
     position: "relative",
   },
   closeButton: {
@@ -459,21 +456,29 @@ const styles = {
     marginBottom: "20px",
   },
   textContainer: {
+    fontSize:"20px",
+    fontWeight:"600",
     marginBottom: "20px",
-    color: "#8e8e8e",
+    color: "black",
   },
   buttonContainer: {
     display: "flex",
     justifyContent: "center",
+    
+    
   },
   button: {
-    backgroundColor: "#0095f6",
+    backgroundColor: "rgb(0, 149, 246)",
     color: "#fff",
     border: "none",
-    borderRadius: "4px",
-    padding: "8px 16px",
+    borderRadius: "8px",
+    fontSize:"14px",
+    fontWeight:"600",
+    
     cursor: "pointer",
     fontWeight: "bold",
+    height:"32px",
+    width:"169px"
   },
   iconStyle: {
     display: "flex",

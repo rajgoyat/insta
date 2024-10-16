@@ -6,7 +6,7 @@ import { DataContext } from "../Context/DataContext";
 export const SlideLogout = ()=>{
   const firebase=useFirebase();
   const navigate=useNavigate();
-  const{setSidebarMenu,setSidebarMenuSeeting}= useContext(DataContext);
+  const{setSidebarMenu}= useContext(DataContext);
   const handleLogOut= async()=>{
     console.log("hello")
    const logout=  await firebase.logout();
@@ -14,7 +14,7 @@ export const SlideLogout = ()=>{
    if(logout){navigate('/insta/login');} 
   }
   const handleseetingicon=()=>{
-setSidebarMenuSeeting(true)
+navigate('/insta/edit')
 setSidebarMenu(false)
   }
     return(<div className='slidelogoutIconmain'> <div className=" slidelogoutIcon position-absolute bg-white d-flex flex-column  justify-content-evenly" style={{height:"404px", width:"266px", bottom:"50px",left:"55px", boxShadow:"0 0 10px 2px rgba(43, 41, 41, 0.274)",borderRadius:"20px"}}>

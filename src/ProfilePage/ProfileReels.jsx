@@ -3,17 +3,18 @@ import { useFirebase } from '../Firebase';
 import { useParams } from 'react-router-dom';
 import { FaHeart } from "react-icons/fa6";
 import { Comment1 } from './Posts';
+import { useMediaQuery } from 'react-responsive';
 const ProfileReels = () => {
   const firebase = useFirebase();
   const { userId } = useParams();
   const [allVideos, setAllVideos] = useState([]);
-
+ const isLarger = useMediaQuery({query:'(min-width:600px)'});
   useEffect(() => {
     if (userId) {
       const getall = async () => {
         const userdata = await firebase.getUserData(userId);
-        if (userdata && userdata.video) {
-          setAllVideos(userdata.video); // Set the 'video' array in the state
+        if (userdata && userdata.videos) {
+          setAllVideos(userdata.videos); // Set the 'video' array in the state
         }
       };
       getall();
@@ -23,7 +24,7 @@ const ProfileReels = () => {
   return (
     <div className="container row d-flex align-items-center justify-content-center m-0 p-0 postpage">
       {allVideos.length > 0 ? (
-        <div className="row col-12 col-md-11 row-cols-3 m-0 p-0" >
+        <div className={`row col-12 col-md-11 ${isLarger?"row-cols-4":"row-cols-3"}  m-0 p-0`} >
           {allVideos.map((item, index) => (
             <>
               {item.type === 'video' && (

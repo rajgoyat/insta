@@ -60,7 +60,6 @@ const isLarger = useMediaQuery({query: '(max-width: 576px)'});
  if(isLarger){setFollowingInd(4)}else{setFollowingInd(8)}
 }, [isLarger]);
 
-console.log("commando",userData)
 
   return (
     <div

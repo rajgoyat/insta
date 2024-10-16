@@ -7,11 +7,12 @@ import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa6";
 import { BiMessageRounded } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { LuSend } from "react-icons/lu";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useIntersectionObserver from './useIntersectionObserver';
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoVolumeMute } from "react-icons/io5";
 import Loader from "./Component/Loader";
+import { useFirebase } from "./Firebase";
 const Center = () => {
  
   return (
@@ -59,20 +60,43 @@ const PostData = () => {
   const [like,setLikes]= useState([]) 
 
   const [likeNo, setLikeNo]= useState(Array(dataLength).fill(false))
-  const { allUsers } = useContext(DataContext);
+  const { allUsers, user } = useContext(DataContext);
   const [allPosts, setAllPosts] = useState([]);
   const [imageCount, setImageCount] = useState(0);
   const [likeStatus, setLikeStatus] = useState([]);
+const [followstate,setfollowstate]=useState("")
+const firebase= useFirebase();
 const navigate= useNavigate();
-useEffect(() => {
+useEffect(()=>{
+  if (user?.followings?.includes(user.userId)) {
+    console.log("User ID found in followings:", user.userId);
+    setfollowstate("Unfollow")
+  }
+  else{setfollowstate("Follow")}
+  
+},[user])
+
+const handleFollow=async ()=>{
+  try {
+    if (followstate === "Follow") {
+      await firebase.followuser(user.userId); // Perform follow action
+      setfollowstate("Unfollow"); // Change the button to "Unfollow"
+    } else {
+      await firebase.unfollowuser(user.userId); // Optionally, perform unfollow action if needed
+      setfollowstate("Follow"); // Change the button to "Follow"
+    }
+  } catch (error) {
+    console.error("Error in following/unfollowing user:", error);
+  }
+}
   const getAllPosts = () => {
     if (allUsers && Array.isArray(allUsers)) {
       // Combine video posts with the user's fullname and username
       const posts = allUsers.flatMap(user => {
         // Check if user.video is a valid array before mapping
-        if (Array.isArray(user.video)) {
-          return user.video.map(video => ({
-            ...video,           // Spread video properties (src, type, etc.)  // Add the user's fullname
+        if (Array.isArray(user.videos)) {
+          return user.videos.map(videos => ({
+            ...videos,           // Spread video properties (src, type, etc.)  // Add the user's fullname
             username: user.username,  
             userId:user.userId,
             proimg:user.proimg// Add the user's username (if needed)
@@ -89,10 +113,11 @@ useEffect(() => {
       setImageCount(imageCount);
     }
   };
+ 
 
+useEffect(() => {
   getAllPosts();
 }, [allUsers]);
-console.log(allPosts)
 
 //   const likeHandler = (index) => {
 //     setLikeStatus(prev => {
@@ -116,12 +141,11 @@ console.log(allPosts)
     generateUniqueRandomNumbers();
 }, []);
 useEffect(() => {
-  console.log("hello from raj")
+
   setLikes(randomNo.map((index) => peopleImgs[index].likes));
 }, []);
 
   const likeHandler = (index) => {
-    console.log(index)
     setLikes((prevLikes) => 
       prevLikes.map((like, i) => (i === index ? (likeNo[index] ? like - 1 : like + 1) : like))
     );
@@ -130,9 +154,10 @@ useEffect(() => {
       prevLikeNo.map((likeState, i) => (i === index ? !likeState : likeState))
     );
   };
-  const handleFollow=(id)=>{
+  const handleProfile=(id)=>{
 navigate(`/insta/profile/${id}`)
   }
+  
     return (
     <div className="postData w-100 d-flex flex-column align-items-center justify-content-center row pe-0">
 {/* <VideoComponent src={vid1}  vol={vol} setVol={setVol}/> */}
@@ -150,9 +175,9 @@ navigate(`/insta/profile/${id}`)
               
             >
               
-                <img onClick={()=>handleFollow(val.userId)}
+                <img onClick={()=>handleProfile(val.userId)}
                   className="rounded-circle border border-dark"
-                  style={{ width: "32px", height: "32px" }}
+                  style={{ width: "32px", height: "32px", cursor:"pointer" }}
                   src={val.proimg}
                   alt=""
                 />
@@ -164,7 +189,7 @@ navigate(`/insta/profile/${id}`)
               <p className="m-0 p-0 d-flex flex-row" >
                 <p className="p-0 m-0">{val.username}</p>
                   
-                    <p className="ms-2 text-primary m-0 p-0">Follow</p>
+                    <p className="ms-2 text-primary m-0 p-0" style={{cursor:"pointer"}} onClick={handleFollow}>{followstate}</p>
                  
                 </p> 
                 <p className="p-0 m-0">Suggested for you</p>
@@ -187,7 +212,7 @@ navigate(`/insta/profile/${id}`)
             <div className="text-dark" style={{ fontSize: "12px" }}>
               <p className="m-0">{like[ind]} likes</p>
               <p className="m-0 p-0">
-                cars_universe.tiktok #vutruxe #catagram
+                {val.desc}
               </p>
             </div>
             <div

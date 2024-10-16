@@ -1,5 +1,5 @@
 // ChatPage.js
-import React, { useContext, useEffect, useState,useRef } from "react";
+import React, { useContext, useEffect, useState,useRef} from "react";
 // import { useFirebase } from '../Firebase';
 import "./chat.css";
 import {set ,push,onValue, ref,query, orderByChild, equalTo, remove,child, get} from 'firebase/database';
@@ -34,13 +34,20 @@ const [userId,setuserId]=useState(null)
   const [msg, setmsg] = useState(false);
   const [receiverId,setReceiverId]= useState(null)
   const [message, setMessages] = useState([]);
-  const [textheight,settextheight]=useState()
+  const [textheight,settextheight]=useState('40')
 const [textwidth,settextwidth]=useState()
+const {msgUser1}= useContext(DataContext)
+const sortedMessages = message.sort((a, b) => a.timestamp - b.timestamp);
 
   const [msgUser, setmsgUser] = useState({
     username: "",
     proimg: "",
   });
+  useEffect(()=>{
+if(msgUser1 ){
+  handleUserMsgBox(msgUser1.username, msgUser1.proimg, msgUser1.userId)
+}
+  },[msgUser1])
   useEffect(()=>{
     const getdata=async()=>{
       const userdata= await firebase.userdata;
@@ -61,7 +68,6 @@ const [textwidth,settextwidth]=useState()
   // State for message width
   const [msgWidth, setMsgWidth] = useState("calc(100% - 640px)"); // Default width
 
-  // UseEffect to handle width changes
   useEffect(() => {
     if (isVerySmall) {
       setMsgWidth("calc(100% - 122px)");
@@ -196,23 +202,12 @@ const fetchMessages = () => {
     // setIsVisible(true); // Option click hides the box
   };
   const black= 'black'
- 
+
+
+
   useEffect(()=>{
     const elements = document.getElementsByClassName('msg-container');
-    function getElementOffsetTop(element) {
-      let offsetTop = 0;
-      while (element) {
-        offsetTop += element.offsetTop;
-        element = element.offsetParent;
-      }
-      return offsetTop;
-    }    
-    const element = elements[0];  // Access the first element in the HTMLCollection
-if (element && visibleIndex) {
-  const position = getElementOffsetTop(element);
-settextheight(position)
-console.log(position)
-}
+  
     if (elements.length > 0) {
       const width = elements[0].offsetWidth;
       console.log(width) // Get width of the first element
@@ -473,7 +468,7 @@ console.log(position)
             {/* Chat Body */}
             <div
               className=" p-3"
-              style={{ overflowY: "scroll", backgroundColor: "#f9f9f9" }}
+              style={{ overflowY: "scroll", backgroundColor: "#f9f9f9" , height:"calc(100% - 125px)"}}
             >
               <div className="col">
                 {/* Message Received */}
@@ -503,12 +498,24 @@ console.log(position)
                   className="d-flex flex-column"
                   style={{ padding: "10px", maxWidth: "600px", margin: "auto",height:"70vh" }}
                 >
-                  {message.map((msg, index) => {
+                  {sortedMessages.map((msg, index) => {
                     // Check if the current message is the first message in a sequence by Vishwas Deol
                     const isFirstVishwasMessage =
                       msg.sender === "other" &&
                       (index === 0 || message[index - 1].sender !== "other");
+                      const date = new Date(msg.timestamp);
 
+                      // Define options for formatting the date
+                      const options = {
+                        weekday: 'short', // Short form of the weekday (e.g., "Wed")
+                        hour: '2-digit', // 2-digit hour
+                        minute: '2-digit', // 2-digit minute
+                        hour12: true, // Use 12-hour clock
+                      };
+              
+                      // Format the date to a string
+                      const formattedTime = date.toLocaleString('en-US', options);
+              
                     return (
                       <div
                         key={msg.id}
@@ -545,7 +552,7 @@ console.log(position)
           }}
         >
           <div className="options-header fs11 fw600" style={{color:'rgb(115, 115, 115)',  marginBottom: '5px'}}>
-            {msg.timestamp}
+            {formattedTime}
           </div>
           <button
             className="options-item fs13 fw400 d-flex justify-content-between"
@@ -584,7 +591,7 @@ console.log(position)
                             color: msg.sender === "self" ? "white" : "black",
                             textAlign: msg.sender === "self" ? "right" : "left",
                             height:"32px"
-                          }} onClick={()=>console.log(msg.sender)}
+                          }} 
                         >
                           
                           {msg.text}

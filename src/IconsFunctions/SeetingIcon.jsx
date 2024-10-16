@@ -5,10 +5,10 @@ import { useContext } from 'react';
 import { DataContext } from '../Context/DataContext';
 function InstagramDialog() {
   
-  const { sidebarMenuSeeting,setSidebarMenuSeeting } = useContext(DataContext);
+  const { allshow,setallshow} = useContext(DataContext);
 
   return (
-    <div onClick={()=>setSidebarMenuSeeting(false)} className={`${sidebarMenuSeeting?"d-flex":' d-none'} align-items-center justify-content-center h-100 w-100 position-fixed`} style={{backgroundColor:"#59595994",zIndex:"50"}}>
+    <div onClick={()=>setallshow("")} className={`${allshow==="seetingProfileIcon"?"d-flex":' d-none'} align-items-center justify-content-center h-100 w-100 position-fixed`} style={{backgroundColor:"#59595994",zIndex:"50"}}>
       
 
      
@@ -19,7 +19,7 @@ function InstagramDialog() {
             <button  className="butn mt-0 p-2 d-flex align-items-center justify-content-center" style={{borderBottom:"1px solid #dbdbdb",fontSize:"12px",outline:"none",border:"none"}}>Settings and privacy</button>
             <button  className="butn mt-0 p-2 d-flex align-items-center justify-content-center" style={{borderBottom:"1px solid #dbdbdb",fontSize:"12px",outline:"none",border:"none"}}>Supervision</button>
             <button  className="butn mt-0 p-2 d-flex align-items-center justify-content-center" style={{borderBottom:"1px solid #dbdbdb",fontSize:"12px",outline:"none",border:"none"}}>Log Out</button>
-            <button  className="butn mt-0 p-2 d-flex align-items-center justify-content-center"  onClick={()=>setSidebarMenuSeeting(false)} style={{borderBottomLeftRadius:"10px",borderBottomRightRadius:"10px",borderBottom:"1px solid #dbdbdb",fontSize:"12px",outline:"none",border:"none"}} >Cancel</button>
+            <button  className="butn mt-0 p-2 d-flex align-items-center justify-content-center"  onClick={()=>setallshow("")} style={{borderBottomLeftRadius:"10px",borderBottomRightRadius:"10px",borderBottom:"1px solid #dbdbdb",fontSize:"12px",outline:"none",border:"none"}} >Cancel</button>
           </div> 
         
     </div>

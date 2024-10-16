@@ -9,7 +9,7 @@ import {
   getDoc,
   // getDocs,
   collection,
-  // deleteDoc,
+  deleteField,
   query,
   orderBy,
   onSnapshot,updateDoc, arrayUnion,arrayRemove,getDocs
@@ -22,7 +22,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   FacebookAuthProvider,
-
+  
   signInWithPopup,
   onAuthStateChanged,
   signOut
@@ -136,6 +136,7 @@ const [searchshow,setSearchshow]= useState(false)
         followers:[],
         followings:[],
         password: password,
+        video:[],
         date: new Date().toLocaleString("en-us", {
           month: "short",
           day: "2-digit",

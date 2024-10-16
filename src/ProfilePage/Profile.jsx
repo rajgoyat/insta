@@ -1,11 +1,13 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState ,useEffect, useContext} from "react";
 import { useMediaQuery } from 'react-responsive';
 import './profile.css'
+import { DataContext } from "../Context/DataContext";
 import { Link, useNavigate } from "react-router-dom";
 // import { peopleImgs } from "../SuggestionData";
 import { SideBottombars } from "../Insta";
 import { IoIosArrowBack } from "react-icons/io";
 import { useParams } from 'react-router-dom';
+import Footer from "./Footer";
 import ProfileReels from "./ProfileReels";
 import Posts from './Posts'
 import {
@@ -53,6 +55,7 @@ const [showwhat,setshowwhat]=useState("post")
 const [followstate,setfollowstate]=useState("")
 const [bordertop,setborderTop]=useState(1)
 // console.log("prem",userdata)
+const { handleUserMsgBox,setallshow } = useContext(DataContext);
 const [isExpanded, setIsExpanded] = useState(false); 
 useEffect(()=>{
   if(userdata?.userId===userId){
@@ -68,6 +71,21 @@ useEffect(()=>{
   else{setfollowstate("Follow")}
   
 },[userdata,userId])
+
+const handleFollow=async ()=>{
+  try {
+    if (followstate === "Follow") {
+      await firebase.followuser(userId); // Perform follow action
+      setfollowstate("Unfollow"); // Change the button to "Unfollow"
+    } else {
+      await firebase.unfollowuser(userId); // Optionally, perform unfollow action if needed
+      setfollowstate("Follow"); // Change the button to "Follow"
+    }
+  } catch (error) {
+    console.error("Error in following/unfollowing user:", error);
+  }
+}
+
 useEffect(() => {
   const fetchData = async () => {
     try {
@@ -93,31 +111,20 @@ useEffect(() => {
 const EditProfile=()=>{
   navigate('/insta/edit')
 }
-const handleFollow=async ()=>{
-  try {
-    if (followstate === "Follow") {
-      await firebase.followuser(userId); // Perform follow action
-      setfollowstate("Unfollow"); // Change the button to "Unfollow"
-    } else {
-      await firebase.unfollowuser(userId); // Optionally, perform unfollow action if needed
-      setfollowstate("Follow"); // Change the button to "Follow"
-    }
-  } catch (error) {
-    console.error("Error in following/unfollowing user:", error);
-  }
-}
 
 const toggleExpanded = () => {
   setIsExpanded(!isExpanded); // Toggle between expanded and collapsed state
 };
   return (
-    <div className="centerOrsuggestion">
+    <>
+    <div className="centerOrsuggestion d-flex flex-column">
       <div className="profilePage" style={{ width:"100%" }}>
+        <div className="d-flex justify-content-center flex-column align-items-center">
         <div
           className="justify-content-center d-flex flex-column flex-md-row m-3 m-md-0 mt-md-3"
           // style={{ height: "193px" }}
         >
-          <div className="user-image " style={{ MaxWidth: "260px" }}>
+          <div className="user-image ms-md-3" style={{ MaxWidth: "260px" }}>
             <img
               className="rounded-circle p-1"
               src={user?.proimg}
@@ -156,12 +163,12 @@ const toggleExpanded = () => {
                   height: "30px",
                   width: "120px",
                   backgroundColor: " rgba(51, 49, 49, 0.151)",
-                }}
+                }} onClick={()=>!userAdmin? handleUserMsgBox(user.username,user.proimg, user.userId):''}
               >
                {userAdmin?"View Archieve ": "Message"} 
               </div>
 
-              <div className="ms-1 iconhover d-flex align-items-center justify-content-center" style={{height:"30px",width:"30px", borderRadius:"5px"}}>
+              <div className="ms-1 iconhover d-flex align-items-center justify-content-center" onClick={()=>userAdmin? setallshow("seetingProfileIcon"):setallshow('')} style={{height:"30px",width:"30px", borderRadius:"5px"}}>
                 {userAdmin? <Seeting />: <AddUser/>  }
               </div>
               {!userAdmin && ( <div className="ms-1 iconhover d-flex align-items-center justify-content-center" style={{height:"30px",width:"30px", borderRadius:"5px"}}>
@@ -176,8 +183,8 @@ const toggleExpanded = () => {
             </span>
           )}</p>)}  </div>
           </div>
-        </div>
-       {userAdmin && ( <div className="ms-sm-5 ms-2" style={{ height: "120px", width: "115px" }}>
+          
+        </div><div className="ms-3" style={{maxWidth:"935px", minWidth:"400px", width:"100%"}}> {userAdmin && ( <div className="" style={{ height: "120px", width: "115px"}}>
           <div
             className="border border-1 m-3 d-flex align-items-center justify-content-center"
             style={{ height: "87px", width: "87px", borderRadius: "50%" }}
@@ -185,7 +192,8 @@ const toggleExpanded = () => {
           <PlusIcon />
           </div>
           <div className="text-center">New</div>
-        </div>)}
+        </div>)}</div></div>
+       
         <div className="d-md-none d-flex align-items-center justify-content-center"><FollowerAndFollowing/></div>
         <div
           className="gap-5 content d-flex align-items-center mt-md-5 justify-content-evenly justify-content-md-center"
@@ -224,8 +232,10 @@ const toggleExpanded = () => {
         </div>
         <div className=" bottom area row m-0">{showwhat==="reels"?<ProfileReels/>:<Posts/>}</div>
       </div>
+      <Footer/>
+
     </div>
-  );
+    </>);
 };
 const ProfileHeader = ({heading}) => {
   return (
@@ -268,14 +278,14 @@ if (Array.isArray(notadmindata.video)) {
 getfollower();
   },[firebase,userId])
   return(
-  <div className="d-flex followContent align-items-center justify-content-md-between justify-content-evenly w-100" style={{marginTop:"20px",padding:"12px",width:"300px"}}>
+  <div className="d-flex followContent align-items-center justify-content-md-start justify-content-evenly w-100" style={{marginTop:"20px",padding:"12px",width:"300px"}}>
               <div className=" d-md-flex flex-md-row" style={{height:"36px"}}>
                 <div className="text-center text-dark me-1" style={{fontWeight:"600", fontSize:"14px"}}>{numpost>=1?numpost :"0"}</div> <div style={{fontSize:"14px", fontWeight:"400"}}> post
               </div></div>
-              <div className=" d-md-flex flex-md-row" style={{height:"36px"}}>
+              <div className="ms-md-5 ps-md-3 d-md-flex flex-md-row" style={{height:"36px"}}>
               <div className="text-center text-dark me-1" style={{fontWeight:"600", fontSize:"14px"}}>{follower} </div> <div style={{fontSize:"14px", fontWeight:"400"}}> follower
               </div></div>
-              <div className=" d-md-flex flex-md-row" style={{height:"36px"}}>
+              <div className="ms-md-5 ps-md-3 d-md-flex flex-md-row" style={{height:"36px"}}>
                 <div className="text-center text-dark me-1" style={{fontWeight:"600", fontSize:"14px"}}>{following}</div><div style={{fontSize:"14px", fontWeight:"400"}}>  following
               </div></div>
             </div>)

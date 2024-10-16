@@ -11,8 +11,8 @@ const Posts = () => {
     if (userId) {
       const getall = async () => {
         const userdata = await firebase.getUserData(userId);
-        if (userdata && userdata.video) {
-          setAllVideos(userdata.video); // Set the 'video' array in the state
+        if (userdata && userdata.videos) {
+          setAllVideos(userdata.videos); // Set the 'video' array in the state
         }
       };
       getall();
@@ -34,7 +34,7 @@ const Posts = () => {
             >
               <div
                 className="position-absolute top-0 end-0"
-                style={{ marginRight: "3px", cursor: "pointer" }}
+                style={{ marginRight: "3px", cursor: "pointer",zIndex:"11" ,color:"white"}}
               >
                 <VideoSvg />
               </div>

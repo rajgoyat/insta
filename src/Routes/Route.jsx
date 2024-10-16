@@ -31,7 +31,7 @@ const PathTo = () => {
         <Route path="/insta/dob" element={<Birth/>}  />
         <Route path="/insta/edit" element={<EditMain/>}  />
         <Route path="/insta/chat" element={<Chat/>}  />
-        <Route path="/insta/all" element={<SuggestionMain/>}  />
+        <Route path="/insta/explore" element={<SuggestionMain/>}  />
        
         {/* <Route path="/insta/register" element=/{<Register/>}  /> */}
         <Route path="/insta/messages" element={<Chat/>}  />
