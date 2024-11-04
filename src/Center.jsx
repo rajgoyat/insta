@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "./Context/DataContext";
+import { Saved2, Saved} from './AllIconsSvgs/IconsSvg'
 import  { useRef} from "react";
 import { peopleImgs } from "./Suggestion/SuggestionData";
 import Following from "./Following";
@@ -12,13 +13,16 @@ import useIntersectionObserver from './useIntersectionObserver';
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoVolumeMute } from "react-icons/io5";
 import Loader from "./Component/Loader";
+import CaughtUpBox from './Component/CaughtUpBox'
 import { useFirebase } from "./Firebase";
+
 const Center = () => {
  
   return (
     <div 
-      className="center align-items-center position-relative col-12" style={{zIndex:"4"}}
+      className="center align-items-center d-flex  position-relative col-12" style={{zIndex:"4"}}
     >
+
       <Following />
     </div>
   );
@@ -60,10 +64,9 @@ const PostData = () => {
   const [like,setLikes]= useState([]) 
 
   const [likeNo, setLikeNo]= useState(Array(dataLength).fill(false))
-  const { allUsers, user } = useContext(DataContext);
+  const { allUsers, user,savedpost, setsavedpost,handleSavedPost,deleteSaved } = useContext(DataContext);
   const [allPosts, setAllPosts] = useState([]);
   const [imageCount, setImageCount] = useState(0);
-  const [likeStatus, setLikeStatus] = useState([]);
 const [followstate,setfollowstate]=useState("")
 const firebase= useFirebase();
 const navigate= useNavigate();
@@ -73,8 +76,13 @@ useEffect(()=>{
     setfollowstate("Unfollow")
   }
   else{setfollowstate("Follow")}
-  
+  if(user?.saved && savedpost.length===0){
+    const hello=  user.saved
+      setsavedpost(hello)
+      console.log(savedpost)
+    }
 },[user])
+
 
 const handleFollow=async ()=>{
   try {
@@ -104,17 +112,15 @@ const handleFollow=async ()=>{
         }
         return []; // If user.video is not an array, return an empty array
       }).filter(post => post.src); // Filter out any posts that do not have a src
-
-      // Set the posts in the state
-      setAllPosts(posts);
+      const shuffledPosts = posts.sort(() => Math.random() - 0.5);
+      setAllPosts(shuffledPosts);
 
       // Calculate the number of image posts
       const imageCount = posts.filter(post => post.type === 'image').length;
       setImageCount(imageCount);
     }
-  };
+  };  
  
-
 useEffect(() => {
   getAllPosts();
 }, [allUsers]);
@@ -159,16 +165,14 @@ navigate(`/insta/profile/${id}`)
   }
   
     return (
-    <div className="postData w-100 d-flex flex-column align-items-center justify-content-center row pe-0">
-{/* <VideoComponent src={vid1}  vol={vol} setVol={setVol}/> */}
-{/* <VideoComponent src={vid1}  vol={vol} setVol={setVol} /> */}
+    <div className="postData w-100 d-flex flex-column align-items-center justify-content-center  row pe-0">
 {allPosts.length > 0 ? (<>
       {allPosts.map((val,ind) => {
         const isVideo = (type) => {
           if(type==="video")
           return true;
         };
-        return (
+        return (<>
           <div className="position-relative row col-12 m-0 pe-0" key={ind} style={{width:'468px'}}>
             <div
               className="position-relative d-flex p-2 mt-3 col-12  m-0 p-0"
@@ -205,9 +209,8 @@ navigate(`/insta/profile/${id}`)
               <BiMessageRounded className="m-2" size={23} />
               <LuSend className="m-2" size={23} />
                 
-                <div className="position-absolute end-0  top-0 mt-1 me-1" ><FaRegBookmark
-                size={20}
-              /></div>
+                <div className="position-absolute end-0  top-0 mt-1 me-1" 
+                onClick={()=>savedpost?.some(item=>item.link===val.src)?deleteSaved(val.src,val.userId,val.type):handleSavedPost(val.src,val.userId,val.type)} > {savedpost?.some(item=>item.link===val.src)?<Saved2 />:<Saved height={24} width={24} /> }</div>
             </div>
             <div className="text-dark" style={{ fontSize: "12px" }}>
               <p className="m-0">{like[ind]} likes</p>
@@ -227,8 +230,10 @@ navigate(`/insta/profile/${id}`)
               <p className="m-0">Add a comment</p>
             </div>
           </div>
+          
+          </>
         );
-      })}</>):(<div className="d-felx align-items-center justify-content-center "><Loader/></div>)}
+      })}<CaughtUpBox/></>):(<div className="d-felx align-items-center justify-content-center "><Loader/></div>)}
     </div>
   );
 };

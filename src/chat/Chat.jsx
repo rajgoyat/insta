@@ -2,14 +2,14 @@
 import React, { useContext, useEffect, useState,useRef} from "react";
 // import { useFirebase } from '../Firebase';
 import "./chat.css";
-import {set ,push,onValue, ref,query, orderByChild, equalTo, remove,child, get} from 'firebase/database';
+import {set ,push,onValue, ref, remove,child, get} from 'firebase/database';
  
 import { realdatabase } from "../Firebase";
 import { DataContext } from "../Context/DataContext";
 import {
   Pencil,
   Listner,
-  Smile,
+  
   Like,
   Image,
   Conversation,
@@ -270,7 +270,7 @@ const fetchMessages = () => {
       <div className="d-flex vh-100">
         {/* Sidebar */}
         <div
-          className="position-relative"
+          className="position-relative 90vh"
           style={{ width: isNames ? "122px" : "396px" }}
         >
           <div
@@ -342,22 +342,9 @@ const fetchMessages = () => {
                   </div>
                 </>
               )}
-              <div
-                className={` ${
-                  isNames
-                    ? "d-felx flex-collumn align-items-center justify-content-center"
-                    : ""
-                } `}
-              >
-                {/* Sample Chat List */}
+              <div>
                 {allUsers && (
-                  <div
-                    className={` ${
-                      isNames
-                        ? "d-felx flex-column align-items-center justify-content-center"
-                        : ""
-                    } `}
-                  >
+                  <div>
                     {allUsers.map((val, ind) => {
                         if(val.userId===userId){
                             return null;

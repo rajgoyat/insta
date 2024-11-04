@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DataContext } from "../Context/DataContext";
+import { useNavigate } from 'react-router-dom';
 
 const Allpostreel = () => {
   const { allUsers } = useContext(DataContext);
   const [allVideos, setAllVideos] = useState([]);
-
+const navigate = useNavigate();
   useEffect(() => {
     const getAllVideos = () => {
       if (allUsers && Array.isArray(allUsers)) {
@@ -25,7 +26,7 @@ const Allpostreel = () => {
       {allVideos.length > 0 ? (
         <div className="row">
           {allVideos.map((item, index) => (
-            <div key={index} className="">
+            <div key={index} className="" onClick={()=>navigate(`/insta/post/${index}`)}>
               <div className="insta-item">
               {item.type === 'image' ? (
                   <img src={item.src} alt={`Post ${index}`} className="img-fluid" style={{background:"cover",objectFit:"cover"}} />
@@ -52,4 +53,4 @@ const Allpostreel = () => {
   );
 };
 
-export default Allpostreel;
+// export default Allpostreel; this file is not userd anywhere 

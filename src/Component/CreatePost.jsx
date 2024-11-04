@@ -10,6 +10,7 @@ import "../insta.css";
 import ProfileImg from '../Imgs/profile.jpg'
 
 import { BackArrow, Copy, Crop, Zoom, ManLogo,Location,DownChevron,Smile,AddColloborator } from "../AllIconsSvgs/IconsSvg";
+import { useMediaQuery } from "react-responsive";
 function CreatePost() {
   // const [userId,setUserId]=useState(null)
   const [show, setshow] = useState(false);
@@ -22,16 +23,17 @@ function CreatePost() {
     const [videoFile, setVideoFile] = useState(null); // Stores the uploaded file
   const [data, setData] = useState(null); // Stores user data from Firestore
 const [userId,setUserId]=useState()
+// 767px
+const postRensponsive = useMediaQuery({ query: "(max-width: 767px)" });
+
 useEffect(()=>{
   const getId=async()=>{  
     if (user && user.userId) {
 const userId= await user.userId;
-  console.log(userId)
   setUserId(user.userId)}}
 getId()
 },[user])
 useEffect(()=>{
-console.log(postText)
 },[postText])
 
 // console.log(userId)
@@ -144,7 +146,7 @@ console.log(postText)
       
     <Carousel.Item>
     
-      <div className="container p-0" style={{...styles.dialog, width:"445px", height:"499px"}}>
+      <div className="container p-0" style={{...styles.dialog, width:postRensponsive?"348px":"445px", height:postRensponsive?"391px":"499px"}}>
         <div className="" style={styles.header}>
           {selectedImage ? (
             <div className="
@@ -221,9 +223,9 @@ console.log(postText)
                 backgroundImage: `url(${selectedImage})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                maxHeight: "446px",
+                maxHeight:postRensponsive? "348px":"446px",
               objectFit: "cover",
-              width: "445px",
+              width:postRensponsive?"348px": "445px",
                 border: "2px solid #ccc",
                 borderRadius: "5px",
               }}
@@ -233,14 +235,16 @@ console.log(postText)
         )}
 
         {selectedImage && mediaType === "video" && (
+          
           <video
             loop
             autoPlay
             style={{
               // borderRadius: "5px",
-              height: "446px",
+              
+              height:postRensponsive?"348px": "456px",
               objectFit: "cover",
-              width: "445px",
+              width:postRensponsive?"348px": "445px",
               borderBottomRightRadius:"10px",
               borderBottomLeftRadius:"10px"
             }}
@@ -283,11 +287,11 @@ console.log(postText)
    
     <Carousel.Item>
  
-    <div className=" position-relative" style={{...styles.dialog, width:"785px",height:"484px", overflow:"hidden"}}>
-        <div  className="position-relative bg-white" style={{...styles.header,width:"785px",height:"40px",}}>
+    <div className=" position-relative" style={{...styles.dialog, width:postRensponsive?"380px":"785px",height:postRensponsive?"":"484px", overflow:"hidden"}}>
+        <div  className="position-relative bg-white" style={{...styles.header,width:postRensponsive?"380px":"785px",height:"40px",}}>
         
             <div className="
-             d-flex align-items-center justify-content-between p-2 pb-0 pt-0 position-fixed" style={{width:"785px",height:"40px",}}>
+             d-flex align-items-center justify-content-between p-2 pb-0 pt-0 position-fixed" style={{width:postRensponsive?"380px":"785px",height:"40px",}}>
               <div >
                 <BackArrow />
               </div>
@@ -300,7 +304,7 @@ console.log(postText)
             </div>
         
         </div>
-       <div className="d-flex flex-sm-row m-0 flex-column row" style={{height:"445px"}}>
+       <div className={`d-flex flex-sm-row m-0 ${postRensponsive?"flex-row":"flex-column"} row`} style={{height:postRensponsive?"":"445px"}}>
        
         {selectedImage && mediaType === "image" && (
           <div className="laptop-frame col-7 p-0">
@@ -312,7 +316,7 @@ console.log(postText)
                 // backgroundImage: `url(${selectedImage})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                height:"445px",
+                height:postRensponsive?"348px":"445px",
               // borderRadius: "5px",
               width:"455px",
               objectFit: "cover",
@@ -328,7 +332,7 @@ console.log(postText)
             loop
             autoPlay={activeIndex !== 2}
             style={{
-              height:"445px",
+              height:postRensponsive?"348px":"445px",
               // borderRadius: "5px",
               width:"455px",
               objectFit: "cover",
@@ -388,7 +392,7 @@ console.log(postText)
    
     <Carousel.Item>
       
-    <div style={{...styles.dialog, height:"490px", width:"445px"    }}>
+    <div style={{...styles.dialog, height:postRensponsive?"391px":"490px", width:postRensponsive?"348px":"445px"    }}>
         <div className=" text-center p-2" style={{...styles.header, height:"41.8px"}}>
        <h6 style={{fontWeight:"600", fontSize:"16px"}}>Reel Shared</h6>  
      
@@ -396,7 +400,6 @@ console.log(postText)
       <div className="d-flex align-items-center justify-content-center " style={{height:"440px"}}>
           <div className="d-flex flex-column h-100 align-items-center justify-content-center"> 
             <span style={{ backgroundRepeat: "no-repeat", backgroundPosition: "-244px 0px", height: "98px", width: "98px",backgroundImage:`url(${allimg})` }}>
-                {/* <img src={allimg} alt="Insta_logo"  style={{ }}/> */}
               </span>
        <div style={{fontSize:"20px",fontWeight:"400"}}>Reel has been shared</div></div>      </div>
       </div>

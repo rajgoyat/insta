@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useFirebase } from '../Firebase';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import NoData from "./NoData";
+
 import { FaHeart } from "react-icons/fa6";
-import { Comment1 } from './Posts';
+import { Comment1 } from '../AllIconsSvgs/IconsSvg';
 import { useMediaQuery } from 'react-responsive';
 const ProfileReels = () => {
   const firebase = useFirebase();
-  const { userId } = useParams();
+  const { userId} = useParams();
+  const navigate= useNavigate();
   const [allVideos, setAllVideos] = useState([]);
  const isLarger = useMediaQuery({query:'(min-width:600px)'});
   useEffect(() => {
@@ -14,7 +17,8 @@ const ProfileReels = () => {
       const getall = async () => {
         const userdata = await firebase.getUserData(userId);
         if (userdata && userdata.videos) {
-          setAllVideos(userdata.videos); // Set the 'video' array in the state
+          const imageVideos = userdata.videos.filter(video => video.type === "video"); // Filter videos with type "image"
+          setAllVideos(imageVideos); // Set the filtered array in the state
         }
       };
       getall();
@@ -27,10 +31,11 @@ const ProfileReels = () => {
         <div className={`row col-12 col-md-11 ${isLarger?"row-cols-4":"row-cols-3"}  m-0 p-0`} >
           {allVideos.map((item, index) => (
             <>
-              {item.type === 'video' && (
                 <div
                   key={index}
                   className="col  p-0 m-0 position-relative" 
+              onClick={()=>navigate(`/insta/reel/${userId}/${index}`)}
+
                            style={{
     display: "flex",
     flexWrap: "wrap", border:"1px solid white",cursor:"pointer"
@@ -52,12 +57,11 @@ const ProfileReels = () => {
                     style={{ aspectRatio: '0.6', objectFit: 'fill', width: '100%' }}
                   />
                 </div>
-              )}
             </>
           ))}
         </div>
       ) : (
-        <p>No videos available.</p>
+        <NoData/>
       )}
     </div>
   );

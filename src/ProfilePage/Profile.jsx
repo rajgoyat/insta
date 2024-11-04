@@ -2,12 +2,14 @@ import React, { useState ,useEffect, useContext} from "react";
 import { useMediaQuery } from 'react-responsive';
 import './profile.css'
 import { DataContext } from "../Context/DataContext";
+import FollowerFollowingBox from '../Component/FollowerFollowingBox'
 import { Link, useNavigate } from "react-router-dom";
-// import { peopleImgs } from "../SuggestionData";
 import { SideBottombars } from "../Insta";
 import { IoIosArrowBack } from "react-icons/io";
 import { useParams } from 'react-router-dom';
 import Footer from "./Footer";
+import ProfileTagged from "./ProfileTagged";
+import ProfileSaved from './ProfileSaved'
 import ProfileReels from "./ProfileReels";
 import Posts from './Posts'
 import {
@@ -29,13 +31,13 @@ const[heading,setheading]=useState();
     const getdata=async()=>{
 
   const data=await firebase.getUserData(userId)
-  console.log("dddd",data)
   setheading(data.fullname) } 
   getdata()
   },[userId,firebase])
-  // console.log("kgjdkgjd",heading)
   return (
     <>
+    
+    <FollowerFollowingBox userId= {userId}/>
       <ProfileHeader heading={heading}/>
       <SideBottombars />
       <ProfileMain />
@@ -51,11 +53,9 @@ const ProfileMain = () => {
 const [user,setuser]=useState();
 const {userdata}= firebase;
 const { userId } = useParams();
-const [showwhat,setshowwhat]=useState("post")
 const [followstate,setfollowstate]=useState("")
-const [bordertop,setborderTop]=useState(1)
 // console.log("prem",userdata)
-const { handleUserMsgBox,setallshow } = useContext(DataContext);
+const { handleUserMsgBox,setallshow,showwhat,setshowwhat,bordertop,setborderTop} = useContext(DataContext);
 const [isExpanded, setIsExpanded] = useState(false); 
 useEffect(()=>{
   if(userdata?.userId===userId){
@@ -65,12 +65,11 @@ useEffect(()=>{
 },[userId,userdata])
 useEffect(()=>{
   if (userdata?.followings?.includes(userId)) {
-    console.log("User ID found in followings:", userId);
     setfollowstate("Unfollow")
   }
   else{setfollowstate("Follow")}
   
-},[userdata,userId])
+},[firebase,userId,userdata])
 
 const handleFollow=async ()=>{
   try {
@@ -100,7 +99,11 @@ useEffect(() => {
   fetchData();
 }, [userId,user,firebase]);
 // console.log("profile",user)
-
+// let adminIds = [];
+// useEffect(()=>{
+//   if (userdata) {
+//     adminIds = userdata.followings;
+//   } console.log(adminIds)},[userdata?.followings?.length,userId])
   useEffect(() => {
     if (isLarger) {
       setIconSize(12);
@@ -138,7 +141,7 @@ const toggleExpanded = () => {
           <div className="follwer content mt-3">
             <div className="d-flex">
               <div className="me-2 d-none d-md-block" style={{ fontSize: "25px" }}>
-                {user?.fullname}
+                {user?.username}
               </div>
               <div
                 className="btn ms-md-2 me-2 d-flex align-items-center justify-content-center"
@@ -215,14 +218,14 @@ const toggleExpanded = () => {
           </div>
           <div className="d-flex  h-100 align-items-center justify-content-center" onClick={()=>setborderTop(3)}  style={{width:isLarger?"10%":"20%", borderTop:bordertop===3?"1px solid black":''}}>
             <div style={{cursor:"pointer", color: bordertop===3 ? (isLarger ? "black" : "#0095f6") : ''
-}} className="d-flex align-items-center justify-content-evenly">
+}} className="d-flex align-items-center justify-content-evenly" onClick={()=>setshowwhat("saved")}>
             <div > <Saved height={iconSize} width={iconSize} />
             </div><div className="ms-2 d-none d-md-block" style={{marginTop:"2px"}}>
             SAVED</div></div>
           </div>
           <div className=" d-flex  h-100 align-items-center justify-content-center" onClick={()=>setborderTop(4)}  style={{width:isLarger?"10%":"20%", borderTop:bordertop===4?"1px solid black":''}}>
             <div style={{cursor:"pointer", color: bordertop===4 ? (isLarger ? "black" : "#0095f6") : ''
-}} className="d-flex align-items-center justify-content-evenly">
+}} className="d-flex align-items-center justify-content-evenly" onClick={()=>setshowwhat("tagged")}>
            
             <div >
               <Tagged height={iconSize} width={iconSize}/>
@@ -230,7 +233,7 @@ const toggleExpanded = () => {
             TAGGED</div></div>
           </div>
         </div>
-        <div className=" bottom area row m-0">{showwhat==="reels"?<ProfileReels/>:<Posts/>}</div>
+        <div className=" bottom area row m-0">{showwhat==="reels"?<ProfileReels/>:showwhat==="saved"?<ProfileSaved/>:showwhat==="post"?<Posts/>:showwhat==="tagged"?<ProfileTagged/>:null}</div>
       </div>
       <Footer/>
 
@@ -238,17 +241,17 @@ const toggleExpanded = () => {
     </>);
 };
 const ProfileHeader = ({heading}) => {
+  const navigate = useNavigate()
   return (
     <div
       className="d-md-none text-center position-absolute top-0 w-100"
       style={{ borderBottom: "1px solid #c8c8c8", height: "44px" }}
     >
-      <Link
-        to="/insta"
+      <div onClick={()=>navigate(-1)}
         className="position-absolute start-0 m-2 text-decoration-none"
       >
         <IoIosArrowBack size={22} />
-      </Link>
+      </div>
       <div className="p-2 fw-normal fs-4 pt-1">{heading}</div>
     </div>
   );
@@ -258,34 +261,32 @@ const FollowerAndFollowing=()=>{
 const [follower,setfollower]=useState("")
   const [following,setfollowing]=useState("")
   const [numpost,setnumpost]=useState("")
-  // const {userdata}= firebase;
+  const { setallshow } = useContext(DataContext);
+
   const {userId}=useParams(); //not admin Id
   useEffect(()=>{
 const getfollower=async()=>{
 const notadmindata= await firebase.getUserData(userId)
-// console.log("jkdjfdfd",notadmindata.followers,notadmindata.followings)
-// const data= await firebase.userdata;
 setfollower(notadmindata.followers.length)
 setfollowing(notadmindata.followings.length)
-if (Array.isArray(notadmindata.video)) {
-  const images = notadmindata.video.filter(video => video.type === 'image');
+if (Array.isArray(notadmindata.videos)) {
+  const images = notadmindata.videos.filter(videos => videos.type === 'image');
   setnumpost(images.length);
 } else {
   setnumpost('0');
 }
-// // console.log("jkdjfdfd",data.followers,data.followings)
 }
 getfollower();
-  },[firebase,userId])
+  },[firebase,userId,firebase?.userdata])
   return(
   <div className="d-flex followContent align-items-center justify-content-md-start justify-content-evenly w-100" style={{marginTop:"20px",padding:"12px",width:"300px"}}>
               <div className=" d-md-flex flex-md-row" style={{height:"36px"}}>
                 <div className="text-center text-dark me-1" style={{fontWeight:"600", fontSize:"14px"}}>{numpost>=1?numpost :"0"}</div> <div style={{fontSize:"14px", fontWeight:"400"}}> post
               </div></div>
-              <div className="ms-md-5 ps-md-3 d-md-flex flex-md-row" style={{height:"36px"}}>
+              <div className="ms-md-5 ps-md-3 d-md-flex flex-md-row" style={{height:"36px"}} onClick={()=>setallshow("followerbox")}>
               <div className="text-center text-dark me-1" style={{fontWeight:"600", fontSize:"14px"}}>{follower} </div> <div style={{fontSize:"14px", fontWeight:"400"}}> follower
               </div></div>
-              <div className="ms-md-5 ps-md-3 d-md-flex flex-md-row" style={{height:"36px"}}>
+              <div className="ms-md-5 ps-md-3 d-md-flex flex-md-row" style={{height:"36px"}} onClick={()=>setallshow("followingbox")}>
                 <div className="text-center text-dark me-1" style={{fontWeight:"600", fontSize:"14px"}}>{following}</div><div style={{fontSize:"14px", fontWeight:"400"}}>  following
               </div></div>
             </div>)

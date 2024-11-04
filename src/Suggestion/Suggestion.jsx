@@ -14,7 +14,6 @@ const Suggestion = () => {
     const fetchData = async () => {
       try {
         const data = await firebase.userdata; // Ensure this is resolving correctly
-        console.log("Fetched user data: ", data); // Debugging
         if (data) {
           setUser(data);
           const filteredUsers = getAllUser.filter(u => u.id !== data?.id); // Filter out the logged-in user
@@ -85,7 +84,7 @@ const Suggestion = () => {
 
           <div className="d-flex flex-column">
             {suggestedUsers.map((val, ind) => (
-              <div key={ind} className="d-flex mt-3">
+              <div key={ind} className={`${val.userId===user.userId? "d-none":"d-flex"}  mt-3`}>
                 <img
                   onClick={() => navigate(`/insta/profile/${val.userId}`)}
                   className="rounded-circle"

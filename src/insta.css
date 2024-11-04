@@ -15,12 +15,12 @@ box-sizing: border-box;
 .homevideoorimg{
     width:464px;
 }
-/* .postData img,video{
+/* . img,video{
     width:468px;
 } */
  /* @media(max-width:420px){
 
-    .postData img,video{
+    . img,video{
     width:420px;
 } 
  .header{
@@ -60,7 +60,7 @@ z-index: 10;
     .center-main{
     width:330px;
 }}
-.followings div div::after {
+.followings div .storyImg::after {
     content: "";
     display: block;
     position: absolute;
@@ -257,11 +257,11 @@ z-index: 10;
       display:none;
     }
   }
- /* Custom styles for the scroll-container border-bottom*/
+ /* Custom styles for the scroll-container border-bottom image*/
 .scroll-container {
     /* height: 100vh; Set a fixed height for the container */
     overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal scrolling if not needed */
+    overflow-x: hidden; /* Prevent horizontal scrolling if not needed  */
   }
   
   /* Add custom scrollbar styles if desired */

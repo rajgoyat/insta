@@ -9,10 +9,10 @@ import {
   getDoc,
   // getDocs,
   collection,
-  deleteField,
+  
   query,
   orderBy,
-  onSnapshot,updateDoc, arrayUnion,arrayRemove,getDocs
+  onSnapshot,updateDoc, arrayUnion,arrayRemove
 } from "firebase/firestore";
 import { getDatabase} from 'firebase/database';
 
@@ -37,6 +37,7 @@ const firebaseConfig = {
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 const firebaseApp=initializeApp(firebaseConfig);
@@ -57,13 +58,11 @@ const [searchshow,setSearchshow]= useState(false)
   const [dob, setdob] = useState('');
   const [password, setpassword] = useState();
   const [user, setuser] = useState(null);
-  const [userId,setUserId]= useState('');
   const [userdata, setUserdata] = useState(null);
   const [getAllUser, setgetAllUser] = useState([]);
   const [search,setSearch]= useState(false)
-
- console.log("user=>",userId)
-   useEffect(()=>{
+const [hello,sethello]=useState(false)
+  useEffect(()=>{
      onAuthStateChanged(firebaseAuth,(user)=>{
       if(user){
         setuser(user);
@@ -136,7 +135,8 @@ const [searchshow,setSearchshow]= useState(false)
         followers:[],
         followings:[],
         password: password,
-        video:[],
+        videos:[],
+        stories:[],
         date: new Date().toLocaleString("en-us", {
           month: "short",
           day: "2-digit",
@@ -168,9 +168,6 @@ const [searchshow,setSearchshow]= useState(false)
       const usera = await signupUserWithPassEmailName(email, password);
       if (usera) {
         const userIda = usera.user.uid; // Yeh value directly user se le rahe hain
-        setUserId(userIda); // state update kar rahe hain
-        
-        // Ensure userId is defined before writing data
         await writeUserData(userIda); // direct pass kar rahe hain userIda ko
       }
     } catch (error) {
@@ -215,7 +212,7 @@ const [searchshow,setSearchshow]= useState(false)
       }
     };
     fetchUserData();
-  }, [user]); // Re-run effect when user or getUserData changes
+  }, [user,hello]); // Re-run effect when user or getUserData changes
 
   // get all user function
   const getAllUserFunction = () => {
@@ -274,8 +271,6 @@ const unfollowuser =async(id)=>{
       const updatedData = {
         followings: arrayRemove(id), // Removes the specified user ID from the followings array
       };
-
-      // Update Firestore document
       await updateDoc(userRef, updatedData);
       const userRef1 = doc(database, "users", id);
 
@@ -292,6 +287,48 @@ const unfollowuser =async(id)=>{
     }
   }
 }
+const saved = async (links,postUserId,type) => {
+  if (userdata.userId && links) {
+    try {
+      const linkObject = {
+        link: links,
+        userId: postUserId,
+        type:type
+      };
+      const userRef = doc(database, "users", userdata.userId);
+      const updatedData = {
+        saved: arrayUnion(linkObject)
+      };
+      await updateDoc(userRef, updatedData);
+      console.log("Link with user ID added successfully:");
+    } catch (error) {
+      console.error("Error in adding link with user ID:", error);
+    }
+  } else {
+    console.error("User ID or link is missing.");
+  }
+};
+const deleteSaved = async (links, postUserId, type) => {
+  if (userdata.userId && links) {
+    try {
+      const linkObject = {
+        link: links,
+        userId: postUserId,
+        type: type
+      };
+      const userRef = doc(database, "users", userdata.userId);
+      const updatedData = {
+        saved: arrayRemove(linkObject)
+      };
+      await updateDoc(userRef, updatedData);
+      console.log("Link with user ID removed successfully:");
+    } catch (error) {
+      console.error("Error in removing link with user ID:", error);
+    }
+  } else {
+    console.error("User ID or link is missing.");
+  }
+};
 
   return (
       <FirebaseContext.Provider
@@ -302,6 +339,7 @@ const unfollowuser =async(id)=>{
           isLoggedIn,
           logout,
           userData,
+          saved,deleteSaved,
         saveData,
         userdata,
         savedob,
@@ -314,7 +352,7 @@ const unfollowuser =async(id)=>{
         searchshow,setSearchshow,
         email,
         followuser,
-        unfollowuser
+        unfollowuser,sethello
         }}
       >
     {props.children}

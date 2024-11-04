@@ -62,11 +62,11 @@ const SideBottombars= ()=>{
   const [shows,setshow]= useState(false)
 const [userdata,setData]=useState(null);
 const navigate= useNavigate()
-const {searchshow,setSearchshow}=firebase;
-const { createPostCloseButton,sidebarMenu,setSidebarMenu } = useContext(DataContext);
+// const {allshow==="searchbox",setSearchshow}=firebase;
+const { createPostCloseButton,allshow,setallshow} = useContext(DataContext);
 const isLarger = useMediaQuery({ query: '(min-width: 767px) and (max-width: 768px)' });
 
-  // console.log(shows)
+  // consyyyyyyyyyyyole.log(shows)
 useEffect(()=>{
   const getId=async()=>{
   const userdata= await firebase.userdata
@@ -77,21 +77,27 @@ getId();
 },[firebase,userdata])
 // console.log("hells",userId)
 const handleSearch=()=>{
-  setSearchshow((prevState) => !prevState);  
+  if(allshow!="searchbox"){
+  setallshow("searchbox") }
+  else{setallshow("")}
 }
 const handleMessage=()=>{
- 
+  setallshow("")
   // console.log(userdata,'jjjj')
  navigate(`/insta/messages`)
 }
 const handleHome=()=>{
+  setallshow("")
  navigate('/insta')
 }
 const handleReels=()=>{
+  setallshow("")
   navigate('/insta/reels')
 }
 const handleMenuIcon=()=>{
-setSidebarMenu(prev=>!prev)
+  if(allshow!="menubox"){
+  setallshow("menubox")}
+  else{ setallshow("")}
 }
 useEffect(() => {
     const iconArray = [
@@ -130,12 +136,12 @@ useEffect(() => {
 <div className="text-dark fs-4 fw-medium position-relative btn" style={{top:"-140px",right:"-250px"}} onClick={()=>setshow(!shows)}>X</div></div>
 
     <div className="allIcon m-2">
-      <div className={`d-none d-md-block p-2 ps-2 ${searchshow ? "d-xl-block":"d-xl-none"} `}>
+      <div className={`d-none d-md-block p-2 ps-2 ${allshow==="searchbox" ? "d-xl-block":"d-xl-none"} `}>
         <FaInstagram size={25} />
       </div>
       <img
         src={insta}
-        className={`d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}
+        className={`d-none ${allshow==="searchbox" ? "d-xl-none":"d-xl-inline"} `}
         style={{ height: "70px", width: "160px" }}
         alt=""
       />
@@ -149,7 +155,7 @@ useEffect(() => {
           <div key={ind} className={`allIcon m-2 ${ind===4? "d-none d-sm-block": ""}` } onClick={val.onClick}>
          <div className="p-2">
               {val.icon}
-              <span className={`ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}>{val.label}</span>
+              <span className={`ps-2 d-none ${allshow==="searchbox" ? "d-xl-none":"d-xl-inline"} `}>{val.label}</span>
             </div>
           </div>
         );
@@ -162,7 +168,7 @@ useEffect(() => {
           src={userdata.proimg}
           alt=""
         />
-        <span className={`ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}>Profile</span>
+        <span className={`ps-2 d-none ${allshow==="searchbox" ? "d-xl-none":"d-xl-inline"} `}>Profile</span>
       </div></div>)} 
     </div>
     <div
@@ -171,16 +177,16 @@ useEffect(() => {
     >
       <div className="allIcon m-2 p-2 col ">
         <FaThreads size={25} />
-        <span className={`p-2 ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"} `}>Threads</span>
+        <span className={`p-2 ps-2 d-none ${allshow==="searchbox" ? "d-xl-none":"d-xl-inline"} `}>Threads</span>
       </div>
       <div className=" allIcon m-2 p-2" onClick={handleMenuIcon}>
         <PiList size={25} /> 
-        <span className={`p-2 ps-2 d-none ${searchshow ? "d-xl-none":"d-xl-inline"}  text-center`}  >More</span>
+        <span className={`p-2 ps-2 d-none ${allshow==="searchbox" ? "d-xl-none":"d-xl-inline"}  text-center`}  >More</span>
       </div>
-     {sidebarMenu? <SlideLogout/>:null}
+     {allshow==="menubox"? <SlideLogout/>:null}
     </div>
     
-</div>{searchshow ? <Search/>:null}</div></>    
+</div>{allshow==="searchbox" ? <Search/>:null}</div></>    
   )
 }
 const HeadBar=()=>{

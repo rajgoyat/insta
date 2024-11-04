@@ -5,7 +5,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa6";
 import { DataContext } from "./Context/DataContext";
 import "./insta.css";
 import "./ProfilePage/profile.css";
-import { Comment, Share, Saved, More, Song } from "./AllIconsSvgs/IconsSvg";
+import { Comment, Share, Saved, More, Song, Saved2 } from "./AllIconsSvgs/IconsSvg";
 import useIntersectionObserver from "./useIntersectionObserver";
 import { reels } from "./Suggestion/SuggestionData";
 import { IoVolumeHigh } from "react-icons/io5";
@@ -16,13 +16,12 @@ const Reels = () => {
   const [vol, setVol] = useState(false);
   const [like, setLikes] = useState(reels.map((val) => val.likes));
   const dataLength = reels.length;
-  const { allUsers } = useContext(DataContext);
+  const { allUsers, savedpost,handleSavedPost,deleteSaved } = useContext(DataContext);
   const [allPosts, setAllPosts] = useState([]);
   const [likeNo, setLikeNo] = useState(Array(dataLength).fill(false));
   const [followState, setFollowState] = useState(''); // Store follow state for each user
   const firebase = useFirebase();
   const { userdata } = firebase;
-console.log(allPosts)
   const likeHandler = (index) => {
     setLikes((prevLikes) =>
       prevLikes.map((like, i) =>
@@ -41,8 +40,6 @@ console.log(allPosts)
         // Combine video posts with the user's username, userId, and proimg
         const posts = allUsers.flatMap((user) => {
           if (Array.isArray(user.videos)) {
-            console.log(user.videos)
-            console.log("aaaaaaaaaa",user.videos,user)
             return user.videos
               .filter((videos) => videos.type !== "image" && user.userId !== userdata.userId)  // Filter out videos where video.userId === userdata.userId
               .map((videos) => ({
@@ -117,15 +114,16 @@ console.log(allPosts)
                 onClick={() => setVol(!vol)}
                 style={{
                   zIndex: "2",
+                  borderRadius:"50%",
                   background: "rgba(0, 0, 0, 0.763)",
-                  height: "35px",
-                  width: "35px",
+                  height: "31px",
+                  width: "31px",
                 }}
               >
                 {vol ? (
-                  <IoVolumeHigh size={26} color="white" />
+                  <IoVolumeHigh size={16} color="white" />
                 ) : (
-                  <IoVolumeMute size={26} color="white" />
+                  <IoVolumeMute size={16} color="white" />
                 )}
               </div>
 
@@ -202,8 +200,9 @@ console.log(allPosts)
                 <div className="m-2 mb-3">
                   <Share />
                 </div>
-                <div className="m-2 mb-3">
-                  <Saved height={24} width={24} />
+                <div className="m-2 mb-3" onClick={()=>savedpost?.some(item=>item.link===val.src)?deleteSaved(val.src,val.userId,val.type):handleSavedPost(val.src,val.userId,val.type)}>
+                  {savedpost?.some(item=>item.link===val.src)?<Saved2/>:<Saved height={24} width={24} />}
+                  
                 </div>
                 <div className="m-2 mb-3">
                   <More />

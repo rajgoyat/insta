@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import microsoft from '../Imgs/microsoft.png'
 import playstore from '../Imgs/playstore.png'
-// import auth from "./img/auth.png";
 import allimg from "../Imgs/allimg.png";
 import LoginLayout from '../Layout/LoginLayout';
-
 import { useFirebase } from "../Firebase";
 export default function OtpPage() {
   const navigate = useNavigate();
@@ -18,29 +16,16 @@ const [numtype,setnumType]= useState(false)
   const [emailtype,setemailType]= useState(false)
 const numberoremail= firebase.email;
 const isNumber = /^\d+$/.test(numberoremail);
-
-// Regular expression to check if the input is a valid email
-// const isEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(numberoremail);
-
-
-
-  // OTP generate karne ka function
   const generateOtp = () => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit ka OTP generate karega aur string me convert karega
     setGeneratedOtp(otp);
     console.log("Generated OTP:", otp); // Testing ke liye OTP ko console me dikhayenge
   };
-
-  // Page load hone par OTP generate karna
   useEffect(() => {
     if (isNumber) {
     setnumType(true);
-  // } else if (isEmail) {
-  //   setemailType(true);
   } else {
-  //   navigate("/insta/login")
     setemailType(true); 
-  // alert("Enter valid number or email");
   }
     generateOtp(); // Page load hone par OTP generate karega
   }, []);
@@ -48,50 +33,14 @@ const isNumber = /^\d+$/.test(numberoremail);
   const handleSubmit = (e) => {
     e.preventDefault();
     firebase.saveData();
-
-    // User OTP ko compare karna generated OTP se
     if (userOtp === generatedOtp) {
-      // if(!firebase.user)
-      
-        // console.log("hello raj gahlot")
-        // navigate("/insta/SignUpPage ")
-        // alert("Invalid user credential");
-       
-    
-        // alert("OTP Sahi hai! Home page par navigate ho rahe hain.");
         navigate("/insta");
-      
-      
     } else {
       setErrorMessage("Invalid OTP");
     }
   };
-
-  // Image slider ke liye state
- 
-
   return (
-    // <>
-    //   <div
-    //     className="Main_container bg- w-100 h-100 d-flex align-items-center justify-content-center"
-    //     style={{ height: "663.98px" }}
-    //   >
-    //     <div
-    //       className="Second_main bg- d-flex "
-    //       style={{
-    //         margin: "32px 81.5px 0px",
-    //         width: "936px",
-    //         height: "803.984px",
-    //       }}
-    //     > 
-    //       <div className="col first w-100 bg-" style={{ position: "relative" }}>
-    //         <img src={auth} className="mt-3" alt="Auth" />
-    //         <div className="text-center w-100" style={{ position: "absolute", top: "0px", right: "-50px", marginTop: "-7px" }}>
-    //           <img src={Moveimg} alt="Move_img" className="mt-5" />
-    //         </div>
-    //       </div>
-
-    <LoginLayout>
+      <LoginLayout>
           <div className="col Second w-100 bg-" style={{ padding: "13px 33px" }}>
             {/* Login */}
             <div
@@ -102,7 +51,6 @@ const isNumber = /^\d+$/.test(numberoremail);
               }}
             >
               <span style={{ backgroundRepeat: "no-repeat", backgroundPosition: "-440px -142px", height: "76px", width: "64px",backgroundImage:`url(${allimg})` }}>
-                {/* <img src={allimg} alt="Insta_logo"  style={{ }}/> */}
               </span>
               <span className="w-100 text-center px-5" style={{ color: "#000", fontSize: "16px", fontWeight: "600" }}>
                 Just one more step
@@ -193,33 +141,5 @@ const isNumber = /^\d+$/.test(numberoremail);
             </div>
           </div>
           </LoginLayout>
-    //     </div>
-
-//   </div>
-
-    //   {/* Footer */}
-    //   <div className="w-100 mt-5 d-flex flex-column align-items-center justify-content-center flex-column">
-    //     <div
-    //       className="fotter_data d-flex align-items-center gap-4 justify-content-center"
-    //       style={{ maxWidth: "1066px", flexWrap: "wrap" }}
-    //     >
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>Meta</a>
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>About</a>
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>Blog</a>
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>Jobs</a>
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>Help</a>
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>API</a>
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>Privacy</a>
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>Terms</a>
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>Top Accounts</a>
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>Hashtags</a>
-    //       <a style={{ color: "#737373", fontSize: "12px" }}>Locations</a>
-    //     </div>
-
-    //     <div className="d-flex align-items-center justify-content-center mt-3">
-    //       <span style={{ color: "#737373", fontSize: "12px" }}>© 2024 Instagram from Meta</span>
-    //     </div>
-    //   </div>
-    // </>
   );
 }
