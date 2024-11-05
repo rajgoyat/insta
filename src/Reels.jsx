@@ -7,33 +7,17 @@ import "./insta.css";
 import "./ProfilePage/profile.css";
 import { Comment, Share, Saved, More, Song, Saved2 } from "./AllIconsSvgs/IconsSvg";
 import useIntersectionObserver from "./useIntersectionObserver";
-import { reels } from "./Suggestion/SuggestionData";
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoVolumeMute } from "react-icons/io5";
 import { useFirebase } from "./Firebase";
 
 const Reels = () => {
   const [vol, setVol] = useState(false);
-  const [like, setLikes] = useState(reels.map((val) => val.likes));
-  const dataLength = reels.length;
-  const { allUsers, savedpost,handleSavedPost,deleteSaved } = useContext(DataContext);
+  const { allUsers, savedpost,handleSavedPost,deleteSaved,deleteLiked,handleLikedPost,likedpost,totalLikes } = useContext(DataContext);
   const [allPosts, setAllPosts] = useState([]);
-  const [likeNo, setLikeNo] = useState(Array(dataLength).fill(false));
   const [followState, setFollowState] = useState(''); // Store follow state for each user
   const firebase = useFirebase();
   const { userdata } = firebase;
-  const likeHandler = (index) => {
-    setLikes((prevLikes) =>
-      prevLikes.map((like, i) =>
-        i === index ? (likeNo[index] ? like - 1 : like + 1) : like
-      )
-    );
-
-    setLikeNo((prevLikeNo) =>
-      prevLikeNo.map((likeState, i) => (i === index ? !likeState : likeState))
-    );
-  };
-
   useEffect(() => {
     const getAllPosts = () => {
       if (allUsers && Array.isArray(allUsers)) {
@@ -167,25 +151,25 @@ const Reels = () => {
               <VideoComponent src={val.src} vol={vol} setVol={setVol} />
               <div className="d-flex flex-column align-items-center justify-content-end reelIcons">
                 <div className="m-2 mb-3">
-                  {likeNo[ind] ? (
+                  {likedpost.includes(val.userId) ? (
                     <FaHeart
                       color="red"
                       className="m-2"
                       size={22}
-                      onClick={() => likeHandler(ind)}
+                      onClick={()=>deleteLiked(val.userId)}
                     />
                   ) : (
                     <FaRegHeart
                       className="m-2 clrs"
                       size={22}
-                      onClick={() => likeHandler(ind)}
+                      onClick={()=>handleLikedPost(val.username,val.userId,val.proimg,"like")}
                     />
                   )}
                   <p
                     className="w-100 mb-0 text-center"
                     style={{ fontSize: "12px" }}
                   >
-                    {like[ind]}
+                    {totalLikes?.filter(vals=>vals===val.src).length}
                   </p>
                 </div>
                 <div className="m-2 mb-3">

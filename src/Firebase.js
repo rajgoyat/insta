@@ -12,7 +12,7 @@ import {
   
   query,
   orderBy,
-  onSnapshot,updateDoc, arrayUnion,arrayRemove
+  onSnapshot,updateDoc, arrayUnion,arrayRemove,
 } from "firebase/firestore";
 import { getDatabase} from 'firebase/database';
 
@@ -329,6 +329,52 @@ const deleteSaved = async (links, postUserId, type) => {
     console.error("User ID or link is missing.");
   }
 };
+const notification = async (username,userId,proimg,task) => {
+  try {
+    const linkObject = {
+      username: username,
+      userId: userId,
+      proimg:proimg,
+      task:task
+    };
+
+    const userRef = doc(database, "users", userId);
+    const updatedData = {
+      notification: arrayUnion(linkObject)
+    };
+    await updateDoc(userRef, updatedData);
+  } catch (error) {
+    console.error("err in notification:", error);
+  }
+};
+
+const liked = async (username,userId,proimg,task,src) => {
+  notification(username,userId,proimg,task)
+  try {
+    const userRef = doc(database, "users", userdata.userId);
+    const updatedData = {
+      likedBy: arrayUnion(src)  // Storing userId directly as an array element
+    };
+    await updateDoc(userRef, updatedData);
+    console.log("Liked successfully");
+  } catch (error) {
+    console.error("Error in like:", error);
+  }
+  
+};
+const deleteLiked = async (src) => {
+  try {
+    const userRef = doc(database, "users", userdata.userId);
+    const updatedData = {
+      likedBy: arrayRemove(src)  // Removing userId directly from the array
+    };
+    await updateDoc(userRef, updatedData);
+    console.log("User ID removed from likedBy array successfully");
+  } catch (error) {
+    console.error("Error in removing user ID from likedBy array:", error);
+  }
+  
+};
 
   return (
       <FirebaseContext.Provider
@@ -352,7 +398,7 @@ const deleteSaved = async (links, postUserId, type) => {
         searchshow,setSearchshow,
         email,
         followuser,
-        unfollowuser,sethello
+        unfollowuser,sethello,liked,deleteLiked
         }}
       >
     {props.children}

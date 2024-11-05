@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "./Context/DataContext";
 import { Saved2, Saved} from './AllIconsSvgs/IconsSvg'
 import  { useRef} from "react";
-import { peopleImgs } from "./Suggestion/SuggestionData";
 import Following from "./Following";
-import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa6";
+import { FaRegHeart, FaHeart } from "react-icons/fa6";
 import { BiMessageRounded } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { LuSend } from "react-icons/lu";
@@ -59,17 +58,20 @@ const VideoComponent = ({ src, vol ,setVol }) => {
 
 const PostData = () => {
   const [vol,setVol]= useState(false)
-  const [randomNo, setRandomNo]= useState([])
-  const dataLength= peopleImgs.length;
-  const [like,setLikes]= useState([]) 
-
-  const [likeNo, setLikeNo]= useState(Array(dataLength).fill(false))
-  const { allUsers, user,savedpost, setsavedpost,handleSavedPost,deleteSaved } = useContext(DataContext);
+  const { allUsers, user,savedpost, setsavedpost,handleSavedPost,totalLikes,setTotalLikes,deleteSaved,likedpost,setlikedpost,handleLikedPost,deleteLiked } = useContext(DataContext);
   const [allPosts, setAllPosts] = useState([]);
-  const [imageCount, setImageCount] = useState(0);
 const [followstate,setfollowstate]=useState("")
 const firebase= useFirebase();
+const {getAllUser}= firebase;
 const navigate= useNavigate();
+useEffect(()=>{
+if(getAllUser.length>0 && totalLikes.length===0){
+  const data= getAllUser.map((val)=>{
+    return val.likedBy
+  }).filter(val=> val!==undefined).flat();  
+  setTotalLikes(data)
+}
+},[getAllUser])
 useEffect(()=>{
   if (user?.followings?.includes(user.userId)) {
     console.log("User ID found in followings:", user.userId);
@@ -81,8 +83,18 @@ useEffect(()=>{
       setsavedpost(hello)
       console.log(savedpost)
     }
+    if (user?.followings?.includes(user.userId)) {
+      console.log("User ID found in followings:", user.userId);
+      setfollowstate("Unfollow")
+    }
+    else{setfollowstate("Follow")}
+    if(user?.likedBy && likedpost.length===0){
+      const hello=  user.likedBy
+      console.log("hello",hello)
+        setlikedpost(hello)
+        console.log(likedpost)
+      }
 },[user])
-
 
 const handleFollow=async ()=>{
   try {
@@ -114,59 +126,19 @@ const handleFollow=async ()=>{
       }).filter(post => post.src); // Filter out any posts that do not have a src
       const shuffledPosts = posts.sort(() => Math.random() - 0.5);
       setAllPosts(shuffledPosts);
-
-      // Calculate the number of image posts
-      const imageCount = posts.filter(post => post.type === 'image').length;
-      setImageCount(imageCount);
     }
   };  
  
 useEffect(() => {
   getAllPosts();
 }, [allUsers]);
-
-//   const likeHandler = (index) => {
-//     setLikeStatus(prev => {
-//       const newStatus = [...prev];
-//       newStatus[index] = !newStatus[index];
-//       return newStatus;
-//     });
-//   };
-
-  const generateUniqueRandomNumbers = () =>{
-    const numbers = [];
-    while (numbers.length < dataLength) {
-      const randomNumber =Math.floor(Math.random() * dataLength); // Generates numbers from 0 to 6
-      if (!numbers.includes(randomNumber)) {
-        numbers.push(randomNumber);
-      }
-    }
-    setRandomNo(numbers)
-  } 
-  useEffect(() => {
-    generateUniqueRandomNumbers();
-}, []);
-useEffect(() => {
-
-  setLikes(randomNo.map((index) => peopleImgs[index].likes));
-}, []);
-
-  const likeHandler = (index) => {
-    setLikes((prevLikes) => 
-      prevLikes.map((like, i) => (i === index ? (likeNo[index] ? like - 1 : like + 1) : like))
-    );
-
-    setLikeNo((prevLikeNo) => 
-      prevLikeNo.map((likeState, i) => (i === index ? !likeState : likeState))
-    );
-  };
   const handleProfile=(id)=>{
 navigate(`/insta/profile/${id}`)
   }
   
     return (
     <div className="postData w-100 d-flex flex-column align-items-center justify-content-center  row pe-0">
-{allPosts.length > 0 ? (<>
+{allPosts.length > 0 && totalLikes.length > 0 ? (<>
       {allPosts.map((val,ind) => {
         const isVideo = (type) => {
           if(type==="video")
@@ -205,7 +177,7 @@ navigate(`/insta/profile/${id}`)
             {isVideo(val.type) ? <VideoComponent src={val.src}  vol={vol} setVol={setVol} /> : <img src={val.src} alt="" className="col-12 m-0 p-0" /> }
             
             <div className="col-12 position-relative">
-            {likeNo[ind] ? <FaHeart color="red" className="m-2" size={22} onClick={()=>likeHandler(ind)}/> : <FaRegHeart  className="m-2" size={22} onClick={()=>likeHandler(ind)}/> }
+            {likedpost.includes(val.src) ? <FaHeart color="red" className="m-2" size={22} onClick={()=>deleteLiked(val.src)}/> : <FaRegHeart  className="m-2" size={22} onClick={()=>handleLikedPost(val.username,val.userId,val.proimg,"like",val.src)}/> }
               <BiMessageRounded className="m-2" size={23} />
               <LuSend className="m-2" size={23} />
                 
@@ -213,7 +185,7 @@ navigate(`/insta/profile/${id}`)
                 onClick={()=>savedpost?.some(item=>item.link===val.src)?deleteSaved(val.src,val.userId,val.type):handleSavedPost(val.src,val.userId,val.type)} > {savedpost?.some(item=>item.link===val.src)?<Saved2 />:<Saved height={24} width={24} /> }</div>
             </div>
             <div className="text-dark" style={{ fontSize: "12px" }}>
-              <p className="m-0">{like[ind]} likes</p>
+              <p className="m-0">{totalLikes?.filter(vals=>vals===val.src).length} likes</p>
               <p className="m-0 p-0">
                 {val.desc}
               </p>
