@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { DataContext } from "../Context/DataContext";
-import { peopleImgs } from "../Suggestion/SuggestionData";
 import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa6";
 import { BiMessageRounded } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -12,7 +11,6 @@ import Loader from "../Component/Loader";
 import CaughtUpBox from "../Component/CaughtUpBox";
 import { useFirebase } from "../Firebase";
 import EditProLayout from "../Layout/EditProLayout";
-
 // Video Component
 const VideoComponent = ({ src, vol, setVol }) => {
   const videoRef = useRef(null);
@@ -59,17 +57,15 @@ const VideoComponent = ({ src, vol, setVol }) => {
 // Main NavigatePost Component
 const NavigatePost = () => {
   const [vol, setVol] = useState(false);
-  const [randomNo, setRandomNo] = useState([]);
-  const dataLength = peopleImgs.length;
   const [like, setLikes] = useState([]);
-  const { userId, index, postorreel } = useParams(); // Get the post/reel type and index from URL
-  const [likeNo, setLikeNo] = useState(Array(dataLength).fill(false));
-  const { user } = useContext(DataContext);
+  const { userId, postorreel } = useParams(); // Get the post/reel type and index from URL
+  const [likeNo, setLikeNo] = useState(false);
+  const { user, navigateSrc} = useContext(DataContext);
   const [allPosts, setAllPosts] = useState([]);
   const [allReels, setAllReels] = useState([]);
   const [followstate, setfollowstate] = useState("");
   const firebase = useFirebase();
-  const refs = useRef([]);
+  const contentRefs = useRef([]);
   const navigate = useNavigate();
   let content = postorreel === "post" ? allPosts : allReels; // Determine if it's posts or reels
 
@@ -130,79 +126,34 @@ const NavigatePost = () => {
     }
   }, [firebase, userId]);
 
-  // Generate random numbers for likes
-  const generateUniqueRandomNumbers = () => {
-    const numbers = [];
-    while (numbers.length < dataLength) {
-      const randomNumber = Math.floor(Math.random() * dataLength);
-      if (!numbers.includes(randomNumber)) {
-        numbers.push(randomNumber);
-      }
-    }
-    setRandomNo(numbers);
-  };
-
-  useEffect(() => {
-    generateUniqueRandomNumbers();
-  }, []);
-
-  useEffect(() => {
-    setLikes(randomNo.map((index) => peopleImgs[index].likes));
-  }, []);
-
-  // Handle like button click
-  const likeHandler = (index) => {
-    setLikes((prevLikes) =>
-      prevLikes.map((like, i) => (i === index ? (likeNo[index] ? like - 1 : like + 1) : like))
-    );
-
-    setLikeNo((prevLikeNo) =>
-      prevLikeNo.map((likeState, i) => (i === index ? !likeState : likeState))
-    );
-  };
-
-  // Navigate to profile
   const handleProfile = (id) => {
     navigate(`/insta/profile/${id}`);
   };
-
+  const [move,setMove]= useState(-1)
   useEffect(() => {
-    const parsedIndex = parseInt(index, 10);
-  
-    if (!isNaN(parsedIndex) && refs.current[parsedIndex]) {
-      const interval = setInterval(() => {
-        if (refs.current[parsedIndex]) {
-          refs.current[parsedIndex].scrollIntoView({
+    if (navigateSrc && content.length > 0) {    
+      setTimeout(() => {
+        const foundIndex = content.findIndex((item) => item.src === navigateSrc);
+        setMove(foundIndex);
+        if (foundIndex !== -1 && contentRefs.current[foundIndex]) {
+          contentRefs.current[foundIndex].scrollIntoView({
             behavior: "auto",
-            block: "start",  // Align to the top of the viewport
-            inline: "nearest" // Ensure nearest horizontal alignment
+            block: "start"
           });
-        }
-      }, 100); // Check every 100ms
-  
-      // Clear the interval after 5 seconds
-      const timer = setTimeout(() => {
-        clearInterval(interval);
-      }, 2000);
-  
-      // Cleanup function to clear both interval and timeout on unmount
-      return () => {
-        clearInterval(interval);
-        clearTimeout(timer);
-      };
-    }
-  }, [index, content]);
-
-  return (
+      }
+      }, 1000); //
+    }},[navigateSrc,content,move])
+      return (
     <EditProLayout>
+      
       <div  className="postData w-100 d-flex flex-column align-items-center justify-content-center row pe-0 mt-5 mt-md-auto">
-        {content.length > 0 ? (
+        {content.length > 0 && move!== -1 ?  (
           <>
             {content.map((val, index) => {
               const isVideo = (type) => type === "video";
 
               return (
-                <div ref={(el) => (refs.current[index] = el)}
+                <div ref={(el) => (contentRefs.current[index] = el)}
                   className="position-relative row col-12 m-0 pe-0"
                   key={index}
                   style={{ width: "468px" }}
@@ -240,9 +191,9 @@ const NavigatePost = () => {
                   )}
                   <div className="col-12 position-relative">
                     {likeNo[index] ? (
-                      <FaHeart color="red" className="m-2" size={22} onClick={() => likeHandler(index)} />
+                      <FaHeart color="red" className="m-2" size={22} onClick={() => console.log(index)} />
                     ) : (
-                      <FaRegHeart className="m-2" size={22} onClick={() => likeHandler(index)} />
+                      <FaRegHeart className="m-2" size={22} onClick={() => console.log(index)} />
                     )}
                     <BiMessageRounded className="m-2" size={23} />
                     <LuSend className="m-2" size={23} />
@@ -276,6 +227,7 @@ const NavigatePost = () => {
           </div>
         )}
       </div>
+      
     </EditProLayout>
   );
 };

@@ -16,13 +16,11 @@ const Suggestion = () => {
         const data = await firebase.userdata; // Ensure this is resolving correctly
         if (data) {
           setUser(data);
-          const filteredUsers = getAllUser.filter(u => u.id !== data?.id); // Filter out the logged-in user
-          const shuffledUsers = filteredUsers.sort(() => 0.5 - Math.random()); // Shuffle suggested users
+          const filteredUsers = getAllUser.filter(u => !(data?.followings).includes(u.userId)); 
+          const shuffledUsers = filteredUsers.sort(() => 0.5 - Math.random()); 
           const randomFiveUsers = shuffledUsers.slice(0, 6); // Get 5 users
           setSuggestedUsers(randomFiveUsers);
-        } else {
-          console.log("User data is null or undefined");
-        }
+        } 
       } catch (error) {
         console.error("Error fetching userdata:", error);
       }
@@ -62,16 +60,14 @@ const Suggestion = () => {
         <div className="suggestions">
           {/* Logged-in user's profile */}
           <div className="d-flex">
-            <Link to={`profile/${user.userId}`} className="text-decoration-none text-dark">
+            <div onClick={()=>navigate(`insta/profile/${user.userId}`)}>
               <img className="rounded-circle" style={{ height: "44px", width: "44px" }} src={user?.proimg} alt="" />
-            </Link>
+            </div>
             <div className="naming">
-              <Link to={`profile/${user.userId}`} className="text-decoration-none text-dark">
                 <div className="names d-flex flex-column" style={{ marginLeft: "5px" }}>
                   <div style={{ fontSize: "14px" }}>{user?.username}</div>
                   <div className="fw-light light-color" style={{ fontSize: "12px" }}>{user?.fullname}</div>
                 </div>
-              </Link>
               <div className="text-primary me-4">Switch</div>
             </div>
           </div>

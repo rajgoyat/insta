@@ -6,12 +6,10 @@ import { DataContext } from "../Context/DataContext";
 export const SlideLogout = ()=>{
   const firebase=useFirebase();
   const navigate=useNavigate();
-  const{allshow,setallshow,user,setshowwhat,setborderTop}= useContext(DataContext);
+  const{setallshow,user,setshowwhat,setborderTop}= useContext(DataContext);
   const handleLogOut= async()=>{
-    console.log("hello")
-   const logout=  await firebase.logout();
-   console.log(logout)
-   if(logout){navigate('/insta/login');} 
+   await firebase.logout();
+   navigate('/insta/login');
   }
   const handleseetingicon=()=>{
 navigate('/insta/edit')

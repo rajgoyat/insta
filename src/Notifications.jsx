@@ -50,6 +50,7 @@ const navigate= useNavigate();
         description: 'started following you.',
         time: '3w',
         action: 'Follow',
+        imageSrc: 'https://via.placeholder.com/40', // Placeholder image
       },
       {
         usernames: 'up_20__abhishek',
@@ -88,7 +89,7 @@ const navigate= useNavigate();
         {notifications.week.map((notification, index) => (
           <div key={index} className="d-flex align-items-center justify-content-between mb-3">
             <div className="d-flex align-items-center">
-              <div
+              <img src=''
                 className="rounded-circle bg-secondary"
                 style={{ width: '40px', height: '40px', backgroundColor: '#f0f0f0' }}
               />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, doc, updateDoc, getDoc } from "firebase/firestore";
+import {doc, updateDoc, getDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { database, storage } from "../Firebase"; // import your Firebase config
 import { useContext } from "react";
@@ -21,7 +21,6 @@ function CreatePost() {
     const [activeIndex, setActiveIndex] = useState(0); // Track the current active slide index
     const [postText, setPostText] = useState("");
     const [videoFile, setVideoFile] = useState(null); // Stores the uploaded file
-  const [data, setData] = useState(null); // Stores user data from Firestore
 const [userId,setUserId]=useState()
 // 767px
 const postRensponsive = useMediaQuery({ query: "(max-width: 767px)" });
@@ -29,7 +28,6 @@ const postRensponsive = useMediaQuery({ query: "(max-width: 767px)" });
 useEffect(()=>{
   const getId=async()=>{  
     if (user && user.userId) {
-const userId= await user.userId;
   setUserId(user.userId)}}
 getId()
 },[user])
@@ -80,19 +78,6 @@ useEffect(()=>{
     }
   };
 
-  // Load user data when the component mounts
-  useEffect(() => {
-    if(userId){const getUserData = async () => {
-      const userRef = doc(database, "users", userId);
-      const userDoc = await getDoc(userRef);
-      if (userDoc.exists()) {
-        setData(userDoc.data());
-      } else {
-        console.log("No such document!");
-      }
-    };
-    getUserData();}
-  }, [userId]);
   useEffect(() => {
     setshow(handlecreatePostCloseButton);
   }, [handlecreatePostCloseButton]);
@@ -124,13 +109,16 @@ useEffect(()=>{
     });
   };
   const inputClicked = () => {
-    document.getElementById("file-upload").click(); // Programmatically click the hidden input
-    // sethandlecreatePostCloseButton(false)
-  };
-  // const 20=20;
-
+    document.getElementById("file-upload").click(); 
+    };
   return (
-    <div style={styles.overlay} className={`${show ? "" : "d-none"}`}>
+    <div style={styles.overlay} onClick={()=>{
+              sethandlecreatePostCloseButton(false);
+        setSelectedImage(null);
+        setActiveIndex(0)
+      
+    }} className={`${show ? "" : "d-none"}`}>
+      <div onClick={(e)=>e.stopPropagation()}>
       <button
         style={styles.closeButton}
         onClick={() => {
@@ -217,19 +205,20 @@ useEffect(()=>{
         )}
         {selectedImage && mediaType === "image" && (
           <div className="laptop-frame">
-            <div
+            
+            <div>
+              <img src={selectedImage} alt="" 
               className="laptop-screen"
               style={{
-                backgroundImage: `url(${selectedImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                maxHeight:postRensponsive? "348px":"446px",
+                // backgroundSize: "cover",
+                // backgroundPosition: "center",
+                // maxHeight:postRensponsive? "348px":"446px",
               objectFit: "cover",
-              width:postRensponsive?"348px": "445px",
+              // width:postRensponsive?"348px": "445px",
                 border: "2px solid #ccc",
                 borderRadius: "5px",
-              }}
-            ></div>
+              }}/>
+            </div>
            
           </div>
         )}
@@ -308,7 +297,7 @@ useEffect(()=>{
        
         {selectedImage && mediaType === "image" && (
           <div className="laptop-frame col-7 p-0">
-            <img
+            <img alt="hi"
             src={selectedImage}
               className="laptop-screen img fluid "
               style={{
@@ -342,7 +331,7 @@ useEffect(()=>{
             <source src={selectedImage} type="video/mp4" />
           </video></div>
         )}
- <div className=" instagram-post-container flex-grow-1 col-4  p-0" style={{height:"446px", width:"320px", overflowY:"scroll"}} >
+ <div className=" instagram-post-container flex-grow-1 col-4  p-0" style={{height:postRensponsive?"":"446px", width:"320px", overflowY:"scroll"}} >
       <div className="profile-info p-2">
         <img
           src={ProfileImg}
@@ -381,7 +370,7 @@ useEffect(()=>{
 </div>
           <div
             className=" d-flex justify-content-between align-items-center icon-container p-1 position-absolute rounded-pill"
-            style={{fontSize:"14px", fontWeight:"600", zIndex: "3", bottom:"15px", left:"5px", color:"white", backgroundColor:"rgba(0, 0, 0, 0)" }}
+            style={{fontSize:"14px", fontWeight:"600", zIndex: "3", bottom:postRensponsive?"310px":"15px", left:"5px", color:"black", backgroundColor:"rgba(0, 0, 0, 0)" }}
           >
            <div><ManLogo/></div><div className="pt-1 ms-1">Tag People</div>
           </div>
@@ -405,7 +394,7 @@ useEffect(()=>{
       </div>
     </Carousel.Item>
  
-</Carousel>
+</Carousel></div>
     </div>
   );
 }

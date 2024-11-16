@@ -1,53 +1,29 @@
 
-import React, { useState, useEffect } from 'react';
-import { getFirestore, doc, setDoc, collection, getDocs, updateDoc, getDoc, deleteDoc } from 'firebase/firestore';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import React, { useState, useEffect, useRef } from 'react';
+import { getFirestore, doc,updateDoc, getDoc} from 'firebase/firestore';
 import { useFirebase } from '../Firebase';
 import { useNavigate } from 'react-router-dom';
 
 const StoryImage = () => {
   const [stories, setStories] = useState([]);
-  const [progress, setProgress] = useState([]);
   const firebase = useFirebase();
-  const { userdata } = firebase; // Get user data
+  const { userdata } = firebase; 
   const navigate = useNavigate();
+  const fileURL = useRef(null); 
 
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const userId = userdata?.userId;
-    const storage = getStorage();
-
-    const storageRef = ref(storage, `stories/${userId}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progressPercent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgress((prev) => [...prev, progressPercent]);
-      },
-      (error) => {
-        console.error("Upload failed", error);
-      },
-      async () => {
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-        // Update the userdata with the new story link
-        await updateDoc(doc(getFirestore(), `users/${userId}`), {
-          stories: [...(userdata.stories || []), { 
-            src: downloadURL,
-            isVideo: file.type.startsWith("video"),
-            timestamp: new Date().getTime() // Store current timestamp
-          }],
-        });
-
-        fetchStories(); // Fetch updated stories after upload
-        navigate(`/insta/story/${userId}`); // Navigate to story page
-      }
-    );
-  };
+const handleFileUpload1 = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    fileURL.current = URL.createObjectURL(file); 
+    const storyData = {
+      file: file,
+      fileURL: fileURL.current, 
+            fileType: file.type.startsWith("image/") ? "image" : "video",
+    };
+    navigate('/insta/create/story', { state: storyData });
+    return () => URL.revokeObjectURL(fileURL.current);
+  }
+};
 
   const fetchStories = async () => {
     const userId = userdata?.userId; // Get current user ID
@@ -91,13 +67,14 @@ await deleteExpiredStories()
   useEffect(() => {
     fetchStories(); // Fetch stories on component mount
   }, []);
-  return (
+  return (<>
+
     <div style={{ height: "61px", width: "61px" }} className="p-1 me-2">
       <input
         type="file"
         accept="image/*,video/*"
         id="fileInput"
-        onChange={handleFileUpload}
+        onChange={handleFileUpload1}
         style={{ display: 'none' }}
       />
       <div className='position-relative'>
@@ -132,17 +109,6 @@ await deleteExpiredStories()
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               )}
-              <div
-                className="progress mt-2"
-                style={{
-                  height: '3px',
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  backgroundColor: '#007bff',
-                  width: `${progress[0] || 0}%`,
-                }}
-              ></div>
             </div>
           ) : (
             <img
@@ -159,7 +125,7 @@ await deleteExpiredStories()
           )}
         </div>
       </div>
-    </div>
+    </div></>
   );
 };
 

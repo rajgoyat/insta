@@ -15,7 +15,7 @@ const Seeting = () => (
       fill="none"
       r="8.635"
       stroke="currentColor"
-      stroke-linecap="round"
+      strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
     ></circle>
@@ -23,8 +23,8 @@ const Seeting = () => (
       d="M14.232 3.656a1.269 1.269 0 0 1-.796-.66L12.93 2h-1.86l-.505.996a1.269 1.269 0 0 1-.796.66m-.001 16.688a1.269 1.269 0 0 1 .796.66l.505.996h1.862l.505-.996a1.269 1.269 0 0 1 .796-.66M3.656 9.768a1.269 1.269 0 0 1-.66.796L2 11.07v1.862l.996.505a1.269 1.269 0 0 1 .66.796m16.688-.001a1.269 1.269 0 0 1 .66-.796L22 12.93v-1.86l-.996-.505a1.269 1.269 0 0 1-.66-.796M7.678 4.522a1.269 1.269 0 0 1-1.03.096l-1.06-.348L4.27 5.587l.348 1.062a1.269 1.269 0 0 1-.096 1.03m11.8 11.799a1.269 1.269 0 0 1 1.03-.096l1.06.348 1.318-1.317-.348-1.062a1.269 1.269 0 0 1 .096-1.03m-14.956.001a1.269 1.269 0 0 1 .096 1.03l-.348 1.06 1.317 1.318 1.062-.348a1.269 1.269 0 0 1 1.03.096m11.799-11.8a1.269 1.269 0 0 1-.096-1.03l.348-1.06-1.317-1.318-1.062.348a1.269 1.269 0 0 1-1.03-.096"
       fill="none"
       stroke="currentColor"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
   </svg>
 );
@@ -43,7 +43,7 @@ const YourActivity = () => (
   </svg>
 );
 const Saved = ({ height = 20, width = 20 }) => (
-<svg aria-label="Saved" class="x1lliihq x1n2onr6 x1roi4f4" fill="currentColor" height={height} role="img" viewBox="0 0 24 24" width={width}><title>Saved</title><polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon></svg>
+<svg aria-label="Saved" className="x1lliihq x1n2onr6 x1roi4f4" fill="currentColor" height={height} role="img" viewBox="0 0 24 24" width={width}><title>Saved</title><polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></polygon></svg>
 )
 const DarkMode = () => (
   <svg
@@ -102,9 +102,9 @@ const Post = ({ height = 15, width = 15 }) => (
       fill="none"
       height="18"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       width="18"
       x="3"
       y="3"
@@ -112,9 +112,9 @@ const Post = ({ height = 15, width = 15 }) => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="9.015"
       x2="9.015"
       y1="3"
@@ -123,9 +123,9 @@ const Post = ({ height = 15, width = 15 }) => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="14.985"
       x2="14.985"
       y1="3"
@@ -134,9 +134,9 @@ const Post = ({ height = 15, width = 15 }) => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="21"
       x2="3"
       y1="9.015"
@@ -145,9 +145,9 @@ const Post = ({ height = 15, width = 15 }) => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="21"
       x2="3"
       y1="14.985"
@@ -169,8 +169,8 @@ const Reels = ({ height = 25, width = 25 }) => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="2.049"
       x2="21.95"
       y1="7.002"
@@ -179,9 +179,9 @@ const Reels = ({ height = 25, width = 25 }) => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="13.504"
       x2="16.362"
       y1="2.001"
@@ -190,9 +190,9 @@ const Reels = ({ height = 25, width = 25 }) => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="7.207"
       x2="10.002"
       y1="2.11"
@@ -202,9 +202,9 @@ const Reels = ({ height = 25, width = 25 }) => (
       d="M2 12.001v3.449c0 2.849.698 4.006 1.606 4.945.94.908 2.098 1.607 4.946 1.607h6.896c2.848 0 4.006-.699 4.946-1.607.908-.939 1.606-2.096 1.606-4.945V8.552c0-2.848-.698-4.006-1.606-4.945C19.454 2.699 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.546 2 5.704 2 8.552Z"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
     <path
       d="M9.763 17.664a.908.908 0 0 1-.454-.787V11.63a.909.909 0 0 1 1.364-.788l4.545 2.624a.909.909 0 0 1 0 1.575l-4.545 2.624a.91.91 0 0 1-.91 0Z"
@@ -227,17 +227,17 @@ const Tagged = ({ height = 15, width = 15 }) => (
       d="M10.201 3.797 12 1.997l1.799 1.8a1.59 1.59 0 0 0 1.124.465h5.259A1.818 1.818 0 0 1 22 6.08v14.104a1.818 1.818 0 0 1-1.818 1.818H3.818A1.818 1.818 0 0 1 2 20.184V6.08a1.818 1.818 0 0 1 1.818-1.818h5.26a1.59 1.59 0 0 0 1.123-.465Z"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
     <path
       d="M18.598 22.002V21.4a3.949 3.949 0 0 0-3.948-3.949H9.495A3.949 3.949 0 0 0 5.546 21.4v.603"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
     <circle
       cx="12.072"
@@ -245,16 +245,16 @@ const Tagged = ({ height = 15, width = 15 }) => (
       fill="none"
       r="3.556"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></circle>
   </svg>
 );
 const Like = () => (
   <svg
     aria-label="Like"
-    class="clrs x1lliihq x1n2onr6 xyb1xck"
+    className="clrs x1lliihq x1n2onr6 xyb1xck"
     fill="currentColor"
     height="24"
     role="img"
@@ -268,7 +268,7 @@ const Like = () => (
 const Comment = () => (
   <svg
     aria-label="Comment"
-    class="clrs x1lliihq x1n2onr6 xyb1xck"
+    className="clrs x1lliihq x1n2onr6 xyb1xck"
     fill="currentColor"
     height="24"
     role="img"
@@ -280,15 +280,15 @@ const Comment = () => (
       d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"
       fill="none"
       stroke="currentColor"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
   </svg>
 );
 const Share = ({height=24, width=24}) => (
   <svg
     aria-label="Direct"
-    class="clrs x1lliihq x1n2onr6 xyb1xck"
+    className="clrs x1lliihq x1n2onr6 xyb1xck"
     fill="currentColor"
     height={height}
     role="img"
@@ -299,8 +299,8 @@ const Share = ({height=24, width=24}) => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="22"
       x2="9.218"
       y1="3"
@@ -310,15 +310,15 @@ const Share = ({height=24, width=24}) => (
       fill="none"
       points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
       stroke="currentColor"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></polygon>
   </svg>
 );
 const More = () => (
   <svg
     aria-label="More"
-    class="clrs x1lliihq x1n2onr6 xyb1xck"
+    className="clrs x1lliihq x1n2onr6 xyb1xck"
     fill="currentColor"
     height="24"
     role="img"
@@ -334,7 +334,7 @@ const More = () => (
 const Song = () => (
   <svg
     aria-label="Audio image"
-    class="x1lliihq x1n2onr6 x9bdzbf"
+    className="x1lliihq x1n2onr6 x9bdzbf"
     fill="currentColor"
     height="12"
     role="img"
@@ -348,7 +348,7 @@ const Song = () => (
 const YourMessage = () => (
   <svg
     aria-label=""
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="96"
     role="img"
@@ -362,7 +362,7 @@ const YourMessage = () => (
 const Pencil = () => (
   <svg
     aria-label="New message"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="24"
     role="img"
@@ -374,24 +374,24 @@ const Pencil = () => (
       d="M12.202 3.203H5.25a3 3 0 0 0-3 3V18.75a3 3 0 0 0 3 3h12.547a3 3 0 0 0 3-3v-6.952"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
     <path
       d="M10.002 17.226H6.774v-3.228L18.607 2.165a1.417 1.417 0 0 1 2.004 0l1.224 1.225a1.417 1.417 0 0 1 0 2.004Z"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="16.848"
       x2="20.076"
       y1="3.924"
@@ -402,7 +402,7 @@ const Pencil = () => (
 const DownChevron = () => (
   <svg
     aria-label="Down chevron icon"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="15"
     role="img"
@@ -416,7 +416,7 @@ const DownChevron = () => (
 const CreatePost = () => (
   <svg
     aria-label="Post"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="24"
     role="img"
@@ -430,7 +430,7 @@ const CreatePost = () => (
 const LiveVideo = () => (
   <svg
     aria-label="Live video"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="24"
     role="img"
@@ -447,7 +447,7 @@ const LiveVideo = () => (
 const AddUser = () => (
   <svg
     aria-label="Similar accounts"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="16"
     role="img"
@@ -459,23 +459,24 @@ const AddUser = () => (
       d="M19.006 8.252a3.5 3.5 0 1 1-3.499-3.5 3.5 3.5 0 0 1 3.5 3.5Z"
       fill="none"
       stroke="currentColor"
-      stroke-miterlimit="10"
-      stroke-width="2"
+      strokeMiterlimit="10"
+      
+      strokeWidth="2"
     ></path>
     <path
       d="M22 19.5v-.447a4.05 4.05 0 0 0-4.05-4.049h-4.906a4.05 4.05 0 0 0-4.049 4.049v.447"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-miterlimit="10"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeMiterlimit="10"
+      strokeWidth="2"
       x1="5.001"
       x2="5.001"
       y1="7.998"
@@ -484,9 +485,9 @@ const AddUser = () => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-miterlimit="10"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeMiterlimit="10"
+      strokeWidth="2"
       x1="8.004"
       x2="2.003"
       y1="11"
@@ -497,7 +498,7 @@ const AddUser = () => (
 const HorizintalDot = () => (
   <svg
     aria-label="Options"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="32"
     role="img"
@@ -513,7 +514,7 @@ const HorizintalDot = () => (
 const BackArrow = () => (
   <svg
     aria-label="Back"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="24"
     role="img"
@@ -524,9 +525,9 @@ const BackArrow = () => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="2.909"
       x2="22.001"
       y1="12.004"
@@ -536,16 +537,16 @@ const BackArrow = () => (
       fill="none"
       points="9.276 4.726 2.001 12.004 9.276 19.274"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></polyline>
   </svg>
 );
 const Copy = ({fill="#ffffff"}) => (
   <svg
     aria-label="Open media gallery"
-    class="x1lliihq x1n2onr6 x9bdzbf"
+    className="x1lliihq x1n2onr6 x9bdzbf"
     fill={fill}
     height="16"
     role="img"
@@ -562,7 +563,7 @@ const Copy = ({fill="#ffffff"}) => (
 const Crop = () => (
   <svg
     aria-label="Select crop"
-    class="x1lliihq x1n2onr6 x9bdzbf"
+    className="x1lliihq x1n2onr6 x9bdzbf"
     fill="#ffffff"
     height="16"
     role="img"
@@ -576,7 +577,7 @@ const Crop = () => (
 const Zoom = () => (
   <svg
     aria-label="Select zoom"
-    class="x1lliihq x1n2onr6 x9bdzbf"
+    className="x1lliihq x1n2onr6 x9bdzbf"
     fill="#ffffff"
     height="16"
     role="img"
@@ -590,7 +591,7 @@ const Zoom = () => (
 const ManLogo = () => (
   <svg
     aria-label="Tags"
-    class="x1lliihq x1n2onr6 x9bdzbf"
+    className="x1lliihq x1n2onr6 x9bdzbf"
     fill="currentColor"
     height="16"
     role="img"
@@ -604,7 +605,7 @@ const ManLogo = () => (
 const Smile = ({height=20, width=20}) => (
   <svg
     aria-label="Emoji"
-    class="x1lliihq x1n2onr6 x1roi4f4"
+    className="x1lliihq x1n2onr6 x1roi4f4"
     fill="#858585"
     height={height}
     role="img"
@@ -618,7 +619,7 @@ const Smile = ({height=20, width=20}) => (
 const Location = () => (
   <svg
     aria-label="Emoji"
-    class="x1lliihq x1n2onr6 x1roi4f4"
+    className="x1lliihq x1n2onr6 x1roi4f4"
     fill="currentColor"
     height="20"
     role="img"
@@ -632,7 +633,7 @@ const Location = () => (
 const AddColloborator = () => {
   <svg
     aria-label="Add collaborators"
-    class="x1lliihq x1n2onr6 x1roi4f4"
+    className="x1lliihq x1n2onr6 x1roi4f4"
     fill="currentColor"
     height="16"
     role="img"
@@ -647,7 +648,7 @@ const AddColloborator = () => {
 const Call = () => (
   <svg
     aria-label="Audio call"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="24"
     role="img"
@@ -661,7 +662,7 @@ const Call = () => (
 const VideoCall = () => (
   <svg
     aria-label="Video call"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="24"
     role="img"
@@ -674,9 +675,9 @@ const VideoCall = () => (
       height="18"
       rx="3"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       width="16.999"
       x="1"
       y="3"
@@ -685,16 +686,16 @@ const VideoCall = () => (
       d="m17.999 9.146 2.495-2.256A1.5 1.5 0 0 1 23 8.003v7.994a1.5 1.5 0 0 1-2.506 1.113L18 14.854"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
   </svg>
 );
 const Listner = () => (
   <svg
     aria-label="Voice Clip"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="24"
     role="img"
@@ -706,15 +707,15 @@ const Listner = () => (
       d="M19.5 10.671v.897a7.5 7.5 0 0 1-15 0v-.897"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="12"
       x2="12"
       y1="19.068"
@@ -723,9 +724,9 @@ const Listner = () => (
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="8.706"
       x2="15.104"
       y1="22"
@@ -735,18 +736,18 @@ const Listner = () => (
       d="M12 15.745a4 4 0 0 1-4-4V6a4 4 0 0 1 8 0v5.745a4 4 0 0 1-4 4Z"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></path>
   </svg>
 );
 const Image = () => (
-    <svg aria-label="Add Photo or Video" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Add Photo or Video</title><path d="M6.549 5.013A1.557 1.557 0 1 0 8.106 6.57a1.557 1.557 0 0 0-1.557-1.557Z" fill-rule="evenodd"></path><path d="m2 18.605 3.901-3.9a.908.908 0 0 1 1.284 0l2.807 2.806a.908.908 0 0 0 1.283 0l5.534-5.534a.908.908 0 0 1 1.283 0l3.905 3.905" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path><path d="M18.44 2.004A3.56 3.56 0 0 1 22 5.564h0v12.873a3.56 3.56 0 0 1-3.56 3.56H5.568a3.56 3.56 0 0 1-3.56-3.56V5.563a3.56 3.56 0 0 1 3.56-3.56Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>);
+    <svg aria-label="Add Photo or Video" className="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Add Photo or Video</title><path d="M6.549 5.013A1.557 1.557 0 1 0 8.106 6.57a1.557 1.557 0 0 0-1.557-1.557Z" fill-rule="evenodd"></path><path d="m2 18.605 3.901-3.9a.908.908 0 0 1 1.284 0l2.807 2.806a.908.908 0 0 0 1.283 0l5.534-5.534a.908.908 0 0 1 1.283 0l3.905 3.905" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2"></path><path d="M18.44 2.004A3.56 3.56 0 0 1 22 5.564h0v12.873a3.56 3.56 0 0 1-3.56 3.56H5.568a3.56 3.56 0 0 1-3.56-3.56V5.563a3.56 3.56 0 0 1 3.56-3.56Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>);
 const Conversation = () => (
   <svg
     aria-label="Conversation information"
-    class="x1lliihq x1n2onr6 x5n08af"
+    className="x1lliihq x1n2onr6 x5n08af"
     fill="currentColor"
     height="24"
     role="img"
@@ -760,17 +761,17 @@ const Conversation = () => (
       fill="none"
       r="10.5"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></circle>
     <circle cx="11.819" cy="7.709" r="1.25"></circle>
     <line
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       x1="10.569"
       x2="13.432"
       y1="16.777"
@@ -780,16 +781,16 @@ const Conversation = () => (
       fill="none"
       points="10.569 11.05 12 11.05 12 16.777"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     ></polyline>
   </svg>
 );
 const VideoSvg = () => (
   <svg
     aria-label="Clip"
-    class="x1lliihq x1n2onr6 x9bdzbf"
+    className="x1lliihq x1n2onr6 x9bdzbf"
     fill="currentColor"
     height="20"
     role="img"
@@ -825,10 +826,10 @@ const Comment1 = ({ height = 24, width = 24 }) => (
   </svg>
 );
 const Saved2=()=>(
-  <svg aria-label="Remove" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Remove</title><path d="M20 22a.999.999 0 0 1-.687-.273L12 14.815l-7.313 6.912A1 1 0 0 1 3 21V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1Z"></path></svg>
+  <svg aria-label="Remove" className="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Remove</title><path d="M20 22a.999.999 0 0 1-.687-.273L12 14.815l-7.313 6.912A1 1 0 0 1 3 21V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1Z"></path></svg>
 )
 const Saved1=()=>(
-  <svg aria-label="Remove" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Remove</title><path d="M20 22a.999.999 0 0 1-.687-.273L12 14.815l-7.313 6.912A1 1 0 0 1 3 21V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1Z"></path></svg>
+  <svg aria-label="Remove" className="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Remove</title><path d="M20 22a.999.999 0 0 1-.687-.273L12 14.815l-7.313 6.912A1 1 0 0 1 3 21V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1Z"></path></svg>
 )
 
 export {

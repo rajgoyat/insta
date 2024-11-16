@@ -100,11 +100,11 @@ const [hello,sethello]=useState(false)
   // logout
   const logout = async () => {
     try {
-      // Clear myId from Redux
       setuser(null);
       setUserdata(null);
       console.log("User logged out");
       await signOut(firebaseAuth);
+
     } catch (error) {
       console.error("Error during logout: ", error);
     }
@@ -243,7 +243,6 @@ const [hello,sethello]=useState(false)
  const followuser=async(id)=>{
   if(userdata.userId){
   try {
-    // console.log("heloss",userdata.userId)
     const userRef = doc(database, "users", userdata.userId);
  const updatedData = {
   followings: arrayUnion(id)
@@ -255,8 +254,6 @@ const [hello,sethello]=useState(false)
   followers: arrayUnion(userdata.userId)
  };
  await updateDoc(userRef1, updatedData1);
-//  console.log("followerd",id)
-
 } catch (error) {
  console.error("Error in following user:", error);
 }
@@ -264,24 +261,19 @@ const [hello,sethello]=useState(false)
 const unfollowuser =async(id)=>{
   if (userdata.userId) {
     try {
-      // Reference to the user's document in Firestore
       const userRef = doc(database, "users", userdata.userId);
-
-      // Prepare the updated data with arrayRemove to remove the user from followings
+      const userRef1 = doc(database, "users", id);
+      
       const updatedData = {
-        followings: arrayRemove(id), // Removes the specified user ID from the followings array
+        followings: arrayRemove(id), 
+      };
+      const updatedData1 = {
+        followers: arrayRemove(userdata.userId), 
       };
       await updateDoc(userRef, updatedData);
-      const userRef1 = doc(database, "users", id);
-
-      // Prepare the updated data with arrayRemove to remove the user from followings
-      const updatedData1 = {
-        followers: arrayRemove(userdata.userId), // Removes the specified user ID from the followings array
-      };
-
-      // Update Firestore document
       await updateDoc(userRef1, updatedData1);
-      console.log("User successfully unfollowed!");
+
+      console.log("User successfully unfollowed!",userdata.followings);
     } catch (error) {
       console.error("Error in unfollowing user:", error);
     }

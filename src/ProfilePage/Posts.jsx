@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useFirebase } from "../Firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaHeart } from "react-icons/fa6";
 import {Comment1,VideoSvg} from '../AllIconsSvgs/IconsSvg'
 import NoData from "./NoData";
+import { DataContext } from "../Context/DataContext";
 const Posts = () => {
   const firebase = useFirebase();
   const { userId } = useParams();
   const [allVideos, setAllVideos] = useState([]);
+  const {setNavigateSrc}= useContext(DataContext)
 const navigate= useNavigate();
   useEffect(() => {
     if (userId) {
@@ -30,7 +32,7 @@ const navigate= useNavigate();
             <div
               key={index}
               className="col p-0 position-relative"
-              onClick={()=>navigate(`/insta/post/${userId}/${index}`)}
+              onClick={()=>{setNavigateSrc(item.src); navigate(`/insta/post/${userId}`)}}
 
               style={{
                 display: "flex",

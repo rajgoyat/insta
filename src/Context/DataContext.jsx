@@ -15,7 +15,7 @@ const [bordertop,setborderTop]=useState(1) //for profile.jsx
 const [savedpost, setsavedpost] = useState([]); //for center.jsx  or saved on profilepage
 const [likedpost,setlikedpost]= useState([])//for center.jsx  
 const [totalLikes,setTotalLikes]= useState([])
-
+const [navigateSrc,setNavigateSrc]= useState('')
   const navigate= useNavigate()
   const deleteSaved=(src,userId,type)=>{
     setsavedpost(savedpost.filter(post=> !post.link.includes(src))) 
@@ -74,7 +74,7 @@ useEffect(()=>{
 },[firebase,user])
     return (
     <DataContext.Provider value={{showwhat,setshowwhat,bordertop,totalLikes,setTotalLikes,handleLikedPost,deleteLiked,setborderTop,savedpost,likedpost,setlikedpost, setsavedpost,handleSavedPost,deleteSaved,
-     createPostCloseButton,handlecreatePostCloseButton,
+     createPostCloseButton,handlecreatePostCloseButton,navigateSrc,setNavigateSrc,
      sethandlecreatePostCloseButton,user ,allUsers,
      handleUserMsgBox, msgUser1,allshow,setallshow}}>
     {children}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useFirebase } from '../Firebase';
 import { useNavigate, useParams } from 'react-router-dom';
 import NoData from "./NoData";
@@ -6,11 +6,13 @@ import NoData from "./NoData";
 import { FaHeart } from "react-icons/fa6";
 import { Comment1 } from '../AllIconsSvgs/IconsSvg';
 import { useMediaQuery } from 'react-responsive';
+import { DataContext } from '../Context/DataContext';
 const ProfileReels = () => {
   const firebase = useFirebase();
   const { userId} = useParams();
   const navigate= useNavigate();
   const [allVideos, setAllVideos] = useState([]);
+  const {setNavigateSrc}= useContext(DataContext)
  const isLarger = useMediaQuery({query:'(min-width:600px)'});
   useEffect(() => {
     if (userId) {
@@ -34,7 +36,7 @@ const ProfileReels = () => {
                 <div
                   key={index}
                   className="col  p-0 m-0 position-relative" 
-              onClick={()=>navigate(`/insta/reel/${userId}/${index}`)}
+              onClick={()=>{setNavigateSrc(item.src); navigate(`/insta/reel/${userId}`)}}
 
                            style={{
     display: "flex",

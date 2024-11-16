@@ -50,9 +50,9 @@ const Following = () => {
 
   useEffect(() => {
     if (isLarger) {
-      setFollowingInd(4);
+      setFollowingInd(3);
     } else {
-      setFollowingInd(8);
+      setFollowingInd(7);
     }
   }, [isLarger]);
 
@@ -102,7 +102,7 @@ const Following = () => {
                         : ""
                     }`}
                   >
-                    {userStories?.length > 0 ? (
+                    {userStories?.length > 0 && userdata?.followings.includes(val?.userId) ? (
                       userStories[0]?.src?.type?.startsWith("video") ? (
                         <video
                           src={userStories[0].src}

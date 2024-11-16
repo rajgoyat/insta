@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getDoc, doc } from "firebase/firestore";
 import { database, useFirebase } from "../Firebase";
 import { DataContext } from "../Context/DataContext";
+import { useMediaQuery } from "react-responsive";
 export default function SearchFollowing({ userId }) {
   const navigate = useNavigate();
   const { allshow, setallshow} = useContext(DataContext);
@@ -19,7 +20,7 @@ export default function SearchFollowing({ userId }) {
   const firebase = useFirebase();
   const [userdata, setuserdata] = useState();
   const [remove, setremove] = useState("Remove");
-
+  const smallScreen=useMediaQuery({ query: '(max-width:576px)' })
 const handleFollowToggle = async (userId,ind) => {
   firebase.sethello((prev) => !prev);
 
@@ -69,7 +70,7 @@ btn.innerText==="Removed"?setremove("Remove"):btn.innerText==="Remove"?setremove
   // Mock fetching following users dat
 
   const handlenavigate = (id) => {
-    navigate(`/SearchProfile/${id}`);
+    navigate(`/insta/profile/${id}`);
     setallshow("");
   };
 
@@ -152,19 +153,21 @@ btn.innerText==="Removed"?setremove("Remove"):btn.innerText==="Remove"?setremove
         } w-100 bg- DALJU position-absolute top-0`}
         onClick={() => setallshow("")}
         style={{
-          height: "100vh",
+          height:smallScreen?"": "100vh",
+          marginTop:smallScreen? "40px":'',
+          bottom:smallScreen? "50px":'',
           background: "rgba(0,0,0,0.65)",
           zIndex: "1001",
         }}
       >
         <div
-          style={{ width: "400px", height: "400px", borderRadius: "12px" }}
+          style={{ width:smallScreen?"100%": "400px", height:smallScreen?"100%": "400px", borderRadius:smallScreen?'0': "12px" }}
           className="d-flex bg-white flex-column"
           onClick={(e) => e.stopPropagation()}
         >
           <div
-            style={{ height: "42px" }}
-            className="w-100 d-flex align-items-center justify-content-between px-2"
+            style={{display:smallScreen? 'none':'flex', height: "42px" }}
+            className="w-100 align-items-center justify-content-between px-2"
           >
             <div></div>
             <div style={{ fontSize: "16px", fontWeight: "600" }}>

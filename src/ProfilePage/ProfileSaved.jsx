@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import NoData from './NoData';
 import { useMediaQuery } from 'react-responsive';
 import { DataContext } from '../Context/DataContext';
 
 const ProfileSaved = () => {
-  const { userId } = useParams();
-const {savedpost}= useContext(DataContext)
+const {savedpost, setNavigateSrc}= useContext(DataContext)
   const navigate = useNavigate();
   const isLarger = useMediaQuery({ query: '(min-width:600px)' });
+  const small = useMediaQuery({ query: '(max-width:450px)' });
   return (
     <div>
       <div className=" p-2 pt-0 d-flex align-items-center justify-content-between">
-        <div style={{ fontSize: "12px", fontWeight: "400" }} className="text-muted">  Only you can see what you have saved</div> <div style={{fontWeight:"600", fontSize:"14px"}} className='text-primary'><span style={{fontSize:"22px", fontWeight:"800"}}>+</span> New Collection</div>
+        <div style={{ fontSize:small? "9px": "12px", fontWeight:small? '200': "400" }} className="text-muted">  Only you can see what you have saved</div> <div style={{fontWeight:small? '400':"600", fontSize:small? "11px":"14px"}} className='text-primary'><span style={{fontSize:small? "13":"22px", fontWeight:small?"400":"800"}}>+</span> New Collection</div>
       </div>
       <div className="container row d-flex align-items-center justify-content-center m-0 p-0 postpage">
         {savedpost?.length > 0 ? (
@@ -21,7 +21,7 @@ const {savedpost}= useContext(DataContext)
               <div
                 key={index}
                 className="col p-0 m-0 position-relative"
-                onClick={() => navigate(`/insta/${item.type==="video"?'reel':'post'}/${item.userId}/${index}`)}
+                onClick={() => {setNavigateSrc(item.link); navigate(`/insta/${item.type==="video"?'reel':'post'}/${item.userId}`)}}
                 style={{
                   display: "flex",
                   flexWrap: "wrap",

@@ -9,7 +9,7 @@ import {Center} from "./Center";
 // import EditSeeting from "./EditPage/EditSeeting";
 import { useContext } from "react";
 import CreatePost from "./Component/CreatePost";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import Suggestion from "./Suggestion/Suggestion";
 import { MdOutlineExplore, MdHomeFilled } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -17,7 +17,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 // import { SiYoutubeshorts } from "react-icons/si";
 import {DataContext} from './Context/DataContext'
 import { FaRegHeart, FaThreads, FaInstagram } from "react-icons/fa6";
-import {SlideLogout, CreateReel} from './IconsFunctions/SlideLogout'
+import {SlideLogout} from './IconsFunctions/SlideLogout'
 import { RiMessengerLine } from "react-icons/ri";
 import { LuPlusSquare } from "react-icons/lu";
 import { PiList } from "react-icons/pi";
@@ -38,13 +38,13 @@ const Insta = () => {
            navigate("/insta/login");
     }
   },[firebase,navigate])
-     
+     const {setallshow}= useContext(DataContext)
   return (
     <><CreatePost/>
      <HeadBar/>   
 <SideBottombars/>
 
-      <div className="centerOrsuggestion ">
+      <div className="centerOrsuggestion " onClick={()=>setallshow("")}>
         <div className="center-main row m-0 p-0">
         <Center />
         <PostData/>
@@ -59,28 +59,27 @@ const Insta = () => {
 const SideBottombars= ()=>{
   const firebase= useFirebase();
   const [iconData, setIconData] = useState([]);
-  const [shows,setshow]= useState(false)
 const [userdata,setData]=useState(null);
 const navigate= useNavigate()
-// const {allshow==="searchbox",setSearchshow}=firebase;
 const { createPostCloseButton,allshow,setallshow} = useContext(DataContext);
 const isLarger = useMediaQuery({ query: '(min-width: 767px) and (max-width: 768px)' });
-
-  // consyyyyyyyyyyyole.log(shows)
 useEffect(()=>{
   const getId=async()=>{
   const userdata= await firebase.userdata
-  // const userId= await user.userId;
-
   setData(userdata)}
 getId();
 },[firebase,userdata])
-// console.log("hells",userId)
-const handleSearch=()=>{
-  if(allshow!="searchbox"){
-  setallshow("searchbox") }
-  else{setallshow("")}
-}
+const handleSearch = () => {
+  setallshow((prevAllshow) => {
+    if (prevAllshow !== "searchbox") {
+      console.log("no");
+      return "searchbox";
+    } else {
+      console.log("yes");
+      return "";
+    }
+  });
+};
 const handleMessage=()=>{
   setallshow("")
   // console.log(userdata,'jjjj')
@@ -95,23 +94,31 @@ const handleReels=()=>{
   navigate('/insta/reels')
 }
 const handleMenuIcon=()=>{
-  if(allshow!="menubox"){
+  if(allshow!=="menubox"){
   setallshow("menubox")}
   else{ setallshow("")}
+}
+const handleNotification=()=>{
+  if(allshow!=="notification"){
+    setallshow("notification")}
+    else{ setallshow("")}
+}
+const handleExplore=()=>{
+navigate('/insta/explore')
 }
 useEffect(() => {
     const iconArray = [
       { label: "Home", icon: <MdHomeFilled size={25} />, onClick:handleHome },
       { label: "Search", icon: <AiOutlineSearch size={25} />, onClick:handleSearch },
-      { label: "Explore", icon: <MdOutlineExplore size={25}  /> },
+      { label: "Explore", icon: <MdOutlineExplore size={25}  />,onClick:handleExplore },
       { label: "Reels", icon:  <Reels /> ,onClick:handleReels},
       { label: "Messenger", icon: <RiMessengerLine size={25} />,onClick:handleMessage },
-      { label: "Notifications", icon: <FaRegHeart size={25} onClick={()=>setshow(!shows)}/> },
+      { label: "Notifications", icon: <FaRegHeart size={25}/>, onClick:handleNotification },
       { label: "Create", icon: <LuPlusSquare size={25} />, onClick:createPostCloseButton },
     ];
      const iconArrayBottom = [
       {link:"/insta", label: "Home", icon: <MdHomeFilled size={25} />, onClick:handleHome  },
-      {link:"/insta/login", label: "Explore", icon: <MdOutlineExplore size={25} />},
+      {link:"/insta/login", label: "Explore", icon: <MdOutlineExplore size={25} />,onClick:handleExplore },
       {link:"/insta", label: "Create", icon: <LuPlusSquare size={25} />, onClick:createPostCloseButton },
       {link:"/insta/reels", label: "Reels", icon: <Reels />,onClick:handleReels },
       {link:"/insta/messages", label: "Messenger", icon: <RiMessengerLine size={25} />, onClick:handleMessage},
@@ -130,10 +137,8 @@ useEffect(() => {
   }, []);
   return(
    <><SeetingIcon/><div className="position-relative" style={{zIndex:"10"}}> <div id="slideBar" className="position-fixed" style={{zIndex:"5"}}> 
-<div className={`position-absolute notificationMain d-none d-md-block ${shows? "shown": ""}`} style={{zIndex:"19"}}><Notifications/>
-
-
-<div className="text-dark fs-4 fw-medium position-relative btn" style={{top:"-140px",right:"-250px"}} onClick={()=>setshow(!shows)}>X</div></div>
+<div className={`position-absolute notificationMain  ${allshow==="notification"? "d-md-block d-none shown": "d-none"}`} style={{zIndex:"19", width:"397px", marginLeft:"60px", height:"100vh", overflowY:"scroll"}}><Notifications/>
+</div>
 
     <div className="allIcon m-2">
       <div className={`d-none d-md-block p-2 ps-2 ${allshow==="searchbox" ? "d-xl-block":"d-xl-none"} `}>
@@ -176,7 +181,7 @@ useEffect(() => {
       style={{ position: "absolute", bottom: "0px" }}
     >
       <div className="allIcon m-2 p-2 col ">
-        <FaThreads size={25} />
+       <a href="https://www.threads.net/" target="_blank" style={{ color:"black"}}> <FaThreads size={25} /></a>
         <span className={`p-2 ps-2 d-none ${allshow==="searchbox" ? "d-xl-none":"d-xl-inline"} `}>Threads</span>
       </div>
       <div className=" allIcon m-2 p-2" onClick={handleMenuIcon}>
@@ -186,14 +191,13 @@ useEffect(() => {
      {allshow==="menubox"? <SlideLogout/>:null}
     </div>
     
-</div>{allshow==="searchbox" ? <Search/>:null}</div></>    
+</div><div className={`${allshow==='searchbox'?'d-none d-md-flex':"d-none" }  flex-column bg-white position-fixed top-0'`} style={{left:"57px",width:"397px",height:"100vh", borderLeft:'1px solid rgba(0, 0, 0, 0.219)',borderTopRightRadius:"20px",borderBottomRightRadius:"20px",position:"absolute",zIndex:"1000",boxShadow: "10px 0px 14px rgba(0,0,0,0.1)"}}><Search/></div></div></>    
   )
 }
 const HeadBar=()=>{
   const [show,setshow]=useState(false)
   const navigate= useNavigate();
   const handleSeeting=()=>{
-    console.log("helo")
     setshow(prevShow => !prevShow);
 show? navigate('/insta/edit'): navigate("/insta")
   }
@@ -221,31 +225,23 @@ show? navigate('/insta/edit'): navigate("/insta")
       </div>
       <div className="d-flex col justify-content-end">
         <div
-          className="d-sm-flex align-items-center flex-row d-none"
+          className="d-md-none align-items-center flex-row d-flex"
           style={{
             borderRadius: "10px",
-            backgroundColor: "rgba(51, 49, 49, 0.351)",
+            backgroundColor:"white",
           }}
         >
-          <AiOutlineSearch size={18} className="ms-1 " />
-          <input
-            className="text-dark "
-            type="text"
-            placeholder="Search"
-            style={{
-              outline: "none",
-              border: "none",
-              borderRadius: "10px",
-              backgroundColor: "transparent",
-            }}
-          />
+         
+          <div><Search/></div>
         </div>
-        <Link to="/insta/notifications" className="text-decoration-none text-reset"><FaRegHeart size={20} className="m-2" /></Link>
-        <PiList size={25} className="iconhover me-2" onClick={()=>handleSeeting()} style={{marginTop:"4px" }}/>
+        <div onClick={()=>navigate('/insta/notifications')}>
+        <FaRegHeart size={20} className="m-2" /></div>
+        <PiList size={25} className="iconhover me-2 d-none d-sm-block" onClick={()=>handleSeeting()} style={{marginTop:"4px" }}/>
         {/* <PiList size={25} />  */}
-      </div>  </div>
+      </div> </div>
         </div>
         {/* {show? <EditSeeting/>: null} */}
+        
         </>
   )
 }

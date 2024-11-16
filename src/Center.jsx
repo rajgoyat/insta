@@ -32,11 +32,12 @@ const VideoComponent = ({ src, vol ,setVol }) => {
   const [videoContainerRef, isIntersecting] = useIntersectionObserver({
     threshold: 0.5, // Adjust as needed
   });
+  const [showWatchAgain, setShowWatchAgain] = useState(false); // Watch Again button state
 
   useEffect(() => {
     const video = videoRef.current;
   
-    if (isIntersecting) {
+    if (isIntersecting && !showWatchAgain) {
       // Attempt to play the video when it's in view
       video.play().catch((error) => {
         console.error("Error trying to play video:", error);
@@ -45,14 +46,55 @@ const VideoComponent = ({ src, vol ,setVol }) => {
       // Pause the video if it's out of view
       video.pause();
     }
-  }, [isIntersecting]);
-  
+  }, [isIntersecting, showWatchAgain]);
+  const handleWatchAgain = async () => {
+    const video = videoRef.current;
+    
+    // Video ko manually pause karte hain
+    video.pause();
+    // Video ko reset karte hain start position par
+    video.currentTime = 0;
+    
+    // Thoda delay de kar video ko dobara play karte hain
+    setTimeout(() => {
+    video.play().then(() => {
+    setShowWatchAgain(false); // Watch Again button hide karna
+    }).catch((error) => {
+    console.error("Play failed", error);
+    });
+    }, 200); // 200ms ka delay to ensure video is properly paused
+    };
+    
  
   return (
     <div ref={videoContainerRef} className="video-container position-relative col-12 row  m-0 p-0">
       <div className="position-absolute fs-3 rounded-circle d-flex align-items-center col-12 row justify-content-center  m-0 p-0" onClick={()=>setVol(!vol)} style={{zIndex:"2",height:"578px", background:"rgba(0, 0, 0, 0.763)", bottom:"10px",right:"10px", height:"35px", width:"35px"}}>{vol ?<IoVolumeHigh size={26} color="white"/> :<IoVolumeMute size={26} color="white"/> }</div>
-      <video ref={videoRef} src={src} controls={false} {...(vol ? {} : {muted: true})}  className="position-relative col-12  m-0 p-0" style={{zIndex:'1'}} />
-    </div>
+      <video ref={videoRef} src={src}
+      onEnded={()=>{setShowWatchAgain(true); console.log('ended')}}
+      controls={false} {...(vol ? {} : {muted: true})}
+ className="position-relative col-12  m-0 p-0" style={{zIndex:'1'}} />
+  {showWatchAgain && (
+<button
+onClick={handleWatchAgain}
+style={{
+position: "absolute",
+zIndex:"2",
+width:"150px",
+top: "50%",
+left: "50%",
+transform: "translate(-50%, -50%)",
+backgroundColor: "rgba(0, 0, 0, 0.7)",
+color: "white",
+border: "none",
+padding: "10px 20px",
+borderRadius: "5px",
+cursor: "pointer",
+}}
+>
+Watch Again
+</button>
+    )}
+      </div>
   );
 };
 
@@ -60,7 +102,6 @@ const PostData = () => {
   const [vol,setVol]= useState(false)
   const { allUsers, user,savedpost, setsavedpost,handleSavedPost,totalLikes,setTotalLikes,deleteSaved,likedpost,setlikedpost,handleLikedPost,deleteLiked } = useContext(DataContext);
   const [allPosts, setAllPosts] = useState([]);
-const [followstate,setfollowstate]=useState("")
 const firebase= useFirebase();
 const {getAllUser}= firebase;
 const navigate= useNavigate();
@@ -73,46 +114,31 @@ if(getAllUser.length>0 && totalLikes.length===0){
 }
 },[getAllUser])
 useEffect(()=>{
-  if (user?.followings?.includes(user.userId)) {
-    console.log("User ID found in followings:", user.userId);
-    setfollowstate("Unfollow")
-  }
-  else{setfollowstate("Follow")}
-  if(user?.saved && savedpost.length===0){
+ if(user?.saved && savedpost.length===0){
     const hello=  user.saved
       setsavedpost(hello)
-      console.log(savedpost)
     }
-    if (user?.followings?.includes(user.userId)) {
-      console.log("User ID found in followings:", user.userId);
-      setfollowstate("Unfollow")
-    }
-    else{setfollowstate("Follow")}
     if(user?.likedBy && likedpost.length===0){
       const hello=  user.likedBy
-      console.log("hello",hello)
         setlikedpost(hello)
-        console.log(likedpost)
       }
 },[user])
 
-const handleFollow=async ()=>{
+const handleFollow=async (followstate)=>{
   try {
     if (followstate === "Follow") {
       await firebase.followuser(user.userId); // Perform follow action
-      setfollowstate("Unfollow"); // Change the button to "Unfollow"
     } else {
       await firebase.unfollowuser(user.userId); // Optionally, perform unfollow action if needed
-      setfollowstate("Follow"); // Change the button to "Follow"
     }
   } catch (error) {
     console.error("Error in following/unfollowing user:", error);
   }
 }
   const getAllPosts = () => {
-    if (allUsers && Array.isArray(allUsers)) {
-      // Combine video posts with the user's fullname and username
-      const posts = allUsers.flatMap(user => {
+    if (allUsers && Array.isArray(allUsers) && allPosts.length===0) {
+      const data2 = allUsers.filter(u=> user?.followings.includes(u.userId));// Combine video posts with the user's fullname and username
+      const posts = data2.flatMap(user => {
         // Check if user.video is a valid array before mapping
         if (Array.isArray(user.videos)) {
           return user.videos.map(videos => ({
@@ -135,9 +161,8 @@ useEffect(() => {
   const handleProfile=(id)=>{
 navigate(`/insta/profile/${id}`)
   }
-  
     return (
-    <div className="postData w-100 d-flex flex-column align-items-center justify-content-center  row pe-0">
+    <div className="postData p-0 m-0 w-100 d-flex flex-column align-items-center justify-content-center  row pe-0">
 {allPosts.length > 0 && totalLikes.length > 0 ? (<>
       {allPosts.map((val,ind) => {
         const isVideo = (type) => {
@@ -145,7 +170,7 @@ navigate(`/insta/profile/${id}`)
           return true;
         };
         return (<>
-          <div className="position-relative row col-12 m-0 pe-0" key={ind} style={{width:'468px'}}>
+          <div className="position-relative row col-12 m-0 p-0" key={ind} style={{width:'468px'}}>
             <div
               className="position-relative d-flex p-2 mt-3 col-12  m-0 p-0"
               
@@ -165,7 +190,7 @@ navigate(`/insta/profile/${id}`)
               <p className="m-0 p-0 d-flex flex-row" >
                 <p className="p-0 m-0">{val.username}</p>
                   
-                    <p className="ms-2 text-primary m-0 p-0" style={{cursor:"pointer"}} onClick={handleFollow}>{followstate}</p>
+                    <p className="ms-2 text-primary m-0 p-0" style={{cursor:"pointer"}} onClick={()=>handleFollow(user?.followings?.includes(val.userId)?"Unfollow":"Follow")}>{user?.followings?.includes(val.userId)?"Unfollow":"Follow"}</p>
                  
                 </p> 
                 <p className="p-0 m-0">Suggested for you</p>
