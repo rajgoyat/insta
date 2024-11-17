@@ -11,17 +11,13 @@ import { useNavigate } from "react-router-dom";
 import useIntersectionObserver from './useIntersectionObserver';
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoVolumeMute } from "react-icons/io5";
-import Loader from "./Component/Loader";
 import CaughtUpBox from './Component/CaughtUpBox'
 import { useFirebase } from "./Firebase";
-
 const Center = () => {
- 
   return (
     <div 
       className="center align-items-center d-flex  position-relative col-12" style={{zIndex:"4"}}
     >
-
       <Following />
     </div>
   );
@@ -33,29 +29,20 @@ const VideoComponent = ({ src, vol ,setVol }) => {
     threshold: 0.5, // Adjust as needed
   });
   const [showWatchAgain, setShowWatchAgain] = useState(false); // Watch Again button state
-
   useEffect(() => {
     const video = videoRef.current;
-  
     if (isIntersecting && !showWatchAgain) {
-      // Attempt to play the video when it's in view
       video.play().catch((error) => {
         console.error("Error trying to play video:", error);
       });
     } else {
-      // Pause the video if it's out of view
       video.pause();
     }
   }, [isIntersecting, showWatchAgain]);
   const handleWatchAgain = async () => {
     const video = videoRef.current;
-    
-    // Video ko manually pause karte hain
     video.pause();
-    // Video ko reset karte hain start position par
     video.currentTime = 0;
-    
-    // Thoda delay de kar video ko dobara play karte hain
     setTimeout(() => {
     video.play().then(() => {
     setShowWatchAgain(false); // Watch Again button hide karna
@@ -97,7 +84,6 @@ Watch Again
       </div>
   );
 };
-
 const PostData = () => {
   const [vol,setVol]= useState(false)
   const { allUsers, user,savedpost, setsavedpost,handleSavedPost,totalLikes,setTotalLikes,deleteSaved,likedpost,setlikedpost,handleLikedPost,deleteLiked } = useContext(DataContext);
@@ -108,7 +94,7 @@ const navigate= useNavigate();
 const [userfollowings,setUserFollowing]= useState([])
 useEffect(()=>{
   if(userfollowings?.length===0){
-    setUserFollowing(user.followings)
+    setUserFollowing(user?.followings)
 }},[user,userfollowings])
 useEffect(()=>{
 if(getAllUser.length>0 && totalLikes.length===0){
@@ -230,13 +216,11 @@ navigate(`/insta/profile/${id}`)
                 color: "rgb(115 115 115)",
                 borderBottom: "1px solid rgb(219 219 219)",
                 padding: "2px 15px 0 10px",
-              }}
-            >
+              }}>
               <p className="m-0">View all 345 comments</p>
               <p className="m-0">Add a comment</p>
             </div>
-          </div>
-          
+          </div>          
           </>
         );
       })}<CaughtUpBox/></>):(<CaughtUpBox/>)}
