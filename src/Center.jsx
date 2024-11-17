@@ -70,7 +70,7 @@ const VideoComponent = ({ src, vol ,setVol }) => {
     <div ref={videoContainerRef} className="video-container position-relative col-12 row  m-0 p-0">
       <div className="position-absolute fs-3 rounded-circle d-flex align-items-center col-12 row justify-content-center  m-0 p-0" onClick={()=>setVol(!vol)} style={{zIndex:"2",height:"578px", background:"rgba(0, 0, 0, 0.763)", bottom:"10px",right:"10px", height:"35px", width:"35px"}}>{vol ?<IoVolumeHigh size={26} color="white"/> :<IoVolumeMute size={26} color="white"/> }</div>
       <video ref={videoRef} src={src}
-      onEnded={()=>{setShowWatchAgain(true); console.log('ended')}}
+      onEnded={()=>setShowWatchAgain(true)}
       controls={false} {...(vol ? {} : {muted: true})}
  className="position-relative col-12  m-0 p-0" style={{zIndex:'1'}} />
   {showWatchAgain && (
@@ -105,6 +105,11 @@ const PostData = () => {
 const firebase= useFirebase();
 const {getAllUser}= firebase;
 const navigate= useNavigate();
+const [userfollowings,setUserFollowing]= useState([])
+useEffect(()=>{
+  if(userfollowings?.length===0){
+    setUserFollowing(user.followings)
+}},[user,userfollowings])
 useEffect(()=>{
 if(getAllUser.length>0 && totalLikes.length===0){
   const data= getAllUser.map((val)=>{
@@ -124,12 +129,16 @@ useEffect(()=>{
       }
 },[user])
 
-const handleFollow=async (followstate)=>{
+const handleFollow=async (followstate,id)=>{
   try {
     if (followstate === "Follow") {
-      await firebase.followuser(user.userId); // Perform follow action
+      setUserFollowing([...userfollowings,id]);
+      
+      await firebase.followuser(id); // Perform follow action
     } else {
-      await firebase.unfollowuser(user.userId); // Optionally, perform unfollow action if needed
+      console.log(userfollowings.filter(val=>val!==id));
+      setUserFollowing(userfollowings.filter(val=>val!==id));
+      await firebase.unfollowuser(id); // Optionally, perform unfollow action if needed
     }
   } catch (error) {
     console.error("Error in following/unfollowing user:", error);
@@ -190,7 +199,7 @@ navigate(`/insta/profile/${id}`)
               <p className="m-0 p-0 d-flex flex-row" >
                 <p className="p-0 m-0">{val.username}</p>
                   
-                    <p className="ms-2 text-primary m-0 p-0" style={{cursor:"pointer"}} onClick={()=>handleFollow(user?.followings?.includes(val.userId)?"Unfollow":"Follow")}>{user?.followings?.includes(val.userId)?"Unfollow":"Follow"}</p>
+                    <p className="ms-2 text-primary m-0 p-0" style={{cursor:"pointer"}} onClick={()=>handleFollow(userfollowings?.includes(val.userId)?"Unfollow":"Follow",val.userId)}>{userfollowings?.includes(val.userId)?"Unfollow":"Follow"}</p>
                  
                 </p> 
                 <p className="p-0 m-0">Suggested for you</p>
@@ -230,7 +239,7 @@ navigate(`/insta/profile/${id}`)
           
           </>
         );
-      })}<CaughtUpBox/></>):(<div className="d-felx align-items-center justify-content-center "><Loader/></div>)}
+      })}<CaughtUpBox/></>):(<CaughtUpBox/>)}
     </div>
   );
 };

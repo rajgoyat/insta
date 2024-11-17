@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { collection, doc, deleteDoc, getDoc, getDocs, getFirestore, updateDoc } from "firebase/firestore"; 
-import { database, useFirebase } from "../Firebase";
+import {doc, getDoc, getFirestore, updateDoc } from "firebase/firestore"; 
+import {useFirebase } from "../Firebase";
 import pro from '../Imgs/profile.jpg';
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { BiHeartCircle } from "react-icons/bi";
@@ -10,7 +10,7 @@ export default function StoryPage() {
   const firebase = useFirebase();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const {userdata,getUserData}= firebase;
+  const {getUserData,userdata}= firebase;
   const id= userId
   const [posts, setPosts] = useState([]);
   const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
@@ -86,7 +86,7 @@ setPosts(data.stories)
     }
 
     timerRef.current = setTimeout(() => {
-      handleNextStory();
+      // handleNextStory();
     }, duration * 1000);
   };
 
@@ -122,10 +122,9 @@ setPosts(data.stories)
       }
     }
   }, [currentStoryIndex, posts]);
- console.log(posts)
   return(
     <>
-    <div className="hhh w-100 DALJU  position-relative" style={{ background: "rgba(0,0,0,0.65)"}}>
+    <div className="hhh w-100 DALJU  position-relative d-flex align-items-center justify-content-center" style={{ background: "rgba(0,0,0,0.65)", height:"100vh"}}>
         <div style={{ zIndex: "2001", position: "absolute", top: "15px", left: "15px", color: "white" }} className="cr d-md-block d-none">
          <div><InstaLogo/></div>
         </div>
@@ -133,7 +132,7 @@ setPosts(data.stories)
           <Cross />
         </div>
 
-        <div className="Story_main  position-relative d-flex justify-content-center flex-column">
+        <div className="Story_main  position-relative d-flex justify-content-center flex-column" style={{width:"350px", height:"100%"}}>
           <div style={{ height: "102px", padding: "20px 16px 32px", zIndex: "2005", position: "absolute", top: "0px" }} className="bg- w-100 ">
           <div className="White w-100 d-flex gap-1" style={{ display: "flex" }} ref={progressRef}> 
             {posts?.map((_, idx) => (
@@ -142,7 +141,7 @@ setPosts(data.stories)
           </div>
           <div className="d-flex align-items-center justify-content-between w-100">
             <div style={{ marginTop: "8px", height: "40px" }} className="d-flex align-items-center gap-2">
-              <img src={userInfo.proimg || pro} style={{ width: "32px", height: "32px", borderRadius: "50%" }} alt="Profile" />
+              <img onClick={()=>navigate(`/insta/profile/${id}`)} src={userInfo.proimg || pro} style={{ width: "32px", height: "32px", borderRadius: "50%" }} alt="Profile" />
               <div style={{ fontWeight: "400", fontSize: "14px" }} className="text-white">{userInfo.username}</div>
               <div style={{ fontWeight: "400", fontSize: "14px", opacity: "0.6" }} className="text-white">Now</div>
             </div>
@@ -153,8 +152,8 @@ setPosts(data.stories)
           </div> 
           </div> 
           <div className="w-100 h-100 position-relative DALJU flex-column">
-          {posts[currentStoryIndex]?.isVideo === "image" && posts[currentStoryIndex]?.src ? (
-             <div className="w-100 h-75 DALJU ">
+ {posts[currentStoryIndex]?.isVideo === "image" && posts[currentStoryIndex]?.src ? (
+             <div className="w-100 h-100 DALJU " style={{paddingTop:"70px"}}>
     <img src={posts[currentStoryIndex].src} alt="Post" className="w-100 h-100" />
     </div>
 ) : posts[currentStoryIndex]?.isVideo === "video" && posts[currentStoryIndex]?.src ? ( 
@@ -173,7 +172,7 @@ setPosts(data.stories)
 ) : null} 
 
   {
-                userid===id?
+                userdata?.userId===id?
                 <div className="w-100 position-absolute py-4 px-2 d-flex justify-content-around align-items-center" style={{ padding: "16px", bottom: "0px", right: "0px" }}>
                <div className='d-flex gap-3 bg- position-absolute' style={{width:"230px",right:"0px",bottom:"30px"}}>
               <div className='d-flex flex-column text-center '>
@@ -246,201 +245,3 @@ const Red=()=>(
 
 
 export {Cross}
-// import { useState, useEffect, useRef } from "react";
-// import { useNavigate, useParams } from "react-router-dom";
-// import { collection, doc, deleteDoc, getDocs } from "firebase/firestore"; 
-// import { getFirestore } from "firebase/firestore";
-// import { useFirebase } from "../Firebase";
-// import logo from '../Imgs/logo.png';
-// // import { Cross } from './MoreSvg'; // Assuming you have a Cross component for the close button
-
-// const StoryFeature = () => {
-//   const firebase = useFirebase();
-//   const navigate = useNavigate();
-//   const { userId } = useParams(); // Assuming userId comes from the URL
-//   const [stories, setStories] = useState([]);
-//   const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
-//   const progressRef = useRef(null);
-//   const timerRef = useRef(null);
-
-//   const handleNextStory = () => {
-//     if (currentStoryIndex < stories.length - 1) {
-//       setCurrentStoryIndex(currentStoryIndex + 1);
-//     } else {
-//       navigate('/insta'); // Navigate back when no more stories
-//     }
-//   };
-
-//   const handleDeleteStory = async (storyId) => {
-//     try {
-//       const storyDocRef = doc(getFirestore(), "users", userId, "stories", storyId);
-//       console.log(storyDocRef)
-//       await deleteDoc(storyDocRef); 
-//       setStories(stories.filter(story => story.id !== storyId)); 
-//       alert("Story deleted successfully");
-//       navigate('/insta'); // Navigate back after deletion
-//     } catch (error) {
-//       console.error("Error deleting story:", error);
-//     }
-//   };
-
-//   const fetchStories = async () => {
-// const data1= await firebase.getUserData(userId)
-
-    
-//     setStories(data1.stories);
-//   };
-
-//   useEffect(() => {
-//     fetchStories();
-//   }, [userId]);
-
-//   const startStoryTimer = (duration) => {
-//     if (timerRef.current) clearTimeout(timerRef.current);
-    
-//     if (progressRef.current) {
-//       progressRef.current.style.transition = `width ${duration}s linear`;
-//       progressRef.current.style.width = '100%';
-//     }
-
-//     timerRef.current = setTimeout(() => {
-//       handleNextStory();
-//     }, duration * 1000);
-//   };
-
-//   useEffect(() => {
-//     if (stories.length > 0) {
-//       const currentStory = stories[currentStoryIndex];
-
-//       // Reset progress bar
-//       if (progressRef.current) {
-//         progressRef.current.style.width = '0%';
-//       }
-
-//       if (currentStory) {
-//         if (currentStory.isVideo) {
-//           startStoryTimer(currentStory.duration || 15); // Default duration for videos
-//         } else {
-//           startStoryTimer(15); // Default duration for images
-//         }
-//       }
-//     }
-//   }, [currentStoryIndex, stories]);
-
-//   return (
-//     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-//       <img src={logo} alt="Logo" style={{ width: '250px', position: 'absolute', top: '15px', left: '15px' }} />
-//       <div style={{ position: 'absolute', top: '15px', right: '15px', fontWeight:"600", fontSize:"25px" }} onClick={() => navigate(-1)}>
-//         {/* <Cross /> */} X
-//       </div>
-      
-//       {stories.length > 0 && currentStoryIndex < stories.length && (
-//         <div style={{
-//           position: 'fixed',
-//           top: '50%',
-//           left: '50%',
-//           transform: 'translate(-50%, -50%)',
-//           width: '40%',
-//           height: '90%',
-//           backgroundColor: '#000',
-//           borderRadius: '10px',
-//           overflow: 'hidden',
-//           padding: '10px'
-//         }}>
-//           {stories[currentStoryIndex]?.isVideo ? (
-//             <video
-//               src={stories[currentStoryIndex].src}
-//               muted
-//               autoPlay
-//               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-//               onEnded={handleNextStory}
-//             />
-//           ) : (
-//             <img
-//               src={stories[currentStoryIndex].src}
-//               alt="Current Story"
-//               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-//             />
-//           )}
-          
-//           <div ref={progressRef} style={{ height: '2px', background: 'gray' }}></div>
-//           <button onClick={() => handleDeleteStory(stories[currentStoryIndex].id)} style={{ position: 'absolute', bottom: '10px', left: '10px', color: 'white' }}>
-//             Delete
-//           </button>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default StoryFeature;
-
-
-// // import React, { useState, useEffect } from 'react';
-// // import { getFirestore, collection, getDocs, loadBundle } from 'firebase/firestore';
-// // import 'bootstrap/dist/css/bootstrap.min.css';
-// // import { useFirebase } from '../Firebase';
-// // import { useParams } from 'react-router-dom';
-
-// // const StoryFeature = () => {
-// //   const [stories, setStories] = useState([]);
-// //   const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
-// //   const firebase = useFirebase();
-// //   const { userdata, getUserData } = firebase;
-// // const {userId} =useParams();
-// //   // Function to fetch stories from Firestore
-// //   useEffect(()=>{
-// // const load = async()=>{
-// //   const data= await getUserData(userId)
-// // const story = data?.stories
-// // setStories(story)
-// // }
-// //     load();
-// //   },[userId,userdata])
-
-// //   return (
-// //     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      
-// //       {currentStoryIndex !== null && currentStoryIndex < stories?.length && (
-// //         <div
-// //           style={{
-// //             position: 'fixed',
-// //             top: '50%',
-// //             left: '50%',
-// //             transform: 'translate(-50%, -50%)',
-// //             width: '80%',
-// //             height: '80%',
-// //             backgroundColor: '#000',
-// //             display: 'flex',
-// //             flexDirection: 'column',
-// //             alignItems: 'center',
-// //             justifyContent: 'center',
-// //             borderRadius: '10px',
-// //             overflow: 'hidden',
-// //             padding: '10px'
-// //           }}
-// //         >
-// //           {stories[currentStoryIndex]?.isVideo ? (
-// //             <video
-// //               id={`video-${currentStoryIndex}`}
-// //               src={stories[currentStoryIndex].src}
-// //               muted
-// //               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-// //               onEnded={() => {
-// //                 setCurrentStoryIndex((currentStoryIndex + 1) % stories.length);
-// //               }}
-// //             />
-// //           ) : (
-// //             <img
-// //               src={stories[currentStoryIndex].src}
-// //               alt="Current Story"
-// //               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-// //             />
-// //           )}
-// //         </div>
-// //       )}
-// //     </div>
-// //   );
-// // };
-
-// // export default StoryFeature;

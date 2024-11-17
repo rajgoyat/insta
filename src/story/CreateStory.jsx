@@ -25,7 +25,7 @@ const { user, userdata} = firebase;
 const location = useLocation();
 const { file, fileURL, fileType } = location.state || {}; 
     const handleShare = async () => {
-    console.log("yash")
+        console.log(isUploading)
     if (!file ) return;
     setIsUploading(true);
     try {
@@ -40,13 +40,13 @@ const { file, fileURL, fileType } = location.state || {};
             },
             async () => {
                 const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+               const newStory= {   src: downloadURL,
+                    isVideo: fileType,
+                    timestamp: new Date().getTime(),
+                    id:new Date().getTime() // Store current timestamp
+                  }
                 await updateDoc(doc(getFirestore(), `users/${user.uid}`), {
-                                stories: [...(userdata.stories || []), { 
-                                  src: downloadURL,
-                                  isVideo: fileType,
-                                  timestamp: new Date().getTime(),
-                                  id:new Date().getTime() // Store current timestamp
-                                }],
+                                stories: [...(userdata.stories || []),newStory],
                               }
                             
                           );
@@ -69,8 +69,8 @@ useEffect(() => {
 
     return(
         <>
-      <div className=" w-100 p-sm-3 position-relativebg-danger" style={{background: "rgba(0,0,0,0.65)", height:"100vh"}}>
-
+      <div className=" w-100  d-flex align-items-center justify-content-center" style={{background: "rgba(0,0,0,0.65)", height:"100vh"}}>
+<div style={{height:"100vh", maxWidth:"685px", width:"100%"}}>
 <div  style={{ position: "absolute", top: "15px", right: "15px", color: "white" }} className="cr d-md-block d-none"  onClick={() => navigate(-1)}>
             <Cross />
         </div>
@@ -126,128 +126,10 @@ useEffect(() => {
 <div style={{height:"23px",width:"23px",borderRadius:"50%",border:"1px solid white",background:"green"}} className="d-flex align-items-center justify-content-center p-1"><FaStar/></div>
 <span style={{fontSize:"12px",fontWeight:"500"}}>Close Friends</span>
 </div>
-<div style={{height:"40px",width:"40px",borderRadius:"50%"}} className="bg-white d-flex align-items-center justify-content-center fs-5 " onClick={handleShare}><IoIosArrowForward/></div>
+<div style={{height:"40px",width:"40px",borderRadius:"50%", cursor:isUploading?'not-allowed':'', pointerEvents:isUploading?"none":''}} className={`bg-white d-flex align-items-center justify-content-center fs-5`}  onClick={handleShare}><IoIosArrowForward/></div>
 </div>
 </div>
-        </div>
+</div> </div>
         </>
     )
 }
-// import React, {  useEffect, useState } from 'react'
-// import { useLocation, useNavigate } from 'react-router-dom';
-// import { useFirebase } from '../Firebase';
-// import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-// import { getFirestore, doc,updateDoc} from 'firebase/firestore';
-
-// const CreateStory = () => {
-//     const [data,setdata]= useState(null)
-//   const [progress, setProgress] = useState([]);
-// const [file,setFile]= useState()
-//     const location = useLocation();
-//     useEffect(()=>{
-//         const {previewSrc, file} = location.state
-// setdata(previewSrc);
-// setFile(file)
-//     },[location])
-// const firebase= useFirebase();
-// const navigate= useNavigate();
-// const {userdata}= firebase;
-//     const handleFileUpload = async () => {
-//         if (!file) return;
-    
-//         const userId = userdata?.userId;
-//         const storage = getStorage();
-    
-//         const storageRef = ref(storage, `stories/${userId}/${file.name}`);
-//         const uploadTask = uploadBytesResumable(storageRef, file);
-    
-//         uploadTask.on(
-//           'state_changed',
-//           (snapshot) => {
-//             const progressPercent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//             setProgress((prev) => [...prev, progressPercent]);
-//           },
-//           (error) => {
-//             console.error("Upload failed", error);
-//           },
-//           async () => {
-//             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-    
-//             // Update the userdata with the new story link
-//             await updateDoc(doc(getFirestore(), `users/${userId}`), {
-//               stories: [...(userdata.stories || []), { 
-//                 src: downloadURL,
-//                 isVideo: file.type.startsWith("video"),
-//                 timestamp: new Date().getTime() // Store current timestamp
-//               }],
-//             });
-//  // Fetch updated stories after upload
-//             navigate(`/insta/story/${userId}`); // Navigate to story page
-//           }
-//         );
-//       };
-    
-      
-//     return (
-//     <div className='d-flex  justify-content-center ' style={{backgroundColor:"#3c3c3c", height:"100vh", width:"100vw"}}>{data && (
-//     <div
-//   style={{
-//     position: "fixed",
-//     display: "flex",
-//     flexDirection: "column",
-//     alignItems: "center",
-//     height: "100vh",
-//     backgroundColor: "black",
-//     color: "white",
-//   }}
-// >
-//   {/* Top bar with icons */}
-//   <div
-//     className="d-flex justify-content-between w-100 p-2"
-//     style={{
-//       backgroundColor: "rgba(0, 0, 0, 0.7)",
-//     }}
-//   >
-//     <button style={{ background: "none", border: "none", color: "white", fontSize: "20px" }} onClick={()=>navigate('/insta')}>✖️</button> {/* Close icon */}
-//     <button style={{ background: "none", border: "none", color: "white", fontSize: "20px" }}>⬇️</button> {/* Download icon */}
-//     <button style={{ background: "none", border: "none", color: "white", fontSize: "20px" }}>😊</button> {/* Emoji icon */}
-//     <button style={{ background: "none", border: "none", color: "white", fontSize: "20px" }}>✏️</button> {/* Edit icon */}
-//     <button style={{ background: "none", border: "none", color: "white", fontSize: "20px" }}>Aa</button> {/* Text style icon */}
-//   </div>
-
-//   {/* Content (image or video) */}
-//   <div
-//     className="d-flex align-items-center justify-content-center w-100 flex-grow-1"
-//     style={{ flex: 1 }}
-//   >
-//     {data.type==="video" ? (
-//       <video src={data.src} controls style={{ maxWidth: "90%", maxHeight: "90%" }} />
-//     ) : (
-//       <img src={data.src} alt="Story Preview" style={{ maxWidth: "90%", maxHeight: "90%" }} />
-//     )}
-//   </div>
-
-//   {/* Bottom bar with "Add to your story" */}
-//   <div
-//     className="d-flex justify-content-center w-100 p-2"
-//     style={{
-//       backgroundColor: "rgba(0, 0, 0, 0.7)",
-//     }}
-//   >
-//     <button onClick={handleFileUpload}
-//       className="btn btn-dark"
-//       style={{
-//         color: "white",
-//         backgroundColor: "#333",
-//         padding: "10px 20px",
-//       }}
-//     >
-//       Add to your story
-//     </button>
-//   </div>
-// </div>
-// )}</div>
-//   )
-// }
-
-// export default CreateStory
