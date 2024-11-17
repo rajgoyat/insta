@@ -1,33 +1,19 @@
 {
   "files": {
-    "main.css": "/insta/static/css/main.826fbfcd.css",
-    "main.js": "/insta/static/js/main.43659f97.js",
-    "static/media/VID-20240616-WA0001.mp4": "/insta/static/media/VID-20240616-WA0001.3ed3c370ceea6bc29528.mp4",
-    "static/media/VID-20240704-WA0005.mp4": "/insta/static/media/VID-20240704-WA0005.577d90eebd969a705e5d.mp4",
-    "static/media/VID-20240704-WA0009.mp4": "/insta/static/media/VID-20240704-WA0009.96b24bbf51f8751c26db.mp4",
-    "static/media/VID-20240704-WA0008.mp4": "/insta/static/media/VID-20240704-WA0008.f860c85e05005f4ee456.mp4",
-    "static/media/VID-20240704-WA0006.mp4": "/insta/static/media/VID-20240704-WA0006.af1674bdd6479b3e2ae5.mp4",
-    "static/media/VID-20240704-WA0002.mp4": "/insta/static/media/VID-20240704-WA0002.c410de87f6b69a0be05b.mp4",
-    "static/media/VID-20240704-WA0007.mp4": "/insta/static/media/VID-20240704-WA0007.a6ef2a4216838a5b2579.mp4",
-    "static/media/VID-20240704-WA0004.mp4": "/insta/static/media/VID-20240704-WA0004.9e5db702b9ab2e00e3db.mp4",
-    "static/media/VID-20240704-WA0003.mp4": "/insta/static/media/VID-20240704-WA0003.b6dbf2929c3c21f3471d.mp4",
+    "main.css": "/insta/static/css/main.942f87a3.css",
+    "main.js": "/insta/static/js/main.b22fafc2.js",
     "static/media/screenshot3.png": "/insta/static/media/screenshot3.a015f55058ad24a00428.png",
     "static/media/screenshot1.png": "/insta/static/media/screenshot1.d688ff1f110b88f3c0c9.png",
     "static/media/screenshot4.png": "/insta/static/media/screenshot4.66d6eaaf896694188857.png",
     "static/media/screenshot.png": "/insta/static/media/screenshot.404f8de783b24fa45b85.png",
     "static/media/allimg.png": "/insta/static/media/allimg.67e57e88d221acbd15de.png",
     "static/media/screenshot2.png": "/insta/static/media/screenshot2.a8b4d779fa1026a205a2.png",
-    "static/media/man3.jpeg": "/insta/static/media/man3.96fae756be2759fd3151.jpeg",
-    "static/media/man8.jpeg": "/insta/static/media/man8.4879dba65deafb4ad868.jpeg",
-    "static/media/man2.jpeg": "/insta/static/media/man2.db4df106663962b54bc0.jpeg",
-    "static/media/man6.jpeg": "/insta/static/media/man6.f17f52e1bdcdcec734e7.jpeg",
-    "static/media/man1.jpeg": "/insta/static/media/man1.28fcb4d33f7ef0e4c718.jpeg",
     "index.html": "/insta/index.html",
-    "main.826fbfcd.css.map": "/insta/static/css/main.826fbfcd.css.map",
-    "main.43659f97.js.map": "/insta/static/js/main.43659f97.js.map"
+    "main.942f87a3.css.map": "/insta/static/css/main.942f87a3.css.map",
+    "main.b22fafc2.js.map": "/insta/static/js/main.b22fafc2.js.map"
   },
   "entrypoints": [
-    "static/css/main.826fbfcd.css",
-    "static/js/main.43659f97.js"
+    "static/css/main.942f87a3.css",
+    "static/js/main.b22fafc2.js"
   ]
 }
